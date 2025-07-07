@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aab15057487a4983b1783c8db5d933ff, type: 3}
+  m_Name: Fanny_Boots_NikeSneakersViewConfig
+  m_EditorClassIdentifier: 
+  <ItemIndex>k__BackingField: Fanny_Boots_NikeSneakers
+  <ItemSprite>k__BackingField: {fileID: 21300000, guid: fa642b9fc791d5b41bd13ddc637c2c86, type: 3}
+  <ItemName>k__BackingField: Fanny_Boots_NikeSneakers
+  <PrefabReference>k__BackingField:
+    m_AssetGUID: 8aa5aa56bf1b3a44e851058580ced543
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  <Prefab>k__BackingField: {fileID: -6585330294286629987, guid: 8aa5aa56bf1b3a44e851058580ced543, type: 3}

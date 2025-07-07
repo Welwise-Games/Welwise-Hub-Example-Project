@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd4caa4822824144b9aa983bffd8f4f2, type: 3}
+  m_Name: EmotionsViewConfig
+  m_EditorClassIdentifier: 
+  <OpenCircleKeycodes>k__BackingField: 7100000045010000
+  <EmotionsConfigs>k__BackingField:
+  - <FrameWhenPlayParticles>k__BackingField: 14
+    <EmotionIndex>k__BackingField: Angry
+    <Name>k__BackingField: Angry
+    <Sprite>k__BackingField: {fileID: 21300000, guid: b0a0a1e4dc20fdb4bb19248159ff8e08, type: 3}
+    <ParticlesComponentsParentsPrefabs>k__BackingField:
+    - {fileID: 5144992684838638237, guid: 9298c97bf1b702445a75de7777c6c027, type: 3}
+  - <FrameWhenPlayParticles>k__BackingField: 0
+    <EmotionIndex>k__BackingField: Silly Dance
+    <Name>k__BackingField: Silly Dance
+    <Sprite>k__BackingField: {fileID: 21300000, guid: a6997c3f43e8c23409313967c65e0d14, type: 3}
+    <ParticlesComponentsParentsPrefabs>k__BackingField:
+    - {fileID: 4138615942759177271, guid: 4fcf1493e60f31542a73362d874f2fa5, type: 3}
+  - <FrameWhenPlayParticles>k__BackingField: 70
+    <EmotionIndex>k__BackingField: Breakdance
+    <Name>k__BackingField: Breakdance
+    <Sprite>k__BackingField: {fileID: 21300000, guid: 2b1cbfcda6c1d45468256b3372059da2, type: 3}
+    <ParticlesComponentsParentsPrefabs>k__BackingField:
+    - {fileID: -5476791669347160729, guid: 8adb33cd2349f2742af7246779a6106f, type: 3}
+  - <FrameWhenPlayParticles>k__BackingField: 0
+    <EmotionIndex>k__BackingField: Death
+    <Name>k__BackingField: Death
+    <Sprite>k__BackingField: {fileID: 21300000, guid: febe340f55023d940887ef158f6deee4, type: 3}
+    <ParticlesComponentsParentsPrefabs>k__BackingField:
+    - {fileID: 658990274596886631, guid: fa24d7e8755d01942904a959b280b078, type: 3}
+  - <FrameWhenPlayParticles>k__BackingField: 16
+    <EmotionIndex>k__BackingField: Laughing
+    <Name>k__BackingField: Laughing
+    <Sprite>k__BackingField: {fileID: 21300000, guid: 98f7253622b4b394bbe74696e9595f18, type: 3}
+    <ParticlesComponentsParentsPrefabs>k__BackingField:
+    - {fileID: -1854287085944794950, guid: c3e5ec70ccc04464d872ada201d13d5a, type: 3}
+  - <FrameWhenPlayParticles>k__BackingField: 6
+    <EmotionIndex>k__BackingField: Love
+    <Name>k__BackingField: Love
+    <Sprite>k__BackingField: {fileID: 21300000, guid: c52baa927121d5e4b8c6c45d8ec55140, type: 3}
+    <ParticlesComponentsParentsPrefabs>k__BackingField:
+    - {fileID: 2819902637052677116, guid: 6443c64c899d43a47b14e7ba5cd0d1d6, type: 3}
+  - <FrameWhenPlayParticles>k__BackingField: 23
+    <EmotionIndex>k__BackingField: Punching
+    <Name>k__BackingField: Punching
+    <Sprite>k__BackingField: {fileID: 21300000, guid: 682b1d86a4c6ca6419acff1adf22900c, type: 3}
+    <ParticlesComponentsParentsPrefabs>k__BackingField:
+    - {fileID: 2136013396112785659, guid: 8f507222876614342a45e73c125832de, type: 3}
+  - <FrameWhenPlayParticles>k__BackingField: 4
+    <EmotionIndex>k__BackingField: Sad
+    <Name>k__BackingField: Sad
+    <Sprite>k__BackingField: {fileID: 21300000, guid: 7e7cc740f1898bd47b2dab82336a11a1, type: 3}
+    <ParticlesComponentsParentsPrefabs>k__BackingField:
+    - {fileID: 2350775056102437538, guid: 9a4066695cf55684b865f742a5c611d7, type: 3}
+  <ErrorTextConfig>k__BackingField:
+    <FadeInTime>k__BackingField: 2
+    <FadeOutTime>k__BackingField: 2
+  <MaxParticlesLifeTime>k__BackingField: 5

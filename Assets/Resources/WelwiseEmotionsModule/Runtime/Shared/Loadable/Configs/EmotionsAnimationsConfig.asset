@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e6796071f74d878cbb559e063ea090, type: 3}
+  m_Name: EmotionsAnimationsConfig
+  m_EditorClassIdentifier: 
+  <MaxSelectedAnimationsNumber>k__BackingField: 8
+  <EmotionsAnimationConfigs>k__BackingField:
+  - <EmotionIndex>k__BackingField: Angry
+    <AnimationLength>k__BackingField: 2.425
+    <OverrideController>k__BackingField: {fileID: 22100000, guid: 0c3111d5d8131df438b4c5e4eee4acb0, type: 2}
+  - <EmotionIndex>k__BackingField: Breakdance
+    <AnimationLength>k__BackingField: 3.633
+    <OverrideController>k__BackingField: {fileID: 22100000, guid: fba7ad8b482c03546af955da500709e7, type: 2}
+  - <EmotionIndex>k__BackingField: Silly Dance
+    <AnimationLength>k__BackingField: 5.367
+    <OverrideController>k__BackingField: {fileID: 22100000, guid: 3c1276e1bc535cc459e29abb01ba78ca, type: 2}
+  - <EmotionIndex>k__BackingField: Death
+    <AnimationLength>k__BackingField: 3.633
+    <OverrideController>k__BackingField: {fileID: 22100000, guid: bc0218473f9f4b647b6e9af6af05418b, type: 2}
+  - <EmotionIndex>k__BackingField: Laughing
+    <AnimationLength>k__BackingField: 2.767
+    <OverrideController>k__BackingField: {fileID: 22100000, guid: 3d9db0af3ea23b64c82ac63e3c780e09, type: 2}
+  - <EmotionIndex>k__BackingField: Love
+    <AnimationLength>k__BackingField: 2.4
+    <OverrideController>k__BackingField: {fileID: 22100000, guid: 548b2008646030645afbe3fd9659b364, type: 2}
+  - <EmotionIndex>k__BackingField: Punching
+    <AnimationLength>k__BackingField: 1.533
+    <OverrideController>k__BackingField: {fileID: 22100000, guid: 957245a9eb337a14485d549d1e4f5db8, type: 2}
+  - <EmotionIndex>k__BackingField: Sad
+    <AnimationLength>k__BackingField: 2.8
+    <OverrideController>k__BackingField: {fileID: 22100000, guid: 230ff77f50f4fb14a8f24ab44ae90943, type: 2}

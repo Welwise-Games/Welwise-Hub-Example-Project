@@ -1,0 +1,19 @@
+{
+    "name": "WelwiseChangingAnimationSharedModule",
+    "rootNamespace": "",
+    "references": [
+        "WelwiseSharedClientModule",
+        "WelwiseSharedSharedModule",
+        "FishNet.Runtime",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: ShopPopup_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: aafc8d5b71821a14bbc054754c587095, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 201225031680
+    m_Localized: Equipment
+    m_Metadata:
+      m_Items: []
+  - m_Id: 252953382912
+    m_Localized: Nickname
+    m_Metadata:
+      m_Items: []
+  - m_Id: 360398868480
+    m_Localized: Apply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 841267433472
+    m_Localized: All
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1012030132224
+    m_Localized: Apply changes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1238820343808
+    m_Localized: 'Are you sure, that you want to exit?
+
+      Your changes are not
+      saved'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1423675904000
+    m_Localized: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1626344673280
+    m_Localized: Name change
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1956285403136
+    m_Localized: Please enter name to change
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2084735963136
+    m_Localized: "\rOnly Letters and numbers are allowed. N1-N2 characters."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72301012996096
+    m_Localized: Deselect all emotions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81304719872000
+    m_Localized: Do you want to apply changes for your character's appearance?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82262027816960
+    m_Localized: Exit from shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82263030255616
+    m_Localized: Skin color emission
+    m_Metadata:
+      m_Items: []
+  - m_Id: 381406344794112
+    m_Localized: Skin color
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

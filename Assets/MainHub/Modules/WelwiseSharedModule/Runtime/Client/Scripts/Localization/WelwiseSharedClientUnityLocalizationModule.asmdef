@@ -1,0 +1,29 @@
+{
+    "name": "WelwiseSharedClientUnityLocalizationModule",
+    "rootNamespace": "",
+    "references": [
+        "Unity.Localization",
+        "UniTask",
+        "WelwiseSharedSharedModule",
+        "WelwiseSharedClientModule",
+        "Unity.ResourceManager"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "LinuxStandalone64",
+        "CloudRendering",
+        "WSA",
+        "WebGL",
+        "WindowsStandalone64"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "WELWISE_SHARED_MODULE_LOCALIZATION"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,35 @@
+{
+    "name": "WelwiseHubBotsClientModule",
+    "rootNamespace": "",
+    "references": [
+        "WelwiseSharedClientModule",
+        "FishNet.Runtime",
+        "UniTask",
+        "WelwiseHubBotsSharedModule",
+        "WelwiseSharedSharedModule",
+        "WelwiseSharedClientNetworkModule",
+        "WelwiseChangingAnimationClientModule",
+        "WelwiseChangingNicknameClientModule",
+        "WelwiseSharedNicknameClientModule",
+        "WelwiseChangingNicknameSharedModule",
+        "Unity.TextMeshPro",
+        "WelwiseChangingClothesSharedModule",
+        "WelwiseClothesSharedClientModule",
+        "WelwiseClothesSharedSharedModule",
+        "WelwiseEmotionsClientModule",
+        "WelwiseEmotionsSharedModule",
+        "WelwiseCharacterClientModule"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WebGL"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c17863a97394dfaaae5be008545ef71, type: 3}
+  m_Name: ItemsConfig
+  m_EditorClassIdentifier: 
+  <Items>k__BackingField:
+  - {fileID: 11400000, guid: 708ed7a2316ac6041ba0527a9e65ce0f, type: 2}
+  - {fileID: 11400000, guid: 9c1f47867e0789442872ebe8ac439d5a, type: 2}
+  - {fileID: 11400000, guid: 89d0263d45956af489d482aa2b416f0d, type: 2}
+  - {fileID: 11400000, guid: 2762783b6e73a4a449a0ba2dd7857030, type: 2}
+  - {fileID: 11400000, guid: 094f1c8237678b345ac7d30620a0c304, type: 2}
+  - {fileID: 11400000, guid: cedac52ff14818a4ea230d32e138ba4d, type: 2}
+  - {fileID: 11400000, guid: 356c7242e09033149b491e30143fab10, type: 2}
+  - {fileID: 11400000, guid: 6ab704ed8426c3044925be2bb411a746, type: 2}
+  - {fileID: 11400000, guid: 9fa40170cd612994984046c2007aaa6c, type: 2}
+  - {fileID: 11400000, guid: 5b6d75c42d2f36846b3f4a6204d04ac5, type: 2}
+  - {fileID: 11400000, guid: bffca0aae3423444d8a2a60290059274, type: 2}
+  - {fileID: 11400000, guid: e1f3e2ec62bf6c34ea3b299ac6078a82, type: 2}
+  - {fileID: 11400000, guid: e082bc6a11f15fe4891ed68e15e2a7be, type: 2}
+  - {fileID: 11400000, guid: 83a76593c5eda284599b818dbeb2f860, type: 2}
+  - {fileID: 11400000, guid: 355f73d5df6fd724282faaa334a242ae, type: 2}
+  - {fileID: 11400000, guid: e31d1b4e545910c489eda61eceb9d76e, type: 2}
+  - {fileID: 11400000, guid: 07a1ba544df37cb4082e743e131ecfbc, type: 2}
+  - {fileID: 11400000, guid: f748b8ed58c4c244aa2a2c498c6a4d0d, type: 2}
+  - {fileID: 11400000, guid: 5395b5e46cbaa304690e9f4efd22e815, type: 2}
+  - {fileID: 11400000, guid: 429ad28237a8f8a44abe64c8fa8b4b83, type: 2}
+  - {fileID: 11400000, guid: 588f546f3a4eb1d49a3b82d0ff8eab49, type: 2}
+  - {fileID: 11400000, guid: 4ea36e16d85680e4c88f8af11408014c, type: 2}
+  - {fileID: 11400000, guid: 1b8de595caf6bad47860df109d72b15e, type: 2}
+  - {fileID: 11400000, guid: b7ea3d11ff2eafa42a6b9917d23d3f82, type: 2}
+  - {fileID: 11400000, guid: 8e221960c2d989d4d8c98c9dee4643f2, type: 2}
+  - {fileID: 11400000, guid: c22d36d64da761b498a2abd5c923e4fe, type: 2}
+  - {fileID: 11400000, guid: c00307e9e1283b94e8e2b6d78f2999f0, type: 2}
+  - {fileID: 11400000, guid: ef153ba73ef4a9642aa5bd074597a743, type: 2}
+  - {fileID: 11400000, guid: 922192a74c45ef84abf1c688d391b74a, type: 2}
+  - {fileID: 11400000, guid: b556ad6ceb9245c4cb47c8fb6db80c80, type: 2}
+  <PlayerSkinColorItemSprite>k__BackingField: {fileID: 21300000, guid: c4457df3e3e3fc640a8b88543f1a5d89, type: 3}
+  <PlayerDefaultClothesEmissionColorSprite>k__BackingField: {fileID: 21300000, guid: 2ee36cf46c759a84d82f38a866a2a464, type: 3}

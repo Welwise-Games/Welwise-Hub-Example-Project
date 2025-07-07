@@ -1,0 +1,18 @@
+<linker>
+    <assembly fullname="Client">
+    </assembly>
+    <assembly fullname="UnityShared">
+    </assembly>
+    <assembly fullname="Server">
+    </assembly>
+    <assembly fullname="WelwiseCharacterModule">
+    </assembly>
+    <assembly fullname="WelwiseChatModule">
+    </assembly>
+    <assembly fullname="WelwiseEmotionsModule">
+    </assembly>
+    <assembly fullname="WelwiseSharedModule">
+    </assembly>
+    <assembly fullname="Assembly-CSharp">
+    </assembly>
+</linker>

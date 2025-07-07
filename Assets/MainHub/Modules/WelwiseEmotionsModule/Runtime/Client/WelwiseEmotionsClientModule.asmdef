@@ -1,0 +1,27 @@
+{
+    "name": "WelwiseEmotionsClientModule",
+    "rootNamespace": "",
+    "references": [
+        "UniTask",
+        "FishNet.Runtime",
+        "WelwiseSharedClientModule",
+        "WelwiseSharedSharedModule",
+        "WelwiseEmotionsSharedModule",
+        "Unity.TextMeshPro",
+        "WelwiseSharedClientUIModule",
+        "WelwiseSharedClientUnityLocalizationModule",
+        "WelwiseGamesSDK"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WebGL"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

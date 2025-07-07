@@ -1,0 +1,22 @@
+{
+    "name": "WelwiseClothesSharedClientModule",
+    "rootNamespace": "",
+    "references": [
+        "WelwiseSharedSharedModule",
+        "UniTask",
+        "WelwiseClothesSharedSharedModule",
+        "Unity.Addressables"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WebGL"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

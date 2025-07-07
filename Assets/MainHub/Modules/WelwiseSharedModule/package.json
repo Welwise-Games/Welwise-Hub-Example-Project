@@ -1,0 +1,26 @@
+{
+  "name": "com.welwise.sharedmodule",
+  "displayName": "Welwise Shared Module",
+  "version": "1.0.1",
+  "unity": "2022.3",
+  "dependencies": {
+    "com.unity.addressables": "1.21.21",
+    "com.unity.nuget.newtonsoft-json": "3.2.1"
+  },
+  "description": "",
+  "keywords": [
+    "unity",
+    "tools",
+    "utility"
+  ],
+  "category": "Shared",
+  "author": {
+    "name": "Arendrast",
+    "email": "Arendrast@gmail.com",
+    "url": "https://github.com/arendrast"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Welwise-Games/Shared_Module"
+  }
+}

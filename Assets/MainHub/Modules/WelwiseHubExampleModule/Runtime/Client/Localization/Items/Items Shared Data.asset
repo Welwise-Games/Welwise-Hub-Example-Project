@@ -1,0 +1,156 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Items Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Items
+  m_TableCollectionNameGuidString: 8dd6aa5728d607a43a25a218028a1e38
+  m_Entries:
+  - m_Id: 4642197504
+    m_Key: BaseballHat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78696828928
+    m_Key: CowboyHat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81783836672
+    m_Key: DinoHead
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127925374976
+    m_Key: SkinColor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 184292626432
+    m_Key: DefaultClothesEmissionColor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 644558770176
+    m_Key: Glasses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098107035754496
+    m_Key: BaseCloth_Body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098111267807232
+    m_Key: BaseCloth_Boots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098111947284480
+    m_Key: BaseCloth_Pants
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098112614178816
+    m_Key: Fanny_Boots_Dino
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098113339793408
+    m_Key: Fanny_Boots_NikeSneakers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098114111545344
+    m_Key: Fanny_Boots_SmileSlippers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098114719719424
+    m_Key: Fanny_pants
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098115453722624
+    m_Key: Fanny_Shorts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098116191920128
+    m_Key: BaseHair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098116816871424
+    m_Key: Hair1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098117525708800
+    m_Key: Hair2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098118217768960
+    m_Key: Hair3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098118872080384
+    m_Key: Hair4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098119568334848
+    m_Key: King_body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098120314920960
+    m_Key: King_cloak
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098121011175424
+    m_Key: King_Hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098121585795072
+    m_Key: Suit_Body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098122227523584
+    m_Key: Suit_Boots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2099987350626304
+    m_Key: Suit_Pants
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2100285209124864
+    m_Key: Viking_Body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2100285896990720
+    m_Key: Viking_Boots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2100286484193280
+    m_Key: Viking_Hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2100287125921792
+    m_Key: Viking_Pants
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2104315784273920
+    m_Key: Bathrobe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2104317004816384
+    m_Key: RubberBoots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2104317814317056
+    m_Key: UsuallySweater
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4251230079897567251
+  references:
+    version: 2
+    RefIds:
+    - rid: 4251230079897567251
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1746980627946

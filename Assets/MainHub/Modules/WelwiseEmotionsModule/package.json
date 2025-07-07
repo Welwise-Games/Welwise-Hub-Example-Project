@@ -1,0 +1,21 @@
+{
+  "name": "com.welwise.emotionsmodule",
+  "displayName": "Welwise Emotions Module",
+  "version": "1.0.0",
+  "unity": "2022.3",
+  "description": "",
+  "keywords": [
+    "unity",
+    "emotions"
+  ],
+  "category": "Emotions",
+  "author": {
+    "name": "Arendrast",
+    "email": "Arendrast@gmail.com",
+    "url": "https://github.com/Arendrast"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Welwise-Games/Emotions_Module"
+  }
+}

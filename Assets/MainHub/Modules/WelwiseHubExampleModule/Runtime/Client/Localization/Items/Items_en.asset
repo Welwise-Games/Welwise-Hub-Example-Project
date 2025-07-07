@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Items_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 8dd6aa5728d607a43a25a218028a1e38, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 184292626432
+    m_Localized: Clothes Emission Color
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127925374976
+    m_Localized: Skin Color
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81783836672
+    m_Localized: Dino's Head
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78696828928
+    m_Localized: Cowboy Hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4642197504
+    m_Localized: Baseball Hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 644558770176
+    m_Localized: Glasses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098107035754496
+    m_Localized: Base Sweater
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098111267807232
+    m_Localized: Base Boots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098111947284480
+    m_Localized: Base Pants
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098112614178816
+    m_Localized: Dino Boots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098113339793408
+    m_Localized: Nike Sneakers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098114111545344
+    m_Localized: Smile Slippers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098114719719424
+    m_Localized: Funny Pants
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098115453722624
+    m_Localized: Funny Shorts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098116191920128
+    m_Localized: Base Hair
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098116816871424
+    m_Localized: Hair 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098117525708800
+    m_Localized: Hair 2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098118217768960
+    m_Localized: Hair 3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098118872080384
+    m_Localized: Hair 4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098119568334848
+    m_Localized: King's sweater
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098120314920960
+    m_Localized: King's Clock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098121011175424
+    m_Localized: Crown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098121585795072
+    m_Localized: Suit's Jacket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2098122227523584
+    m_Localized: Suit's Boots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2099987350626304
+    m_Localized: Suit's Pants
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2100285209124864
+    m_Localized: Viking Breastplate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2100285896990720
+    m_Localized: Viking Boots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2100286484193280
+    m_Localized: Viking Hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2100287125921792
+    m_Localized: Viking Pants
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2104315784273920
+    m_Localized: Bathrobe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2104317004816384
+    m_Localized: Rubber Boots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2104317814317056
+    m_Localized: Usually Sweater
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

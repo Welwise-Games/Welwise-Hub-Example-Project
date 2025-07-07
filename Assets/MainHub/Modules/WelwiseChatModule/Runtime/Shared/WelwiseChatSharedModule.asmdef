@@ -1,0 +1,17 @@
+{
+    "name": "WelwiseChatSharedModule",
+    "rootNamespace": "",
+    "references": [
+        "FishNet.Runtime",
+        "WelwiseSharedSharedModule"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

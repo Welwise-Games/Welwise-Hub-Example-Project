@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa209d9f440c41aca5b9ee55bc3397bd, type: 3}
+  m_Name: Fanny_Boots_SmileSlippersConfig
+  m_EditorClassIdentifier: 
+  <ItemSprite>k__BackingField: {fileID: 21300000, guid: 832434520509ba94881f92988be9c0a0, type: 3}
+  <ItemIndex>k__BackingField: Fanny_Boots_SmileSlippers
+  <ItemName>k__BackingField: Fanny_Boots_SmileSlippers
+  <ItemCategory>k__BackingField: 1
+  <PrefabReference>k__BackingField:
+    m_AssetGUID: 3bc4053f3f21e9a44a55adb09edfc1c5
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

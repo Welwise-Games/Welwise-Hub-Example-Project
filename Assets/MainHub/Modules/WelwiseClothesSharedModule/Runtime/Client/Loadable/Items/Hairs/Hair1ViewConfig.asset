@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aab15057487a4983b1783c8db5d933ff, type: 3}
+  m_Name: Hair1ViewConfig
+  m_EditorClassIdentifier: 
+  <ItemIndex>k__BackingField: Hair1
+  <ItemSprite>k__BackingField: {fileID: 21300000, guid: e67ebd00869fdd240b4e2cd8632ff33a, type: 3}
+  <ItemName>k__BackingField: Hair1
+  <PrefabReference>k__BackingField:
+    m_AssetGUID: 3e3d63e32dd6c16478ac552c641fb3f5
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  <Prefab>k__BackingField: {fileID: -4573721704129433787, guid: 3e3d63e32dd6c16478ac552c641fb3f5, type: 3}

@@ -1,0 +1,17 @@
+{
+    "name": "WelwiseLoadingClothesSharedModule",
+    "rootNamespace": "",
+    "references": [
+        "WelwiseClothesSharedSharedModule",
+        "WelwiseSharedSharedModule"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

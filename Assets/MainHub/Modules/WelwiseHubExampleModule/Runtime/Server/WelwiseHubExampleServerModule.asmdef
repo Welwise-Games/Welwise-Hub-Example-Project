@@ -1,0 +1,41 @@
+{
+    "name": "WelwiseHubExampleServerModule",
+    "rootNamespace": "",
+    "references": [
+        "FishNet.Runtime",
+        "Unity.Addressables",
+        "UniTask",
+        "Bayou",
+        "UniTask.DOTween",
+        "WelwiseSharedClientModule",
+        "WelwiseChangingNicknameServerModule",
+        "WelwiseChangingNicknameSharedModule",
+        "WelwiseSharedSharedModule",
+        "WelwiseSharedServerModule",
+        "WelwiseClothesSharedSharedModule",
+        "WelwiseChangingAnimationServerModule",
+        "WelwiseHubBotsServerModule",
+        "WelwiseChangingClothesSharedModule",
+        "WelwiseHubExampleSharedModule",
+        "WelwiseEmotionsSharedModule",
+        "WelwiseChatServerModule",
+        "WelwiseChatSharedModule",
+        "WelwiseEmotionsServerModule"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "LinuxStandalone64",
+        "CloudRendering",
+        "WSA",
+        "WindowsStandalone32",
+        "WindowsStandalone64"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

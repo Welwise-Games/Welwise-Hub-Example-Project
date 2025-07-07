@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <title>{{{PRODUCT_NAME}}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <script src="./sdk-adapter.js"></script>
+</head>
+<body>
+<canvas id="canvas" class="fullscreen" tabindex="0"></canvas>
+
+<div id="loading-overlay">
+    <div id="three-canvas">
+        <img id="planet-prerender" src="PlanetPrerender.png" alt="Loading">
+    </div>
+    <div id="progress-bar-container">
+        <div id="progress-bar"><div id="progress-bar-fill"></div></div>
+    </div>
+</div>
+
+<script>
+    // Конфигурация, заменяемая в постпроцессинге
+    window.AppConfig = {
+        aspectRatioMode: 'default',
+        backgroundImageUrl: 'background.jpg'
+    };
+</script>
+
+<script src="app.js" defer></script>
+</body>
+</html>

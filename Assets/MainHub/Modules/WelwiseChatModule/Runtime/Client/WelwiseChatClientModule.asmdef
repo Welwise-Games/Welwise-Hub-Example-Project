@@ -1,0 +1,28 @@
+{
+    "name": "WelwiseChatClientModule",
+    "rootNamespace": "",
+    "references": [
+        "FishNet.Runtime",
+        "Unity.TextMeshPro",
+        "UniTask",
+        "WelwiseSharedClientModule",
+        "WelwiseSharedSharedModule",
+        "WelwiseSharedClientNetworkModule",
+        "WelwiseSharedClientUIModule",
+        "WelwiseSharedClientUnityLocalizationModule",
+        "WebGLMobileKeyboardModule",
+        "WelwiseChatSharedModule"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WebGL"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

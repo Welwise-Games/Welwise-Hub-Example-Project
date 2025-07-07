@@ -1,0 +1,22 @@
+{
+    "name": "WelwiseHubExampleEditorModule",
+    "rootNamespace": "",
+    "references": [
+        "Unity.Addressables.Editor",
+        "Unity.ResourceManager",
+        "Unity.Addressables",
+        "FishNet.Runtime",
+        "ParrelSync"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

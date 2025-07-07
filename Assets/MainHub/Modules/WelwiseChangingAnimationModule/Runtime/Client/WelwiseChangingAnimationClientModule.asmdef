@@ -1,0 +1,25 @@
+{
+    "name": "WelwiseChangingAnimationClientModule",
+    "rootNamespace": "",
+    "references": [
+        "WelwiseSharedSharedModule",
+        "UniTask",
+        "WelwiseSharedClientModule",
+        "FishNet.Runtime",
+        "Unity.TextMeshPro",
+        "WelwiseSharedClientNetworkModule",
+        "WelwiseChangingAnimationSharedModule"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WebGL"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aab15057487a4983b1783c8db5d933ff, type: 3}
+  m_Name: King_HatViewConfig
+  m_EditorClassIdentifier: 
+  <ItemIndex>k__BackingField: King_Hat
+  <ItemSprite>k__BackingField: {fileID: 21300000, guid: 741e0263ca2d12c4898dc4b6f5580d2b, type: 3}
+  <ItemName>k__BackingField: King_Hat
+  <PrefabReference>k__BackingField:
+    m_AssetGUID: 923608510ad25834d8c95719f642b1f3
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  <Prefab>k__BackingField: {fileID: 9073379230162476823, guid: 923608510ad25834d8c95719f642b1f3, type: 3}

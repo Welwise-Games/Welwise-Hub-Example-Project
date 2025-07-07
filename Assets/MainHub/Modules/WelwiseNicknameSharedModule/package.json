@@ -1,0 +1,25 @@
+{
+  "name": "com.welwise.nicknamesharedmodule",
+  "displayName": "Welwise Nickname Shared Module",
+  "version": "1.0.1",
+  "unity": "2022.3",
+  "dependencies": {
+    "com.unity.textmeshpro": "3.0.9"
+  },
+  "description": "",
+  "keywords": [
+    "nickname",
+    "shared module",
+    "shared"
+  ],
+  "category": "Shared",
+  "author": {
+    "name": "Arendrast",
+    "email": "Arendrast@gmail.com",
+    "url": "https://github.com/Arendrast"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Welwise-Games/NicknameShared_Module"
+  }
+}

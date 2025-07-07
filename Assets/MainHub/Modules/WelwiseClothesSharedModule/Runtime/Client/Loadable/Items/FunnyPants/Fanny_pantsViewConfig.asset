@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aab15057487a4983b1783c8db5d933ff, type: 3}
+  m_Name: Fanny_pantsViewConfig
+  m_EditorClassIdentifier: 
+  <ItemIndex>k__BackingField: Fanny_pants
+  <ItemSprite>k__BackingField: {fileID: 21300000, guid: d53b12b74b640784ba88d76dbf2e2dc2, type: 3}
+  <ItemName>k__BackingField: Fanny_pants
+  <PrefabReference>k__BackingField:
+    m_AssetGUID: fedec4d53ca325c4eb715ceb74bf2f3d
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  <Prefab>k__BackingField: {fileID: -7252623284735136972, guid: fedec4d53ca325c4eb715ceb74bf2f3d, type: 3}

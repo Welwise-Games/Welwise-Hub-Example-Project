@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: ShopPopup Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: ShopPopup
+  m_TableCollectionNameGuidString: aafc8d5b71821a14bbc054754c587095
+  m_Entries:
+  - m_Id: 201225031680
+    m_Key: Equipment
+    m_Metadata:
+      m_Items: []
+  - m_Id: 252953382912
+    m_Key: Nickname
+    m_Metadata:
+      m_Items: []
+  - m_Id: 360398868480
+    m_Key: Apply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 841267433472
+    m_Key: All
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1012030132224
+    m_Key: Apply changes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1238820343808
+    m_Key: Are you sure to exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1423675904000
+    m_Key: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1626344673280
+    m_Key: Name change
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1956285403136
+    m_Key: Enter name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2084735963136
+    m_Key: Only letters and numbers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72301012996096
+    m_Key: Deselect all emotions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81304719872000
+    m_Key: Do you want to apply changes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82262027816960
+    m_Key: Exit from shop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82263030255616
+    m_Key: Skin color emission
+    m_Metadata:
+      m_Items: []
+  - m_Id: 381406344794112
+    m_Key: Skin color
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4251230036193968152
+  references:
+    version: 2
+    RefIds:
+    - rid: 4251230036193968152
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1746784741732

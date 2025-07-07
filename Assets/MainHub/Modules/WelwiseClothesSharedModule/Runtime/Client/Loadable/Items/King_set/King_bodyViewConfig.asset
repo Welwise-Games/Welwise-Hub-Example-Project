@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aab15057487a4983b1783c8db5d933ff, type: 3}
+  m_Name: King_bodyViewConfig
+  m_EditorClassIdentifier: 
+  <ItemIndex>k__BackingField: King_body
+  <ItemSprite>k__BackingField: {fileID: 21300000, guid: 0d349adbf3273c04eb1af4a70ae2295a, type: 3}
+  <ItemName>k__BackingField: King_body
+  <PrefabReference>k__BackingField:
+    m_AssetGUID: d6b9c976521057245b07cd40ef5fa9e1
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  <Prefab>k__BackingField: {fileID: -1223135449649574217, guid: d6b9c976521057245b07cd40ef5fa9e1, type: 3}

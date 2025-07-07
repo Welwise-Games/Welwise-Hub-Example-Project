@@ -1,0 +1,30 @@
+{
+    "name": "WelwiseHubExampleSharedModule",
+    "rootNamespace": "",
+    "references": [
+        "WelwiseChangingClothesSharedModule",
+        "UniTask",
+        "FishNet.Runtime",
+        "WelwiseSharedSharedModule",
+        "WelwiseClothesSharedSharedModule",
+        "WelwiseChangingNicknameSharedModule",
+        "WelwiseChatSharedModule",
+        "WelwiseEmotionsSharedModule",
+        "GameKit.Dependencies",
+        "Unity.Addressables",
+        "UniTask.Addressables",
+        "Unity.ResourceManager",
+        "WelwiseCharacterSharedModule",
+        "WelwiseChangingAnimationClientModule",
+        "WelwiseChangingAnimationSharedModule"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

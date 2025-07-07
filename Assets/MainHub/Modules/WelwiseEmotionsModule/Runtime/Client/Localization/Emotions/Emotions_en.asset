@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Emotions_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 10b2f941eaf526b4191679507b75140b, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 66585698304
+    m_Localized: Angry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71685971968
+    m_Localized: Silly Dance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73934118912
+    m_Localized: Breakdance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 390021062656
+    m_Localized: Death
+    m_Metadata:
+      m_Items: []
+  - m_Id: 485982543872
+    m_Localized: Laughing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 520451334144
+    m_Localized: Love
+    m_Metadata:
+      m_Items: []
+  - m_Id: 552323850240
+    m_Localized: Sad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 549706604544
+    m_Localized: Punching
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

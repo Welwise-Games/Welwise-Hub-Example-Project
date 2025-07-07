@@ -1,0 +1,25 @@
+{
+    "name": "WelwiseChatServerModule",
+    "rootNamespace": "",
+    "references": [
+        "WelwiseChatSharedModule",
+        "FishNet.Runtime",
+        "WelwiseSharedSharedModule"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "LinuxStandalone64",
+        "CloudRendering",
+        "WSA",
+        "WindowsStandalone32",
+        "WindowsStandalone64"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

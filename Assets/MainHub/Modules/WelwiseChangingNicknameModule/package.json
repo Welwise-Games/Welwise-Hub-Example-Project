@@ -1,0 +1,24 @@
+{
+  "name": "com.welwise.changingnicknamemodule",
+  "displayName": "Welwise Changing Nickname Module",
+  "version": "1.0.1",
+  "unity": "2022.3",
+  "dependencies": {
+  },
+  "description": "",
+  "keywords": [
+    "changing",
+    "changing nickname",
+    "nickname"
+  ],
+  "category": "ChangingNickname",
+  "author": {
+    "name": "Arendrast",
+    "email": "Arendrast@gmail.com",
+    "url": "https://github.com/Arendrast"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Welwise-Games/ChangingNickname_Module"
+  }
+}

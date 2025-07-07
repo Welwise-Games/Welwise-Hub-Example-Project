@@ -1,0 +1,24 @@
+{
+  "name": "com.welwise.loadingclothesmodule",
+  "displayName": "Loading Clothes Module",
+  "version": "1.0.1",
+  "unity": "2022.3",
+    "dependencies": {
+  },
+  "description": "",
+  "keywords": [
+    "clothes",
+    "loading",
+    "module"
+  ],
+  "category": "LoadingClothes",
+  "author": {
+    "name": "Arendrast",
+    "email": "Arendrast@gmail.com",
+    "url": "https://github.com/arendrast"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Welwise-Games/LoadingClothes_Module"
+  }
+}
