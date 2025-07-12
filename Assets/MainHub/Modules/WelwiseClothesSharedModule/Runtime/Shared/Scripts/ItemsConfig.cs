@@ -7,9 +7,6 @@ namespace WelwiseClothesSharedModule.Runtime.Shared.Scripts
     public class ItemsConfig : ScriptableObject
     {
         [field: SerializeField] public ItemConfig[] Items { get; private set; }
-        [field: SerializeField] public Sprite PlayerSkinColorItemSprite { get; private set; }
-        [field: SerializeField] public Sprite PlayerDefaultClothesEmissionColorSprite { get; private set; }
-        
         public ItemConfig TryGettingConfig(string index) => Items.FirstOrDefault(item => item.ItemIndex == index);
     }
 }

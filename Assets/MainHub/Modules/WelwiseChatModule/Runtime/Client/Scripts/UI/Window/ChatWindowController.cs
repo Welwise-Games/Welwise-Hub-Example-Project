@@ -1,15 +1,13 @@
 using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using WebGLMobileKeyboardModule.Runtime.Scripts;
 using WelwiseChatModule.Runtime.Client.Scripts.Network;
 using WelwiseChatModule.Runtime.Shared.Scripts.Network;
 using WelwiseSharedModule.Runtime.Client.Scripts.Localization;
 using WelwiseSharedModule.Runtime.Client.Scripts.NetworkModule;
 using WelwiseSharedModule.Runtime.Client.Scripts.Tools;
 using WelwiseSharedModule.Runtime.Shared.Scripts.Tools;
-#if UNITY_WEBGL && !UNITY_EDITOR
-using WebGLMobileKeyboardModule.Runtime.Scripts;
-#endif
 
 namespace WelwiseChatModule.Runtime.Client.Scripts.UI.Window
 {
@@ -58,9 +56,8 @@ namespace WelwiseChatModule.Runtime.Client.Scripts.UI.Window
             else
             {
 #if UNITY_WEBGL && !UNITY_EDITOR
-
                 window.InputField.InitializeInputFieldForMobileKeyboard(true, false, "white", "rgba(0, 0, 0, 0.3)", "63px", null, "25px", 
-                    "182px", "55px", "absolute", "1px solid white", "16px");   
+                    "182px", "55px", "none", "absolute", "1px solid white", "16px");   
 
                 window.InputField.onSelect.AddListener(_ =>
                 {

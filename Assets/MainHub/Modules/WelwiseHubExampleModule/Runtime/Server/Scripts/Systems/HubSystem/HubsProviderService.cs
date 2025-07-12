@@ -89,23 +89,17 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Systems.HubSystem
             _playerLimitPerHub = playerLimitPerHub;
         }
 
-        public void DisconnectClientFromHub(NetworkConnection conn)
+        public void TryDisconnectingClientFromHub(NetworkConnection conn)
         {
-            if (_hubByPlayerNetworkConnection.TryGetValue(conn, out var hub))
-            {
-                hub.RemoveClient(conn);
-                _hubByPlayerNetworkConnection.Remove(conn);
+            if (!_hubByPlayerNetworkConnection.Remove(conn, out var hub)) return;
+            
+            hub.RemoveClient(conn);
 
-                ClientDisconnectedFromHub?.Invoke(conn, hub);
-                _clientDisconnectedFromRoom?.Invoke(conn, hub);
+            ClientDisconnectedFromHub?.Invoke(conn, hub);
+            _clientDisconnectedFromRoom?.Invoke(conn, hub);
 
-                if (hub.PeopleCount == 0)
-                    UnloadHub(hub);
-            }
-            else
-            {
-                Debug.LogWarning("Connection not found in any hub");
-            }
+            if (hub.PeopleCount == 0)
+                UnloadHub(hub);
         }
 
         public async UniTask<Hub> TryGettingAndAddingPlayerToFreeHubAsync(NetworkConnection conn,

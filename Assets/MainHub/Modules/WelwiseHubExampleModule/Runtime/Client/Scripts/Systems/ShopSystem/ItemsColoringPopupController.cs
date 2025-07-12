@@ -28,14 +28,13 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
             new List<SelectionItemButtonController>();
 
         private readonly SkinColorChangerController _playerPreviewSkinColorChangerController;
-        private readonly ItemsViewConfig _itemsViewConfig;
 
         private const string SkinColorItemIndex = "SkinColor";
         private const string DefaultClothesEmissionColorItemIndex = "DefaultClothesEmissionColor";
 
         public ItemsColoringPopupController(
             ColorableClothesViewController previewColorableClothesViewController,
-            ItemsConfig itemsConfig, ClientsDataProviderService clientsDataProviderService,
+            ClientsDataProviderService clientsDataProviderService,
             ShopSettingEquippedItemsModel shopSettingEquippedItemsModel,
             ChangingItemsColorPopup changingItemsColorPopup,
             SkinColorChangerController playerPreviewSkinColorChangerController, ItemsViewConfig itemsViewConfig)
@@ -45,12 +44,11 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
             _shopSettingEquippedItemsModel = shopSettingEquippedItemsModel;
             _changingItemsColorPopup = changingItemsColorPopup;
             _playerPreviewSkinColorChangerController = playerPreviewSkinColorChangerController;
-            _itemsViewConfig = itemsViewConfig;
 
             _persistentColorableItems = new List<PersistentColorableItem>
             {
-                new(SkinColorItemIndex, itemsConfig.PlayerSkinColorItemSprite, SkinColorItemIndex),
-                new(DefaultClothesEmissionColorItemIndex, itemsConfig.PlayerDefaultClothesEmissionColorSprite,
+                new(SkinColorItemIndex, itemsViewConfig.PlayerSkinColorItemSprite, SkinColorItemIndex),
+                new(DefaultClothesEmissionColorItemIndex, itemsViewConfig.PlayerDefaultClothesEmissionColorSprite,
                     DefaultClothesEmissionColorItemIndex)
             };
 

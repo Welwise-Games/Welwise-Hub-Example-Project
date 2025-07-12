@@ -36,7 +36,11 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.TrainingSystem
 
         public async UniTask<TrainingPopupView> GetTrainingPopupViewAsync(Transform parent) =>
             await _container.GetOrLoadAndRegisterObjectAsync<TrainingPopupView>(TrainingPopupAssetId, _assetLoader,
-                loaded: async popup => { popup.transform.SetSiblingIndex(popup.transform.parent.childCount - 2); }, parent: parent);
+                loaded: popup =>
+                {
+                    popup.transform.SetSiblingIndex(popup.transform.parent.childCount - 2);
+                    return UniTask.CompletedTask; 
+                }, parent: parent);
 
         public async UniTask<ArrowsDisplayingController> GetArrowsDisplayingControllerAsync(Transform playerTransform,
             Transform shopTransform, DataContainer<Transform> arrowsParentContainer)

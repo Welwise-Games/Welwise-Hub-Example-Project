@@ -69,7 +69,7 @@ namespace WebGLMobileKeyboardModule.Runtime.Scripts
         public static void InitializeInputFieldForMobileKeyboard(this TMP_InputField inputField,
             bool shouldReplaceEmojiTextToImage = true, bool shouldCloseKeyboardAfterSubmit = false, string color = null,
             string backgroundColor = null, string top = null, string bottom = null,
-            string left = null, string width = null, string height = null, string position = null,
+            string left = null, string width = null, string height = null, string transform = null, string position = null,
             string border = null, string fontSize = null)
         {
             if (!_mobileKeyboardEventsObserver || _subscribedInputFields.Contains(inputField))
@@ -82,10 +82,10 @@ namespace WebGLMobileKeyboardModule.Runtime.Scripts
             {
                 OpenKeyboard(shouldReplaceEmojiTextToImage, shouldCloseKeyboardAfterSubmit, inputField.text, color,
                     backgroundColor, top, bottom, left,
-                    width, height, position, border, fontSize);
+                    width, height, transform, position, border, fontSize);
                 _lastFocusedInputField = inputField;
             });
-
+            
             inputField.onDeselect.AddListener(_ => CloseKeyboard());
 
             _subscribedInputFields.Add(inputField);
@@ -107,7 +107,7 @@ namespace WebGLMobileKeyboardModule.Runtime.Scripts
             string startText = null,
             string color = null,
             string backgroundColor = null, string top = null, string bottom = null,
-            string left = null, string width = null, string height = null, string position = null,
+            string left = null, string width = null, string height = null, string transform = null, string position = null,
             string border = null, string fontSize = null);
 
         [DllImport("__Internal")]

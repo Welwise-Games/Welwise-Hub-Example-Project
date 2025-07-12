@@ -3,7 +3,7 @@ const mobileKeyboard = {
         shouldReplaceEmojiTextToImage: true,
         shouldCloseKeyboardAfterSubmit: false,
         mobileKeyboardEventsObserverName: 'MobileKeyboardEventsObserver',
-        getInputDiv: function(shouldSetInputDiv = false, startText = null, color = null, backgroundColor = null, top = null, bottom = null, left = null, width = null, height = null, position = null, border = null, fontSize = null) {
+        getInputDiv: function(shouldSetInputDiv = false, startText = null, color = null, backgroundColor = null, top = null, bottom = null, left = null, width = null, height = null, transform = null, position = null, border = null, fontSize = null) {
             var inputDiv = document.getElementById('unityMobileKeyboardDiv');
             if (!inputDiv) {
                 inputDiv = document.createElement('div');
@@ -39,16 +39,17 @@ const mobileKeyboard = {
                 document.body.appendChild(inputDiv);
             }
             if (shouldSetInputDiv) {
-                inputDiv.style.position = position ? position : 'fixed';
-                inputDiv.style.top = top ? top : 'auto';
-                inputDiv.style.left = left ? left : '0';
-                inputDiv.style.bottom = bottom ? bottom : '0';
-                inputDiv.style.width = width ? width : '100%';
+                inputDiv.style.position = position ? position : 'absolute';
+                inputDiv.style.top = top ? top : '25%';
+                inputDiv.style.left = left ? left : '50%';
+                inputDiv.style.bottom = bottom ? bottom : 'auto';
+                inputDiv.style.width = width ? width : '50%';
                 inputDiv.style.height = height ? height : '60px';
                 inputDiv.style.fontSize = fontSize ? fontSize : '16px';
                 inputDiv.style.border = border ? border : '1px solid #ccc';
                 inputDiv.style.backgroundColor = backgroundColor ? backgroundColor : 'white';
                 inputDiv.style.color = color ? color : '#000';
+                inputDiv.style.transform = transform ? transform : 'none';
                 inputDiv.textContent = startText ? startText : '';
                 if (this.shouldReplaceEmojiTextToImage) {
                     this.replaceEmojiTextToImage(inputDiv);
@@ -104,10 +105,10 @@ const mobileKeyboard = {
             sel.removeAllRanges();
             sel.addRange(range);
         },
-        openKeyboard: function(shouldSetInputDiv = false, shouldCloseKeyboardAfterSubmit = false, shouldReplaceEmojiTextToImage = true, startText = null, color = null, backgroundColor = null, top = null, bottom = null, left = null, width = null, height = null, position = null, border = null, fontSize = null) {
+        openKeyboard: function(shouldSetInputDiv = false, shouldCloseKeyboardAfterSubmit = false, shouldReplaceEmojiTextToImage = true, startText = null, color = null, backgroundColor = null, top = null, bottom = null, left = null, width = null, height = null, transform = null, position = null, border = null, fontSize = null) {
             this.shouldReplaceEmojiTextToImage = shouldReplaceEmojiTextToImage;
             this.shouldCloseKeyboardAfterSubmit = shouldCloseKeyboardAfterSubmit;
-            var inputDiv = this.getInputDiv(true, startText, color, backgroundColor, top, bottom, left, width, height, position, border, fontSize);
+            var inputDiv = this.getInputDiv(true, startText, color, backgroundColor, top, bottom, left, width, height, transform, position, border, fontSize);
             inputDiv.style.display = 'block';
             inputDiv.focus();
             this.setCursorToEnd(inputDiv);
@@ -204,8 +205,9 @@ const mobileKeyboard = {
         }
     },
     // External C# calls
-    OpenKeyboard: function(shouldReplaceEmojiTextToImage, shouldCloseKeyboardAfterSubmit, startText, color, backgroundColor, top, bottom, left, width, height, position, border, fontSize) {
-        mobileKeyboardInstance.openKeyboard(true, shouldCloseKeyboardAfterSubmit, shouldReplaceEmojiTextToImage, GetString(startText), GetString(color), GetString(backgroundColor), GetString(top), GetString(bottom), GetString(left), GetString(width), GetString(height), GetString(position), GetString(border), GetString(fontSize));
+    OpenKeyboard: function(shouldReplaceEmojiTextToImage, shouldCloseKeyboardAfterSubmit, startText, color, backgroundColor, top, bottom, left, width, height, transform, position, border, fontSize) {
+        mobileKeyboardInstance.openKeyboard(true, shouldCloseKeyboardAfterSubmit, shouldReplaceEmojiTextToImage, GetString(startText), GetString(color), GetString(backgroundColor), GetString(top), GetString(bottom), GetString(left), GetString(width), GetString(height), 
+        GetString(transform), GetString(position), GetString(border), GetString(fontSize));
 
         function GetString(pointerOrString) {
             if (pointerOrString === null) return null;

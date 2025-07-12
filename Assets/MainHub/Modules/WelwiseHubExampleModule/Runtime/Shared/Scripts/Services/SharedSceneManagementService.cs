@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using FishNet.Managing.Client;
 using FishNet.Managing.Scened;
+using FishNet.Object;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using WelwiseHubExampleModule.Runtime.Shared.Scripts.Holders;
@@ -16,7 +17,8 @@ namespace WelwiseHubExampleModule.Runtime.Shared.Scripts.Services
         private readonly FishNet.Managing.Scened.SceneManager _sceneManager;
         private readonly ClientManager _clientManager;
 
-        public SharedSceneManagementService(FishNet.Managing.Scened.SceneManager sceneManager, ClientManager clientManager)
+        public SharedSceneManagementService(FishNet.Managing.Scened.SceneManager sceneManager,
+            ClientManager clientManager)
         {
             _sceneManager = sceneManager;
             _clientManager = clientManager;
@@ -40,15 +42,16 @@ namespace WelwiseHubExampleModule.Runtime.Shared.Scripts.Services
             if (!initialScene.isLoaded) return;
 
             if (_clientManager.Started && loadedScene.IsValid())
-                initialScene.GetRootGameObjects().ForEach(gameObject => SceneManager.MoveGameObjectToScene(gameObject, loadedScene));
-            
+                initialScene.GetRootGameObjects()
+                    .Where(gameObject => gameObject.TryGetComponent<NetworkObject>(out var networkObject))
+                    .ForEach(gameObject => SceneManager.MoveGameObjectToScene(gameObject, loadedScene));
+
             SceneManager.UnloadSceneAsync(ScenesNames.Initial);
         }
 
         private static void SimulatePhysicsForAllScenes(float step) =>
             Enumerable.Range(0, SceneManager.sceneCount)
                 .Select(SceneManager.GetSceneAt).Where(scene => scene.IsValid() && scene.name != ScenesNames.Initial)
-                .ForEach(
-                    scene => scene.GetPhysicsScene().Simulate(step));
+                .ForEach(scene => scene.GetPhysicsScene().Simulate(step));
     }
 }

@@ -102,7 +102,7 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.Services
             ClientsDataProviderService clientsDataProviderService)
         {
             clientsConnectionTrackingServiceForServer.Disconnected += playersFactory.TryRemovingPlayer;
-            clientsConnectionTrackingServiceForServer.Disconnected += hubsProviderService.DisconnectClientFromHub;
+            clientsConnectionTrackingServiceForServer.Disconnected += hubsProviderService.TryDisconnectingClientFromHub;
             clientsConnectionTrackingServiceForServer.Disconnected +=
                 clientsSelectedEmotionsDataProviderService.TryRemovingClientSelectedEmotionsData;
             clientsConnectionTrackingServiceForServer.Disconnected += clientsDataProviderService.TryRemovingClientData;

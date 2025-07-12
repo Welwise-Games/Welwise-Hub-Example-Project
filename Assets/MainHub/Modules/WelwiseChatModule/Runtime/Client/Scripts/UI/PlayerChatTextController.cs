@@ -29,7 +29,7 @@ namespace WelwiseChatModule.Runtime.Client.Scripts.UI
         {
             _playerChatTextSerializableComponents.Text.text = text;
             _timer.TryStoppingCountingTime();
-            _timer.TryStartingCountingTime(_chatConfig.TimeShowingPlayerNicknameBeforeHiding);
+            _timer.TryStartingCountingTime(_chatConfig.TimeShowingMessageOverHeadBeforeHide);
         }
     }
 }

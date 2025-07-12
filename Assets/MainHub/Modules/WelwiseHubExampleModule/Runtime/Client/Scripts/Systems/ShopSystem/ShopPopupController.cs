@@ -62,7 +62,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
             _itemsViewConfig = itemsViewConfig;
 
             _itemsColoringPopupController = new ItemsColoringPopupController(
-                previewColorableClothesViewController, itemsConfig, clientsDataProviderService,
+                previewColorableClothesViewController, clientsDataProviderService,
                 shopSettingEquippedItemsModel, shopPopup.ChangingItemsColorPopup,
                 playerPreviewSkinColorChangerController, itemsViewConfig);
 
@@ -101,8 +101,8 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
 
             if (DeviceDetectorTools.IsMobile())
             {
-                ShopPopup.ChangingNicknamePopup.PlayerNicknameInputField.InitializeInputFieldForMobileKeyboard(false, true,
-                    "white", "rgba(0, 0, 0, 0.3)", border:"1px solid white", width: "50%", top: "25px");   
+                ShopPopup.ChangingNicknamePopup.PlayerNicknameInputField.InitializeInputFieldForMobileKeyboard(false, true, "white", "rgba(0, 0, 0, 0.3)", "63px", null, "50%", 
+                    "50%", "55px", "translateX(-50%)", "absolute", "1px solid white");   
             }
 #endif
 
