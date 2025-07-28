@@ -1,17 +1,18 @@
 using System;
+using WelwiseItemInShopModule.Shared.Scripts;
 
 namespace WelwiseEmotionsModule.Runtime.Shared.Scripts.Animations.Network
 {
     [Serializable]
-    public class SelectedEmotionData
+    public class SelectedEmotionData : ISelectedItemData
     {
-        public string EmotionIndex { get; set; }
-        public int IndexInsideCircle { get; set; }
+        public string Index { get; set; }
+        public int OrdinalIndex { get; set; }
 
-        public SelectedEmotionData(int indexInsideCircle, string emotionIndex = null)
+        public SelectedEmotionData(int ordinalIndex, string index = null)
         {
-            EmotionIndex = emotionIndex;
-            IndexInsideCircle = indexInsideCircle;
+            Index = index;
+            OrdinalIndex = ordinalIndex;
         }
         
         public SelectedEmotionData() {}

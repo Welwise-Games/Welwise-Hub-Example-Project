@@ -8,9 +8,10 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.MobileHud
         private readonly Container _container = new Container();
 
         public async UniTask DisposeUIAsync() => await _container.DestroyAndClearAllImplementationsAsync();
-        
-        public async UniTask<MobileHudController> GetCreatedMobileHudControllerAsync(MobileHudSerializableComponents mobileHudSerializableComponents) =>
-            await _container.GetOrRegisterSingleByTypeAsync(async () =>
-                new MobileHudController(mobileHudSerializableComponents));
+
+        public async UniTask<MobileHudController> GetCreatedMobileHudControllerAsync(
+            MobileHudSerializableComponents mobileHudSerializableComponents) =>
+            await _container.GetOrRegisterSingleByTypeAsync(() =>
+                new UniTask<MobileHudController>(new MobileHudController(mobileHudSerializableComponents)));
     }
 }

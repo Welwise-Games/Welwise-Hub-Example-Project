@@ -10,17 +10,23 @@ using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.AddressableAssets.Settings.GroupSchemas;
 using UnityEngine;
+using WelwiseSharedModule.Runtime.Shared.Scripts.Tools;
 
 namespace MainHub.Modules.WelwiseHubExampleModule.Editor
 {
     public class BetweenAddressablesAndResourcesMover : EditorWindow
     {
+        private GUIStyle _buttonStyle;
+
+        private static readonly List<BuildTargetGroup> _buildTargetGroups = new List<BuildTargetGroup>()
+        {
+            BuildTargetGroup.WebGL, BuildTargetGroup.Standalone
+        };
+
         private const string ModulesPath = "Assets/MainHub/Modules";
         private const string ResourcesPath = "Assets/Resources";
         private const string AddressablesDefineName = "ADDRESSABLES";
         private const string NetworkObjectsLabelName = "NetworkObjects";
-
-        private GUIStyle _buttonStyle;
 
 
         [MenuItem("Tools/WelwiseHubExample/Settings")]
@@ -62,7 +68,8 @@ namespace MainHub.Modules.WelwiseHubExampleModule.Editor
 
         public static void RemoveDefineAndMoveAddressablesAssetsToResources()
         {
-            DefineSymbolsTools.RemoveDefineSymbol(AddressablesDefineName);
+            _buildTargetGroups.ForEach(group =>
+                DefineSymbolsTools.RemoveDefineSymbol(AddressablesDefineName, group));
 
             var foldersNames = GetFoldersNames(ModulesPath);
 
@@ -80,7 +87,8 @@ namespace MainHub.Modules.WelwiseHubExampleModule.Editor
 
         public static void AddDefineAndMoveFilesResourcesFilesToAddressables()
         {
-            DefineSymbolsTools.AddDefineSymbol(AddressablesDefineName);
+            _buildTargetGroups.ForEach(group =>
+                DefineSymbolsTools.AddDefineSymbol(AddressablesDefineName, group));
 
             MoveResourcesAssetsToAddressables(ResourcesPath, "Welwise*", ModulesPath);
 
@@ -161,9 +169,10 @@ namespace MainHub.Modules.WelwiseHubExampleModule.Editor
                         entry.SetAddress(Path.GetFileNameWithoutExtension(newAssetPath));
 
                         TryMovingGroup(group, addressablesFilesPath);
-                        
+
                         var asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(newAssetPath);
-                        if (asset is GameObject gameObject && gameObject.TryGetComponent<NetworkObject>(out var networkObject))
+                        if (asset is GameObject gameObject &&
+                            gameObject.TryGetComponent<NetworkObject>(out var networkObject))
                             entry.SetLabel(NetworkObjectsLabelName, true, true);
                     }
                 }

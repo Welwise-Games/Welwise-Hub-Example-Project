@@ -3,7 +3,7 @@ using WelwiseSharedModule.Runtime.Client.Scripts.Tools;
 
 namespace WelwiseSharedModule.Runtime.Client.Scripts
 {
-    [CreateAssetMenu(menuName = "HeroAudioClipsConfig", fileName = "HeroAudioClipsConfig")]
+    [CreateAssetMenu(menuName = "WelwiseHubExampleModule/HeroAudioClipsConfig")]
     public class HeroAudioClipsConfig : ScriptableObject
     {
         [field: SerializeField] public AudioClipWithPitchRange JumpClip { get; private set; }

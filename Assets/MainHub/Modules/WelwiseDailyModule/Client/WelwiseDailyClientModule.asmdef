@@ -1,0 +1,17 @@
+{
+    "name": "WelwiseDailyModule",
+    "rootNamespace": "",
+    "references": ["GUID:5c6184cbae34e72478e19ee3a10e88f0","GUID:f51ebe6a0ceec4240a699833d6309b23"],
+    "includePlatforms": [
+        "Editor",
+        "WebGL"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

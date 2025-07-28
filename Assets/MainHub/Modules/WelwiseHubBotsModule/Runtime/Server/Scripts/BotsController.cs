@@ -31,15 +31,9 @@ namespace WelwiseHubBotsModule.Runtime.Server.Scripts
 
         private async void SpawnBot(BotsConfig botsConfig)
         {
-            var botController = await _botsFactory.GetInitializedBotControllerAsync(_targetRoom, _portalsTransforms, _shopTransform, _sceneRootTransform.gameObject.scene, _assetLoader);
-            
-            botController.EnteredPortal += () =>
-            {
-                Timer.TryStartingCountingTime(Random.Range(botsConfig.MinimalBotRespawnTime, botsConfig.MaximumBotRespawnTime), () => SpawnBot(botsConfig),
-                    false, _sceneRootTransform.gameObject.GetCancellationTokenOnDestroy()).Forget();
-            };
-
-            //botController.EnteredInPortal += _ => 
+            var botController = await _botsFactory.GetInitializedBotControllerAsync(_targetRoom, _portalsTransforms, _shopTransform, _sceneRootTransform.gameObject.scene, _assetLoader,
+                () => Timer.TryStartingCountingTime(Random.Range(botsConfig.MinimalBotRespawnTime, botsConfig.MaximumBotRespawnTime), () => SpawnBot(botsConfig),
+                    false, _sceneRootTransform.gameObject.GetCancellationTokenOnDestroy()).Forget());
         }
     }
 }

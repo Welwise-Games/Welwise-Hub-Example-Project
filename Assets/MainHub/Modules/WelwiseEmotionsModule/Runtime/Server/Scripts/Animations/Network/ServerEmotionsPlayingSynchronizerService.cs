@@ -16,16 +16,16 @@ namespace WelwiseEmotionsModule.Runtime.Server.Scripts.Animations.Network
         private readonly ClientsSelectedEmotionsDataProviderService _clientsSelectedEmotionsDataProviderService;
         private readonly IVisibleClientsProviderService _visibleClientsProviderService;
         private readonly ServerManager _serverManager;
-        private readonly EmotionsConfigsProviderService _emotionsConfigsProviderService;
+        private readonly EmotionsConfigProviderService _emotionsConfigProviderService;
         
         public ServerEmotionsPlayingSynchronizerService(
             ClientsSelectedEmotionsDataProviderService clientsSelectedEmotionsDataProviderService,
-            IVisibleClientsProviderService visibleClientsProviderService, ServerManager serverManager, EmotionsConfigsProviderService emotionsConfigsProviderService)
+            IVisibleClientsProviderService visibleClientsProviderService, ServerManager serverManager, EmotionsConfigProviderService emotionsConfigProviderService)
         {
             _clientsSelectedEmotionsDataProviderService = clientsSelectedEmotionsDataProviderService;
             _visibleClientsProviderService = visibleClientsProviderService;
             _serverManager = serverManager;
-            _emotionsConfigsProviderService = emotionsConfigsProviderService;
+            _emotionsConfigProviderService = emotionsConfigProviderService;
 
             serverManager.RegisterBroadcast<PlayingEmotionAnimationDependenciesForServer>(
                 HandlePlayingAnimationAsync);
@@ -35,21 +35,21 @@ namespace WelwiseEmotionsModule.Runtime.Server.Scripts.Animations.Network
         }
 
         private void SendUpdateSelectedEmotionsDataBroadcast(NetworkConnection networkConnection,
-            ClientSelectedEmotionsData data) => _serverManager.Broadcast(networkConnection, new UpdateEmotionsDataDependencies(data));
+            SelectedEmotionsData data) => _serverManager.Broadcast(networkConnection, new UpdateEmotionsDataBroadcastForClient(data));
 
         public async void HandlePlayingAnimationAsync(NetworkConnection serverNetworkConnection,
             PlayingEmotionAnimationDependenciesForServer selectedEmotionsDependenciesForServer, Channel channel)
         {
             var emotionIndex = _clientsSelectedEmotionsDataProviderService.ClientsData
-                .GetValueOrDefault(serverNetworkConnection)?.SelectedEmotions
-                .SafeGet(selectedEmotionsDependenciesForServer.EmotionIndexInsideCircle)?.EmotionIndex;
+                .GetValueOrDefault(serverNetworkConnection)?.SelectedItemsData
+                .SafeGet(selectedEmotionsDependenciesForServer.EmotionOrdinalIndex)?.Index;
 
             if (emotionIndex == null)
                 return;
             
             var config =
-                (await _emotionsConfigsProviderService.GetEmotionsAnimationsConfig()).EmotionsAnimationConfigs
-                    .FirstOrDefault(config => config.EmotionIndex == emotionIndex);
+                (await _emotionsConfigProviderService.GetEmotionsAnimationsConfig()).Configs
+                    .FirstOrDefault(config => config.Index == emotionIndex);
             
             if (config == null)
                 return;

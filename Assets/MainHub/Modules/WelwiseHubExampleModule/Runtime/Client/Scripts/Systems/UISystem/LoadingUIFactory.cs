@@ -29,9 +29,10 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.UISystem
         public async UniTask<LoadingGamePopupController> GetLoadingGamePopupControllerAsync()
             => await _container.GetControllerAsync<LoadingGamePopupController, LoadingGamePopup>(
                 LoadingGamePopupAssetId, _assetLoader,
-                async popup =>
+                popup =>
                 {
                     _container.RegisterAndGetSingleByType(new LoadingGamePopupController(popup, _eventBus));
+                    return UniTask.CompletedTask;
                 }, shouldMakeDontDestroyOnLoad: true);
     }
 }

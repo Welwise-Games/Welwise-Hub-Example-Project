@@ -31,12 +31,12 @@ namespace WelwiseChangingNicknameModule.Runtime.Server.Scripts
             clientsNicknamesProviderService.ChangedClientNickname += (networkConnection, nickname) => TrySendingForAllPlayersAboutChangingName(networkConnection, nickname, 
                 visibleClientsProviderService, serverManager);
             
-            serverManager.RegisterBroadcast<SettingNicknameBroadcastForServer>(TrySettingPlayerNameAsync);
+            serverManager.RegisterBroadcast<SetNicknameBroadcastForServer>(TrySettingPlayerNameAsync);
 
             nicknamesSharedEntryPointData = new NicknamesSharedEntryPointData(clientsNicknamesProviderService);
             
             async void TrySettingPlayerNameAsync(NetworkConnection networkConnection,
-                SettingNicknameBroadcastForServer broadcast, Channel channel)
+                SetNicknameBroadcastForServer broadcast, Channel channel)
             {
                 await clientsNicknamesProviderService.TrySettingClientNicknameAsync(networkConnection,
                     broadcast.NewNickname);
@@ -51,7 +51,7 @@ namespace WelwiseChangingNicknameModule.Runtime.Server.Scripts
 
             foreach (var clientConnection in connectionsForSending)
             {
-                serverManager.Broadcast(clientConnection, new SettingNicknameBroadcastForClient(
+                serverManager.Broadcast(clientConnection, new SetNicknameBroadcastForClient(
                     nickname, changerNetworkConnection));
             }
         }

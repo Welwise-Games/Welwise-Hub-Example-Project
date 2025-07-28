@@ -14,15 +14,15 @@ namespace WelwiseEmotionsModule.Runtime.Client.Scripts.Animations.Network.Owner
         {
             _ownerSelectedEmotionsDataProvider = ownerSelectedEmotionsDataProvider;
             _clientManager = clientManager;
-            clientManager.RegisterBroadcast<UpdateEmotionsDataDependencies>(UpdateEmotionsData);
+            clientManager.RegisterBroadcast<UpdateEmotionsDataBroadcastForClient>(UpdateEmotionsData);
         }
-        public void SendPlayingEmotionAnimationBroadcast(int emotionIndexInsideCircle)
+        public void SendPlayingEmotionAnimationBroadcast(int emotionOrdinalIndex)
         {
             _clientManager.Broadcast(
-                new PlayingEmotionAnimationDependenciesForServer(emotionIndexInsideCircle));
+                new PlayingEmotionAnimationDependenciesForServer(emotionOrdinalIndex));
         }
 
-        private void UpdateEmotionsData(UpdateEmotionsDataDependencies dependencies, Channel channel)
-            => _ownerSelectedEmotionsDataProvider.TryUpdatingSelectedEmotionsData(dependencies.Data);
+        private void UpdateEmotionsData(UpdateEmotionsDataBroadcastForClient broadcastForClient, Channel channel)
+            => _ownerSelectedEmotionsDataProvider.TryUpdatingSelectedItemsData(broadcastForClient.Data);
     }
 }

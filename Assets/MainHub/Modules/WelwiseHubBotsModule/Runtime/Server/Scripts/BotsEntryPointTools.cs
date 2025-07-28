@@ -6,6 +6,7 @@ using WelwiseChangingClothesModule.Runtime.Shared.Scripts;
 using WelwiseChangingNicknameModule.Runtime.Shared.Scripts.Services;
 using WelwiseClothesSharedModule.Runtime.Shared.Scripts;
 using WelwiseEmotionsModule.Runtime.Shared.Scripts;
+using WelwisePetsModule.Runtime.Shared.Scripts;
 using WelwiseSharedModule.Runtime.Server.Scripts;
 using WelwiseSharedModule.Runtime.Shared.Scripts.Loading;
 
@@ -17,10 +18,12 @@ namespace WelwiseHubBotsModule.Runtime.Server.Scripts
             SetPlayerAnimationPlaceModelsProviderService setPlayerAnimationPlaceModelsProviderService,
             ServerSceneManagementService serverSceneManagementService,
             IRoomsProviderService roomsProviderService, ServerManager serverManager, string roomSceneName,
-            EmotionsConfigsProviderService emotionsConfigsProviderService, out BotsEntryPointData botsEntryPointData,
+            EmotionsConfigProviderService emotionsConfigProviderService, out BotsEntryPointData botsEntryPointData,
             ServerSetPlayersAnimationsPlacesSynchronizer serverSetPlayersAnimationsPlacesSynchronizer,
             ClientsConfigsProviderService clientsConfigsProviderService,
-            ItemsConfigsProviderService itemsConfigsProviderService, IAssetLoader assetLoader)
+            ItemsConfigsProviderService itemsConfigsProviderService, IAssetLoader assetLoader,
+            BotsPetsDataProviderService botsPetsDataProviderService,
+            PetsConfigProviderService petsConfigsProviderService)
         {
             var botsConfigsProviderService = new BotsConfigsProviderService(assetLoader);
 
@@ -28,14 +31,15 @@ namespace WelwiseHubBotsModule.Runtime.Server.Scripts
             var botsCustomizationDataProviderService = new BotsCustomizationDataProviderService();
 
             var botsFactory = new BotsFactory(botsConfigsProviderService, setPlayerAnimationPlaceModelsProviderService,
-                roomsProviderService, emotionsConfigsProviderService, serverSetPlayersAnimationsPlacesSynchronizer,
-                botsNicknamesProviderService, botsCustomizationDataProviderService, clientsConfigsProviderService, itemsConfigsProviderService);
+                roomsProviderService, emotionsConfigProviderService, serverSetPlayersAnimationsPlacesSynchronizer,
+                botsNicknamesProviderService, botsCustomizationDataProviderService, clientsConfigsProviderService, itemsConfigsProviderService, 
+                botsPetsDataProviderService, petsConfigsProviderService);
 
             botsEntryPointData = new BotsEntryPointData(botsFactory, botsConfigsProviderService);
 
             new BotsSubscribingMediator(botsNicknamesProviderService, serverManager, roomSceneName, botsFactory,
                 serverSceneManagementService, roomsProviderService, botsCustomizationDataProviderService,
-                clientsConfigsProviderService, botsConfigsProviderService, itemsConfigsProviderService);
+                clientsConfigsProviderService, botsConfigsProviderService, itemsConfigsProviderService, botsPetsDataProviderService, petsConfigsProviderService);
         }
     }
 }

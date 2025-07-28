@@ -30,7 +30,7 @@ MonoBehaviour:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 344df984e0fe4ec419d58abca67b28bc
-    m_Address: SettingEmotionsPopup_en
+    m_Address: SetEmotionsPopup_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
@@ -43,6 +43,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9861c66029f9be146bbb26135a80c6ab
     m_Address: Portals_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e98ba1408cc24d4c8d5ee7e44655f97
+    m_Address: SetPetsPopup_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

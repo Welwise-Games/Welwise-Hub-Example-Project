@@ -3,7 +3,7 @@ using UnityEngine.AddressableAssets;
 
 namespace WelwiseClothesSharedModule.Runtime.Shared.Scripts
 {
-    [CreateAssetMenu(fileName = "ItemConfig", menuName = "ItemConfig", order = 2)]
+    [CreateAssetMenu(menuName = "WelwiseClothesModule/ItemConfig")]
     public class ItemConfig : ScriptableObject
     {
         [field: SerializeField] public string ItemIndex { get; private set; }

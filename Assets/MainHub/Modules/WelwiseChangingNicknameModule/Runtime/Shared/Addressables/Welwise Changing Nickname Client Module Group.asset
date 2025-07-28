@@ -15,10 +15,10 @@ MonoBehaviour:
   m_GroupName: Welwise Changing Nickname Client Module Group
   m_Data:
     m_SerializedData: []
-  m_GUID: 4f207a875d3934841acb63a2f0fc1242
+  m_GUID: bbe71ccd43e621c499070ff2dc458e06
   m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 237a77756b9c52945863cb194eef1450, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: d9e4b43cf1dee0f45897365e2d9def50, type: 2}
+    - {fileID: 11400000, guid: cc99418ed63ee8346924a3fb0efce80f, type: 2}

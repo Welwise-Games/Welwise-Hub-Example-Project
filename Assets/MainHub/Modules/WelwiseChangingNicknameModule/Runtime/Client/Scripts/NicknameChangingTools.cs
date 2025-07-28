@@ -53,11 +53,11 @@ namespace WelwiseChangingNicknameModule.Runtime.Client.Scripts
             clientsNicknamesDataProvider.AddedNicknameData +=                 
                 (networkConnection, data) => TrySavingOwnerNicknameDataForMetaverse(playerData, networkConnection, data.Nickname);
             
-            clientManager.RegisterBroadcast<SettingNicknameBroadcastForClient>(SetPlayerNickname);
+            clientManager.RegisterBroadcast<SetNicknameBroadcastForClient>(SetPlayerNickname);
             
             nicknamesSharedEntryPointData = new NicknamesSharedEntryPointData(clientsNicknamesProviderService);
 
-            void SetPlayerNickname(SettingNicknameBroadcastForClient broadcast, Channel channel)
+            void SetPlayerNickname(SetNicknameBroadcastForClient broadcast, Channel channel)
             {
                 clientsNicknamesProviderService.TrySettingClientNickname(broadcast.NicknameOwnerNetworkConnection,
                     broadcast.NewNickname);

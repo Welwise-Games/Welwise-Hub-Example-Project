@@ -43,7 +43,6 @@ const initBackground = async () => {
     }
 };
 
-// Обновление соотношения сторон
 const updateAspectRatio = () => {
     if (AppConfig.aspectRatioMode === 'default' || !isDesktop()) {
         resetToFullscreen();
@@ -52,7 +51,7 @@ const updateAspectRatio = () => {
 
     const targetRatio = AppConfig.aspectRatioMode === '16_9' ? 16/9 : 9/16;
     const { innerWidth: w, innerHeight: h } = window;
-    
+
     let width, height;
     if (w / h > targetRatio) {
         height = h;
@@ -65,19 +64,21 @@ const updateAspectRatio = () => {
     applyCanvasSize(width, height, true);
     applyLoadingOverlaySize(width, height, true);
     applyBodyBackground();
-    
-    if (state.unityInstance && !state.isFullscreen) {
+
+    // Всегда перерисовываем Unity при изменении размеров
+    if (state.unityInstance) {
         scheduleUnityRepaint();
     }
 };
 
-// Сброс в полноэкранный режим
+// Обновленная функция resetToFullscreen
 const resetToFullscreen = () => {
     applyCanvasSize('100%', '100%', false);
     applyLoadingOverlaySize('100%', '100%', false);
     clearBodyBackground();
-    
-    if (state.unityInstance && !state.isFullscreen) {
+
+    // Всегда перерисовываем Unity
+    if (state.unityInstance) {
         scheduleUnityRepaint();
     }
 };
@@ -142,25 +143,11 @@ const clearBodyBackground = () => {
 const scheduleUnityRepaint = () => {
     if (!state.unityInstance) return;
     
-    cancelAnimationFrame(state.repaintId);
-    state.repaintId = requestAnimationFrame(() => {
-        const { width, height } = elements.canvas;
-        
-        // Временное изменение размеров
-        elements.canvas.width = width + 1;
-        
-        // Возврат размеров и перерисовка
-        requestAnimationFrame(() => {
-            elements.canvas.width = width;
-            elements.canvas.height = height;
-            
-            if (state.unityInstance.Module?.Invalidate) {
-                state.unityInstance.Module.Invalidate();
-            }
-            
-            elements.canvas.focus();
-        });
-    });
+    // Упрощенная перерисовка без изменения размеров
+    if (state.unityInstance.Module?.Invalidate) {
+        state.unityInstance.Module.Invalidate();
+    }
+    elements.canvas.focus();
 };
 
 // Обработчик прогресса загрузки
@@ -170,7 +157,7 @@ const onProgress = progress => {
     }
 };
 
-// Обработчик полноэкранного режима
+// Обновленный обработчик полноэкранного режима
 const handleFullscreenChange = () => {
     state.isFullscreen = !!(
         document.fullscreenElement ||
@@ -178,14 +165,8 @@ const handleFullscreenChange = () => {
         document.mozFullScreenElement ||
         document.msFullscreenElement
     );
-    
-    if (!state.isFullscreen) {
-        setTimeout(() => {
-            updateAspectRatio();
-            scheduleUnityRepaint();
-            elements.canvas.focus();
-        }, 100);
-    }
+
+    updateAspectRatio();
 };
 
 // Инициализация приложения
@@ -239,9 +220,9 @@ const initializeApp = async () => {
                 
                 updateAspectRatio();
                 
-                // Обработчик клика для перерисовки
+                // Упрощенный обработчик клика - только фокусировка
                 elements.canvas.addEventListener('click', () => {
-                    if (!state.isFullscreen) scheduleUnityRepaint();
+                    elements.canvas.focus();
                 });
             }).catch(error => {
                 console.error('Unity initialization failed:', error);
@@ -249,15 +230,31 @@ const initializeApp = async () => {
         };
         document.body.appendChild(loaderScript);
     };
-    
-    // Проверка готовности Three.js
-    if (typeof THREE === 'undefined') {
+
+    // Проверка ThreeJS опции
+    if (AppConfig.useThreeJsLoader && typeof THREE === 'undefined') {
         const threeScript = document.createElement('script');
         threeScript.src = 'lib/threeImport.js';
-        threeScript.onload = loadUnity;
+        threeScript.onload = () => {
+            if (AppConfig.useThreeJsLoader) {
+                const sceneScript = document.createElement('script');
+                sceneScript.src = 'threeCanvas.js';
+                sceneScript.onload = loadUnity;
+                document.body.appendChild(sceneScript);
+            } else {
+                loadUnity();
+            }
+        };
         document.body.appendChild(threeScript);
     } else {
-        loadUnity();
+        if (AppConfig.useThreeJsLoader) {
+            const sceneScript = document.createElement('script');
+            sceneScript.src = 'threeCanvas.js';
+            sceneScript.onload = loadUnity;
+            document.body.appendChild(sceneScript);
+        } else {
+            loadUnity();
+        }
     }
 };
 

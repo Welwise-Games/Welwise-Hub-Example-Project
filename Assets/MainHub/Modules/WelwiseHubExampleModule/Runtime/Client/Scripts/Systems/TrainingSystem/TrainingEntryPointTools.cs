@@ -37,20 +37,26 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.TrainingSystem
             Transform trainingPopupParent,
             ClientsConnectionTrackingServiceForClient clientsConnectionTrackingServiceForClient)
         {
-            if (!playerData.GameData.GetBool(EnteredPortalHubSavingsVariableName))
-            {
-                await EnableGoToPortalTrainingAsync(trainingFactory, playerData,
-                    enteredToPortalEventProvider);
-            }
+            var wasOpenShop = playerData.GameData.GetBool(OpenedShopPopupHubSavingsVariableName);
 
-            if (!playerData.GameData.GetBool(OpenedShopPopupHubSavingsVariableName))
+            if (!wasOpenShop)
             {
                 await EnableGoToShopTrainingAsync(trainingFactory, shopTransform, playerTransform, shopPopupController,
                     playerData, trainingPopupParent, clientsConnectionTrackingServiceForClient);
             }
+
+            if (!playerData.GameData.GetBool(EnteredPortalHubSavingsVariableName))
+            {
+                await EnableGoToPortalTrainingAsync(trainingFactory, playerData,
+                    enteredToPortalEventProvider);
+
+                if (wasOpenShop)
+                    await ShowGoToGameThroughPortalGameAsync(
+                        await trainingFactory.GetTrainingPopupViewAsync(trainingPopupParent));
+            }
         }
 
-        private static async UniTask EnableGoToPortalTrainingAsync(TrainingFactory trainingFactory,
+        private static UniTask EnableGoToPortalTrainingAsync(TrainingFactory trainingFactory,
             IPlayerData playerData, EnteredToPortalEventProvider enteredToPortalEventProvider)
         {
             enteredToPortalEventProvider.EnteredToPortal += id =>
@@ -61,12 +67,15 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.TrainingSystem
                 if (playerData.GameData.GetBool(OpenedShopPopupHubSavingsVariableName))
                     trainingFactory.Dispose();
             };
+
+            return UniTask.CompletedTask;
         }
 
         private static async UniTask EnableGoToShopTrainingAsync(TrainingFactory trainingFactory,
             Transform shopTransform,
             Transform playerTransform, ShopPopupController shopPopupController, IPlayerData playerData,
-            Transform trainingPopupParent, ClientsConnectionTrackingServiceForClient clientsConnectionTrackingServiceForClient)
+            Transform trainingPopupParent,
+            ClientsConnectionTrackingServiceForClient clientsConnectionTrackingServiceForClient)
         {
             var arrowsParentContainer = new DataContainer<Transform>();
             var arrowsController = await trainingFactory.GetArrowsDisplayingControllerAsync(
@@ -88,7 +97,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.TrainingSystem
                 Object.Destroy(arrowsParentContainer.Data.gameObject);
                 clientsConnectionTrackingServiceForClient.OwnerDisconnected -= ReleaseAllArrowsAndUnsubscribe;
             }
-            
+
             shopPopupController.ShopPopup.Popup.Opened += async () =>
             {
                 playerData.GameData.SetBool(OpenedShopPopupHubSavingsVariableName, true);
@@ -98,13 +107,18 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.TrainingSystem
 
                 if (!playerData.GameData.GetBool(EnteredPortalHubSavingsVariableName))
                 {
-                    trainingPopupView.DoText.text = await LocalizationTools.GetLocalizedStringAsync(
-                        LocalizationTablesHolder.TrainingPopup,
-                        LocalizationKeysHolder.GoToGameThroughPortal);
+                    await ShowGoToGameThroughPortalGameAsync(trainingPopupView);
                 }
                 else
                     trainingFactory.Dispose();
             };
+        }
+
+        private static async UniTask ShowGoToGameThroughPortalGameAsync(TrainingPopupView trainingPopupView)
+        {
+            trainingPopupView.DoText.text = await LocalizationTools.GetLocalizedStringAsync(
+                LocalizationTablesHolder.TrainingPopup,
+                LocalizationKeysHolder.GoToGameThroughPortal);
         }
     }
 }

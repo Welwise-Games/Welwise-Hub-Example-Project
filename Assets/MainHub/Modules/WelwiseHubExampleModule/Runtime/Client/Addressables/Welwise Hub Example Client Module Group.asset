@@ -15,10 +15,10 @@ MonoBehaviour:
   m_GroupName: Welwise Hub Example Client Module Group
   m_Data:
     m_SerializedData: []
-  m_GUID: eaa8bebc976f0454fa8fdc5bb0d71f34
+  m_GUID: 56a23c5235d25cd43a1bb7a845fb90b1
   m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 237a77756b9c52945863cb194eef1450, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: afdeebe939833d44f9aa154aa2eeef85, type: 2}
+    - {fileID: 11400000, guid: 3d89c3fd02f149f4ba27b778ac04776f, type: 2}

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace WelwiseChangingClothesModule.Runtime.Shared.Scripts
 {
-    [CreateAssetMenu(fileName = "ClientsConfig", menuName = "ClientsConfig")]
+    [CreateAssetMenu(menuName = "WelwiseHubExampleModule/ClientsConfig")]
     public class ClientsConfig : ScriptableObject
     {
         [field: SerializeField] [field: Range(0, 1)] public float DefaultPlayerSkinColorValue { get; private set; } = 0.666f;

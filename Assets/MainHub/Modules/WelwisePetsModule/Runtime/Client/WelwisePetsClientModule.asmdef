@@ -1,0 +1,28 @@
+{
+    "name": "WelwisePetsClientModule",
+    "rootNamespace": "",
+    "references": [
+        "WelwiseSharedSharedModule",
+        "UniTask",
+        "WelwiseShopItemClientModule",
+        "WelwiseShopItemSharedModule",
+        "WelwisePetsSharedModule",
+        "WelwiseSharedClientUIModule",
+        "WelwiseGamesSDK",
+        "FishNet.Runtime",
+        "Unity.Addressables",
+        "WelwiseSharedClientNetworkModule"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WebGL"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -32,11 +32,11 @@ namespace WelwiseSharedModule.Runtime.Shared.Scripts.Loading
             return instance;
         }
 
-        public async UniTask<T> GetLoadedAssetAsync<T>(string assetId) where T : Object => await Addressables.LoadAssetAsync<T>(assetId).Task;
-        
+        public async UniTask<T> GetLoadedAssetAsync<T>(string assetId) where T : Object => await Addressables.LoadAssetAsync<T>(assetId);
+
         public async UniTask<IEnumerable<T>> GetLoadedAssetsAsync<T>(string labelOrFolderPath) where T : Object
         {
-            var locations = await Addressables.LoadResourceLocationsAsync(labelOrFolderPath, typeof(T)).Task;
+            var locations = await Addressables.LoadResourceLocationsAsync(labelOrFolderPath, typeof(T));
             var tasks = locations.Select(location => Addressables.LoadAssetAsync<T>(location).Task.AsUniTask());
 
             return await UniTask.WhenAll(tasks);

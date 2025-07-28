@@ -11,7 +11,7 @@ namespace WelwiseSharedModule.Runtime.Shared.Scripts.Tools
         public static async UniTask<TController> GetControllerAsync<TController, TView>(this Container container,
             string viewAssetId, IAssetLoader assetLoader,
             Func<TView, UniTask> created,
-            bool shouldMakeDontDestroyOnLoad = false, Transform parent = null)
+            bool shouldMakeDontDestroyOnLoad = false, Transform parent = null, bool shouldAppointParentAfterInstantiate = false)
             where TView : MonoBehaviour where TController : class
         {
             var viewInstance = await container.GetSingleByAssetIdAsync<TView>(viewAssetId);

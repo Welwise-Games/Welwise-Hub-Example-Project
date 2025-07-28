@@ -9,6 +9,7 @@
         Hair,
         Hat,
         Emotions,
-        Color
+        Color,
+        Pets
     }
 }

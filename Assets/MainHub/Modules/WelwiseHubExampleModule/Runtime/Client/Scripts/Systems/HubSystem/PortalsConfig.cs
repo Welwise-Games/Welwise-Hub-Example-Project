@@ -3,7 +3,7 @@ using WelwiseSharedModule.Runtime.Client.Scripts.Tools;
 
 namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem
 {
-    [CreateAssetMenu(fileName = "PortalsConfig", menuName = "PortalsConfig")]
+    [CreateAssetMenu(menuName = "WelwiseHubExampleModule/PortalsConfig")]
     public class PortalsConfig : ScriptableObject
     {
         [field: SerializeField] public string IconFileName { get; private set; } = "Icon.png";

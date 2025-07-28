@@ -1,5 +1,6 @@
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Modules.WelwiseMiniGamesModule.Runtime.Main.Scripts;
 using UnityEngine;
 using WelwiseChangingAnimationModule.Runtime.Client.Scripts;
 using WelwiseChangingAnimationModule.Runtime.Client.Scripts.Network;
@@ -7,6 +8,7 @@ using WelwiseCharacterModule.Runtime.Client.Scripts.InputServices;
 using WelwiseCharacterModule.Runtime.Client.Scripts.MobileHud;
 using WelwiseClothesSharedModule.Runtime.Client.Scripts;
 using WelwiseClothesSharedModule.Runtime.Shared.Scripts;
+using WelwiseCurrenciesModule.Runtime.Shared.Scripts;
 using WelwiseEmotionsModule.Runtime.Client.Scripts;
 using WelwiseEmotionsModule.Runtime.Client.Scripts.Animations;
 using WelwiseEmotionsModule.Runtime.Shared.Scripts;
@@ -18,10 +20,12 @@ using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.TrainingSystem;
 using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.UISystem;
 using WelwiseHubExampleModule.Runtime.Client.Scripts.UI;
 using WelwiseHubExampleModule.Runtime.Shared.Scripts.Services.Data;
+using WelwisePetsModule.Runtime.Client.Scripts;
 using WelwiseSharedModule.Runtime.Client.Scripts;
 using WelwiseSharedModule.Runtime.Client.Scripts.Animator;
 using WelwiseSharedModule.Runtime.Client.Scripts.NetworkModule;
 using WelwiseSharedModule.Runtime.Client.Scripts.Tools;
+using WelwiseSharedModule.Runtime.Client.Scripts.UI;
 using WelwiseSharedModule.Runtime.Shared.Scripts;
 using WelwiseSharedModule.Runtime.Shared.Scripts.Loading;
 using WelwiseSharedModule.Runtime.Shared.Scripts.EventBusSystem;
@@ -41,7 +45,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem
         private readonly ClientsDataProviderService _clientsDataProviderService;
         private readonly ClothesFactory _clothesFactory;
         private readonly ClientsCustomizationDataProviderService _clientsCustomizationDataProviderService;
-        private readonly EmotionsConfigsProviderService _emotionsConfigsProviderService;
+        private readonly EmotionsConfigProviderService _emotionsConfigProviderService;
         private readonly EmotionsViewFactory _emotionsViewFactory;
         private readonly EventBus _eventBus;
         private readonly ClientConfigsProviderService _clientConfigsProviderService;
@@ -49,7 +53,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem
 
         private readonly EnteredToPortalEventProvider _enteredToPortalEventProvider;
 
-        private readonly EmotionsViewConfigsProviderService _emotionsViewConfigsProviderService;
+        private readonly EmotionsViewConfigProviderService _emotionsViewConfigProviderService;
 
         private readonly SetPlayerAnimationButtonControllersProviderService
             _setPlayerAnimationButtonControllersProviderService;
@@ -61,7 +65,11 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem
         private readonly UIFactory _uiFactory;
         private readonly IAssetLoader _assetLoader;
         private readonly ItemsViewConfigsProviderService _itemsViewConfigsProviderService;
+        private readonly PetsViewFactory _petsViewFactory;
 
+        private readonly MiniGamesFactory _miniGamesFactory;
+        private readonly MiniGamesConfigProviderService _miniGamesConfigsProviderService;
+        private readonly CurrenciesProviderService _currenciesProviderService;
         private readonly Container _container = new Container();
 
         private const string HubViewAssetId =
@@ -75,22 +83,23 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem
             ClientsDataProviderService clientsDataProviderService,
             ClothesFactory clothesFactory,
             ClientsCustomizationDataProviderService clientsCustomizationDataProviderService,
-            EmotionsConfigsProviderService emotionsConfigsProviderService, EmotionsViewFactory emotionsViewFactory,
+            EmotionsConfigProviderService emotionsConfigProviderService, EmotionsViewFactory emotionsViewFactory,
             ItemsConfigsProviderService itemsConfigsProviderService, EventBus eventBus,
             ClientConfigsProviderService clientConfigsProviderService, CameraFactory cameraFactory,
             AnimationChangingViewConfigsProviderService animationChangingViewConfigsProviderService,
             SetPlayerAnimationButtonControllersProviderService setPlayerAnimationButtonControllersProviderService,
             EnteredToPortalEventProvider enteredToPortalEventProvider, IInputService inputService,
             MobileHudFactory mobileHudFactory, UIFactory uiFactory,
-            EmotionsViewConfigsProviderService emotionsViewConfigsProviderService, IAssetLoader assetLoader,
-            ItemsViewConfigsProviderService itemsViewConfigsProviderService)
+            EmotionsViewConfigProviderService emotionsViewConfigProviderService, IAssetLoader assetLoader,
+            ItemsViewConfigsProviderService itemsViewConfigsProviderService, PetsViewFactory petsViewFactory,
+            MiniGamesFactory miniGamesFactory, MiniGamesConfigProviderService miniGamesConfigsProviderService, CurrenciesProviderService currenciesProviderService)
         {
             _shopUIFactory = shopUIFactory;
             _playersFactory = playersFactory;
             _clientsDataProviderService = clientsDataProviderService;
             _clothesFactory = clothesFactory;
             _clientsCustomizationDataProviderService = clientsCustomizationDataProviderService;
-            _emotionsConfigsProviderService = emotionsConfigsProviderService;
+            _emotionsConfigProviderService = emotionsConfigProviderService;
             _emotionsViewFactory = emotionsViewFactory;
             _itemsConfigsProviderService = itemsConfigsProviderService;
             _eventBus = eventBus;
@@ -102,9 +111,13 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem
             _inputService = inputService;
             _mobileHudFactory = mobileHudFactory;
             _uiFactory = uiFactory;
-            _emotionsViewConfigsProviderService = emotionsViewConfigsProviderService;
+            _emotionsViewConfigProviderService = emotionsViewConfigProviderService;
             _assetLoader = assetLoader;
             _itemsViewConfigsProviderService = itemsViewConfigsProviderService;
+            _petsViewFactory = petsViewFactory;
+            _miniGamesFactory = miniGamesFactory;
+            _currenciesProviderService = currenciesProviderService;
+            _miniGamesConfigsProviderService = miniGamesConfigsProviderService;
         }
 
         public async UniTask DisposeAsync() => await _container.DestroyAndClearAllImplementationsAsync();
@@ -141,9 +154,30 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem
             var shopController = new ShopController(
                 hubSerializableComponents.ShopSerializableComponents, _clientsDataProviderService.Data.GetOwners(),
                 await _itemsViewConfigsProviderService.GetItemsViewConfigAsync(), _clothesFactory,
-                _playersFactory.OwnerPlayerComponents.CharacterComponents.MovementController);
+                _playersFactory.OwnerPlayerComponents.CharacterComponents.MovementController, _petsViewFactory);
+            
+            var uiRoot = await _uiFactory.GetUIRootAsync();
+            
+            var slotMachinesController = new SlotMachinesController(hubSerializableComponents.SlotMachinesViews, _miniGamesFactory,
+                _miniGamesConfigsProviderService, _currenciesProviderService, uiRoot.SerializableComponents.transform);
+            
+            var mainCamera = (await _cameraFactory.GetMainCameraAsync());
+            var miniGamesPopup = await _miniGamesFactory.GetMiniGamesPopupViewAsync(uiRoot.SerializableComponents.transform);
+            
+            slotMachinesController.StartedMiniGame += () =>
+            {
+                mainCamera.gameObject.SetActive(false);
+                uiRoot.DisableAllChildrenExcept(miniGamesPopup.gameObject);
+                _playersFactory.OwnerPlayerComponents.CharacterComponents.MovementController.IsEnabled = false;
+            };
+            slotMachinesController.EndedMiniGame += () =>
+            {
+                mainCamera.gameObject.SetActive(true);
+                uiRoot.EnableEarlyDisabledChildren();
+                _playersFactory.OwnerPlayerComponents.CharacterComponents.MovementController.IsEnabled = true;
+            };
 
-            var shopSettingEquippedItemsModel = new ShopSettingEquippedItemsModel(
+            var shopSettingEquippedItemsModel = new ShopSetEquippedItemsModel(
                 await _itemsConfigsProviderService.GetItemsConfigAsync(), _clientsDataProviderService,
                 _clientsCustomizationDataProviderService);
 
@@ -169,7 +203,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem
                 index =>
             {
                 var portalController = new PortalController(
-                    clientHubSerializableComponents.PortalsSerializableComponents[index], index,
+                    clientHubSerializableComponents.PortalsSerializableComponents[index], index.ToString(),
                     await _clientConfigsProviderService.GetPortalsConfigAsync(),
                     platformNavigation, async error =>
                         (await _uiFactory.GetUIRootAsync()).ErrorTextController.SetTextAndStartAnimationAsync(
@@ -192,7 +226,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem
                     animatorStateObserver,
                     components.PlayerEmotionsSerializableComponents.Animator.gameObject
                         .GetOrAddComponent<ParticleEventController>(),
-                    await _emotionsViewConfigsProviderService.GetEmotionsViewConfigAsync());
+                    await _emotionsViewConfigProviderService.GetEmotionsViewConfig());
 
                 var heroEmotionsAnimatorController = new StandEmotionsAnimatorController(
                     emotionsAnimatorController, components.PlayerEmotionsSerializableComponents.Animator,
@@ -209,8 +243,8 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem
             EmotionsAnimatorController emotionsAnimatorController)
         {
             emotionsAnimatorController.SetAnimatorControllerAndTryStartingEmotionAnimation(
-                (await _emotionsConfigsProviderService.GetEmotionsAnimationsConfig()).EmotionsAnimationConfigs
-                .FirstOrDefault(config => config.EmotionIndex == components.EmotionIndex)
+                (await _emotionsConfigProviderService.GetEmotionsAnimationsConfig()).Configs
+                .FirstOrDefault(config => config.Index == components.EmotionIndex)
                 ?.OverrideController, components.EmotionIndex, -1);
 
             var particlesParents = await _emotionsViewFactory.TryCreatingParticlesParentsAsync(

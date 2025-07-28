@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using FishNet;
 using FishNet.Managing.Client;
 using FishNet.Transporting.Bayou;
+using Modules.WelwiseMiniGamesModule.Runtime.Main.Scripts;
 using UnityEngine;
 using WelwiseChangingAnimationModule.Runtime.Client.Scripts;
 using WelwiseChangingAnimationModule.Runtime.Client.Scripts.Network;
@@ -14,22 +15,30 @@ using WelwiseChatModule.Runtime.Client.Scripts.Network;
 using WelwiseChatModule.Runtime.Client.Scripts.UI;
 using WelwiseClothesSharedModule.Runtime.Client.Scripts;
 using WelwiseClothesSharedModule.Runtime.Shared.Scripts;
+using WelwiseCurrenciesModule.Runtime.Shared.Scripts;
 using WelwiseEmotionsModule.Runtime.Client.Scripts;
 using WelwiseEmotionsModule.Runtime.Client.Scripts.Circle;
 using WelwiseEmotionsModule.Runtime.Shared.Scripts;
+using WelwiseEmotionsModule.Runtime.Shared.Scripts.Animations.Network;
 using WelwiseGamesSDK;
 using WelwiseGamesSDK.Shared;
 using WelwiseHubBotsModule.Runtime.Client.Scripts;
 using WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.GameStateMachinePart;
 using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.EmotionsSystem;
 using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem;
-using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem.SettingEmotions;
-using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem.SettingEmotions.Network.Owner;
+using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.PetsSystem;
+using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem.SetEmotions;
 using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.TrainingSystem;
 using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.UISystem;
 using WelwiseHubExampleModule.Runtime.Client.Scripts.UI;
 using WelwiseHubExampleModule.Runtime.Shared.Scripts.Services;
 using WelwiseHubExampleModule.Runtime.Shared.Scripts.Services.Data;
+using WelwiseHubExampleModule.Runtime.Shared.Scripts.Systems.ShopSystem.SetEmotions;
+using WelwiseItemInShopModule.Client.Scripts;
+using WelwiseItemInShopModule.Client.Scripts.Network;
+using WelwisePetsModule.Runtime.Client.Scripts;
+using WelwisePetsModule.Runtime.Client.Scripts.SetPet;
+using WelwisePetsModule.Runtime.Shared.Scripts;
 using WelwiseSharedModule.Runtime.Client.Scripts;
 using WelwiseSharedModule.Runtime.Client.Scripts.NetworkModule;
 using WelwiseSharedModule.Runtime.Client.Scripts.Tools;
@@ -90,9 +99,6 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.Services
                 sharedNicknamesConfigsProviderService,
                 itemsConfigsProviderService, itemsViewConfigsProviderService, uiFactory, assetLoader);
 
-            var emotionsConfigsProviderService = new EmotionsConfigsProviderService(assetLoader);
-            var emotionsViewConfigsProviderService = new EmotionsViewConfigsProviderService(assetLoader);
-
             var connectionTrackingService = new ClientsConnectionTrackingServiceForClient(clientManager);
 
             var chatEntryPointDataContainer = new DataContainer<ChatEntryPointData>();
@@ -107,26 +113,11 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.Services
             var heroAudioClipsProviderService = new HeroAudioClipsProviderService(assetLoader);
 
             var inputConfigProviderService = new InputConfigProviderService(assetLoader);
+
             var inputService = await GetInputServiceAsync(inputConfigProviderService);
             inputConfigProviderService.Dispose();
 
-            var playersFactory = new PlayersFactory(cameraFactory,
-                chatEntryPointDataContainer.Data.ChatFactory,
-                clientsCustomizationDataProviderService, clientsDataProviderService, clothesFactory,
-                emotionsViewConfigsProviderService, nicknamesEntryPointData.ClientsNicknamesProviderService,
-                eventBus, heroAudioClipsProviderService, inputService, assetLoader, itemsViewConfigsProviderService);
-
             var loadingUIFactory = new LoadingUIFactory(eventBus, assetLoader);
-
-            var notOwnerPlayersComponentsProviderService =
-                new NotOwnerPlayersComponentsProviderService(playersFactory);
-
-            var emotionsAnimationsConfig = await emotionsConfigsProviderService.GetEmotionsAnimationsConfig();
-
-            EmotionsEntryPointTools.Initialize(notOwnerPlayersComponentsProviderService,
-                clientManager, emotionsAnimationsConfig, emotionsConfigsProviderService,
-                emotionsViewConfigsProviderService,
-                sdk.PlayerData, out var emotionsEntryPointData, assetLoader);
 
             var clientConfigsProviderService = new ClientConfigsProviderService(assetLoader);
 
@@ -137,70 +128,134 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.Services
             var animationChangingViewConfigsProviderService =
                 new AnimationChangingViewConfigsProviderService(assetLoader);
 
+            var enteredToPortalEventProvider = new EnteredToPortalEventProvider();
+
+            var emotionsConfigsProviderService = new EmotionsConfigProviderService(assetLoader);
+            var emotionsViewConfigsProviderService = new EmotionsViewConfigProviderService(assetLoader);
+
+            #region PetsModuleInitialization
+
+            var petsConfigProviderService = new PetsConfigProviderService(assetLoader);
+            var petsViewConfigsProviderService = new PetsViewConfigProviderService(assetLoader);
+
+            var petsViewFactory = new PetsViewFactory(petsViewConfigsProviderService, assetLoader);
+
+            var playersFactory = new PlayersFactory(cameraFactory,
+                chatEntryPointDataContainer.Data.ChatFactory,
+                clientsCustomizationDataProviderService, clientsDataProviderService, clothesFactory,
+                emotionsViewConfigsProviderService, nicknamesEntryPointData.ClientsNicknamesProviderService,
+                eventBus, heroAudioClipsProviderService, inputService, assetLoader, itemsViewConfigsProviderService,
+                petsViewFactory);
+
+            var playersPetsViewControllersProviderService =
+                new PlayersPetsViewControllerProviderService(playersFactory);
+
+            var petsEntryPointDataContainer = new DataContainer<PetsEntryPointData>();
+            await PetsEntryPointTools.InitializeAsync(petsEntryPointDataContainer,
+                sdk.PlayerData, assetLoader, clientManager, playersPetsViewControllersProviderService, petsViewFactory,
+                petsConfigProviderService, petsViewConfigsProviderService);
+
+            var setPetsUIFactory =
+                new SetPetsUIFactory(petsConfigProviderService, petsViewConfigsProviderService,
+                    petsEntryPointDataContainer.Data.OwnerSelectedPetsDataProviderService, assetLoader);
+
+            var ownerPetsSetSynchronizer =
+                new OwnerItemsSetSynchronizerService<SelectedPetData, SelectedPetsData,
+                    SetSelectedPetsBroadcastForServer>(
+                    petsEntryPointDataContainer.Data.OwnerSelectedPetsDataProviderService, clientManager,
+                    setPetsUIFactory.SetItemsUIFactory,
+                    data => new SetSelectedPetsBroadcastForServer(data));
+
+            #endregion
+
+            var notOwnerPlayersComponentsProviderService =
+                new NotOwnerPlayersComponentsProviderService(playersFactory);
+
+            #region EmotionsModuleInitialization
+
+            var emotionsEntryPointDataContainer = new DataContainer<EmotionsEntryPointData>();
+
+            await EmotionsEntryPointTools.InitializeAsync(emotionsEntryPointDataContainer,
+                notOwnerPlayersComponentsProviderService, clientManager,
+                sdk.PlayerData,
+                assetLoader,
+                emotionsConfigsProviderService, emotionsViewConfigsProviderService);
+
+            var setEmotionsUIFactory =
+                new SetEmotionsUIFactory(emotionsConfigsProviderService, emotionsViewConfigsProviderService,
+                    emotionsEntryPointDataContainer.Data.OwnerSelectedEmotionsDataProviderService, assetLoader);
+
+            var ownerEmotionsSetSynchronizer =
+                new OwnerItemsSetSynchronizerService<SelectedEmotionData, SelectedEmotionsData,
+                    SetSelectedEmotionsBroadcastForServer>(
+                    emotionsEntryPointDataContainer.Data.OwnerSelectedEmotionsDataProviderService, clientManager,
+                    setEmotionsUIFactory.SetItemsUIFactory,
+                    data => new SetSelectedEmotionsBroadcastForServer(data));
+
+            #endregion
+
+            var currenciesProviderService = new CurrenciesProviderService();
+
+            BotsEntryPointTools.Initialize(cameraFactory, clientManager, connectionTrackingService,
+                emotionsConfigsProviderService, emotionsViewConfigsProviderService,
+                emotionsEntryPointDataContainer.Data.EmotionsViewFactory, itemsViewConfigsProviderService,
+                clothesFactory,
+                assetLoader, petsEntryPointDataContainer.Data.BotsPetsDataProviderService,
+                petsViewFactory, eventBus);
+
             ChangingAnimationsTools.Initialize(
                 () => playersFactory.OwnerPlayerComponents?.SerializableComponents.transform,
                 eventBus, clientManager, connectionTrackingService, out var changingAnimationsDataFromInitialize,
                 customCoroutineRunner);
 
-            var enteredToPortalEventProvider = new EnteredToPortalEventProvider();
+            MiniGamesEntryPointTools.Initialize(out var miniGamesEntryPointData, assetLoader);
 
             var hubFactory = new HubFactory(shopUIFactory, playersFactory, clientsDataProviderService,
                 clothesFactory,
                 clientsCustomizationDataProviderService, emotionsConfigsProviderService,
-                emotionsEntryPointData.EmotionsViewFactory, itemsConfigsProviderService,
+                emotionsEntryPointDataContainer.Data.EmotionsViewFactory, itemsConfigsProviderService,
                 eventBus, clientConfigsProviderService, cameraFactory, animationChangingViewConfigsProviderService,
                 changingAnimationsDataFromInitialize.SetPlayerAnimationButtonControllersProviderService,
                 enteredToPortalEventProvider, inputService, mobileHudFactory, uiFactory,
-                emotionsViewConfigsProviderService, assetLoader, itemsViewConfigsProviderService);
-
-            var settingEmotionsUIFactory =
-                new SettingEmotionsUIFactory(emotionsConfigsProviderService, emotionsViewConfigsProviderService,
-                    emotionsEntryPointData.OwnerSelectedEmotionsDataProviderService, assetLoader);
-
-            BotsEntryPointTools.Initialize(cameraFactory, clientManager, connectionTrackingService,
-                emotionsConfigsProviderService, emotionsViewConfigsProviderService,
-                emotionsEntryPointData.EmotionsViewFactory, itemsViewConfigsProviderService, clothesFactory,
-                assetLoader);
-
-            var ownerEmotionsSettingSynchronizer =
-                new OwnerEmotionsSettingSynchronizerService(
-                    emotionsEntryPointData.OwnerSelectedEmotionsDataProviderService, clientManager,
-                    settingEmotionsUIFactory);
+                emotionsViewConfigsProviderService, assetLoader, itemsViewConfigsProviderService,
+                petsEntryPointDataContainer.Data.PetsViewFactory, miniGamesEntryPointData.MiniGamesFactory,
+                miniGamesEntryPointData.MiniGamesConfigProviderService, currenciesProviderService);
 
             new SubscribingMediator(playersFactory, hubFactory, connectionTrackingService,
-                emotionsEntryPointData.OwnerEmotionsPlayingSynchronizerService, eventBus, shopUIFactory,
+                emotionsEntryPointDataContainer.Data.OwnerEmotionsPlayingSynchronizerService, eventBus, shopUIFactory,
                 clientsDataProviderService, clientsCustomizationDataProviderService,
                 chatEntryPointDataContainer.Data.ChatsDataProviderService,
                 clientManager, sdk.Environment, sdk, nicknamesEntryPointData.ClientsNicknamesProviderService,
-                chatEntryPointDataContainer.Data.ChatFactory);
-
+                chatEntryPointDataContainer.Data.ChatFactory, currenciesProviderService);
 
             RegisterGameStateMachine(cameraFactory, shopUIFactory, chatEntryPointDataContainer.Data.ChatFactory,
                 eventBus,
                 playersFactory,
-                emotionsEntryPointData.EmotionsCircleFactory, settingEmotionsUIFactory, hubFactory, loadingUIFactory,
+                emotionsEntryPointDataContainer.Data.EmotionsCircleFactory, setEmotionsUIFactory, hubFactory,
+                loadingUIFactory,
                 clientManager, enteredToPortalEventProvider, sdk,
                 trainingEntryPointData.TrainingFactory, connectionTrackingService, inputService, uiFactory,
-                mobileHudFactory, assetLoader);
+                mobileHudFactory, assetLoader, setPetsUIFactory, miniGamesEntryPointData.MiniGamesFactory);
         }
 
         private void RegisterGameStateMachine(CameraFactory cameraFactory, ShopUIFactory shopUIFactory,
             ChatFactory chatFactory, EventBus eventBus, PlayersFactory playersFactory,
-            EmotionsCircleFactory emotionsCircleFactory, SettingEmotionsUIFactory settingEmotionsUIFactory,
+            EmotionsCircleFactory emotionsCircleFactory, SetEmotionsUIFactory setEmotionsUIFactory,
             HubFactory hubFactory, LoadingUIFactory loadingUIFactory,
             ClientManager clientManager,
             EnteredToPortalEventProvider enteredToPortalEventProvider, ISDK sdk, TrainingFactory trainingFactory,
             ClientsConnectionTrackingServiceForClient clientsConnectionTrackingService, IInputService inputService,
-            UIFactory uiFactory, MobileHudFactory mobileHudFactory, IAssetLoader assetLoader)
+            UIFactory uiFactory, MobileHudFactory mobileHudFactory, IAssetLoader assetLoader,
+            SetPetsUIFactory setPetsUIFactory, MiniGamesFactory miniGamesFactory)
             => new GameStateMachine(new BootstrapGameState(cameraFactory, loadingUIFactory),
                 new InitializationGameState(clientManager),
                 new HubGameState(shopUIFactory, chatFactory, playersFactory, emotionsCircleFactory,
-                    settingEmotionsUIFactory, loadingUIFactory, hubFactory, sdk,
+                    setEmotionsUIFactory, loadingUIFactory, hubFactory, sdk,
                     enteredToPortalEventProvider, trainingFactory, clientsConnectionTrackingService,
-                    uiFactory, assetLoader),
+                    uiFactory, assetLoader, setPetsUIFactory),
                 new ReconnectionGameState(shopUIFactory, hubFactory, emotionsCircleFactory, chatFactory,
                     loadingUIFactory,
-                    playersFactory, inputService, uiFactory, mobileHudFactory),
+                    playersFactory, inputService, uiFactory, mobileHudFactory, setEmotionsUIFactory, setPetsUIFactory, miniGamesFactory),
                 eventBus, assetLoader);
 
         private async UniTask<IInputService>

@@ -31,8 +31,8 @@ namespace WelwiseChatModule.Runtime.Client.Scripts.UI.Window
         [field: SerializeField] public RectTransform ChatElementsParentRectTransform { get; private set; }
         [field: SerializeField] public List<EmojiConfig> EmojiConfigs { get; private set; }
         [field: SerializeField] public List<SelectionChatZoneButtonConfig> SelectionChatZoneButtonsConfigs { get; private set; }
-        [field: SerializeField] public ChatPopupSettingScaleModeButtonConfig SelectionShortScaleModeButtonConfig { get; private set; }
-        [field: SerializeField] public ChatPopupSettingScaleModeButtonConfig SelectionFullScaleModeButtonConfig { get; private set; }
+        [field: SerializeField] public ChatPopupSetScaleModeButtonConfig SelectionShortScaleModeButtonConfig { get; private set; }
+        [field: SerializeField] public ChatPopupSetScaleModeButtonConfig SelectionFullScaleModeButtonConfig { get; private set; }
         [field: SerializeField] public Button SettingScaleModeButton { get; private set; }
         [field: SerializeField] public Image SettingScaleModeImage { get; private set; }
     }

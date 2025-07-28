@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 684526714163343788}
   - component: {fileID: 7252457757903876463}
   - component: {fileID: 8404993479000548851}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Bot
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ MonoBehaviour:
   _spectatorInterpolation: 2
   _enableTeleport: 0
   _teleportThreshold: 1
-  <PrefabId>k__BackingField: 1
+  <PrefabId>k__BackingField: 0
   <SpawnableCollectionId>k__BackingField: 56919
   <AssetPathHash>k__BackingField: 4852457692604409215
   <SceneId>k__BackingField: 0

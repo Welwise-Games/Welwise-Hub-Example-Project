@@ -18,7 +18,9 @@
         "WelwiseClothesSharedSharedModule",
         "WelwiseEmotionsClientModule",
         "WelwiseEmotionsSharedModule",
-        "WelwiseCharacterClientModule"
+        "WelwiseCharacterClientModule",
+        "WelwisePetsSharedModule",
+        "WelwisePetsClientModule"
     ],
     "includePlatforms": [
         "Editor",

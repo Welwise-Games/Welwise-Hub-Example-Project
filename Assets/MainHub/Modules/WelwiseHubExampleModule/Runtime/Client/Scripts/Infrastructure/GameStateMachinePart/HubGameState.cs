@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using WelwiseCharacterModule.Runtime.Client.Scripts.InputServices;
@@ -6,26 +7,32 @@ using WelwiseClothesSharedModule.Runtime.Shared.Scripts;
 using WelwiseEmotionsModule.Runtime.Client.Scripts.Circle;
 using WelwiseGamesSDK.Shared;
 using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem;
-using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem.SettingEmotions;
+using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem;
+using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem.SetEmotions;
 using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.TrainingSystem;
 using WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.UISystem;
 using WelwiseHubExampleModule.Runtime.Client.Scripts.UI;
 using WelwiseHubExampleModule.Runtime.Shared.Scripts.Services.Data;
+using WelwiseItemInShopModule.Client.Scripts;
+using WelwiseItemInShopModule.Shared.Scripts;
+using WelwisePetsModule.Runtime.Client.Scripts.SetPet;
 using WelwiseSharedModule.Runtime.Client.Scripts;
 using WelwiseSharedModule.Runtime.Client.Scripts.NetworkModule;
+using WelwiseSharedModule.Runtime.Client.Scripts.Tools;
 using WelwiseSharedModule.Runtime.Shared.Scripts.Loading;
 using WelwiseSharedModule.Runtime.Shared.Scripts.Tools;
 
 namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.GameStateMachinePart
 {
-    public class  HubGameState : IGameState
+    public class HubGameState : IGameState
     {
         private readonly ShopUIFactory _shopUIFactory;
         private readonly UIFactory _uiFactory;
         private readonly ChatFactory _chatFactory;
         private readonly PlayersFactory _playersFactory;
         private readonly EmotionsCircleFactory _emotionsCircleFactory;
-        private readonly SettingEmotionsUIFactory _settingEmotionsUiFactory;
+        private readonly SetEmotionsUIFactory _setEmotionsUIFactory;
+        private readonly SetPetsUIFactory _setPetsUIFactory;
         private readonly LoadingUIFactory _loadingUIFactory;
         private readonly HubFactory _hubFactory;
         private readonly ISDK _sdk;
@@ -34,24 +41,25 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.GameStat
         private readonly ClientsConnectionTrackingServiceForClient _clientsConnectionTrackingService;
         private readonly IInputService _inputService;
         private readonly IAssetLoader _assetLoader;
-        
-        private const string SkyboxAssetId = 
+
+        private const string SkyboxAssetId =
 #if ADDRESSABLES
         "Skybox";
 #else
-        "WelwiseHubExampleModule/Runtime/Client/ZerinLabs_shaderPack_CartoonSky/Materials/Skybox";
+            "WelwiseHubExampleModule/Runtime/Client/ZerinLabs_shaderPack_CartoonSky/Materials/Skybox";
 #endif
         public HubGameState(ShopUIFactory shopUIFactory, ChatFactory chatFactory, PlayersFactory playersFactory,
-            EmotionsCircleFactory emotionsCircleFactory, SettingEmotionsUIFactory settingEmotionsUiFactory,
-            LoadingUIFactory loadingUIFactory, 
+            EmotionsCircleFactory emotionsCircleFactory, SetEmotionsUIFactory setEmotionsUIFactory,
+            LoadingUIFactory loadingUIFactory,
             HubFactory hubFactory, ISDK sdk, EnteredToPortalEventProvider enteredToPortalEventProvider,
-            TrainingFactory trainingFactory, ClientsConnectionTrackingServiceForClient clientsConnectionTrackingService, UIFactory uiFactory, IAssetLoader assetLoader)
+            TrainingFactory trainingFactory, ClientsConnectionTrackingServiceForClient clientsConnectionTrackingService,
+            UIFactory uiFactory, IAssetLoader assetLoader, SetPetsUIFactory setPetsUIFactory)
         {
             _shopUIFactory = shopUIFactory;
             _chatFactory = chatFactory;
             _playersFactory = playersFactory;
             _emotionsCircleFactory = emotionsCircleFactory;
-            _settingEmotionsUiFactory = settingEmotionsUiFactory;
+            _setEmotionsUIFactory = setEmotionsUIFactory;
             _loadingUIFactory = loadingUIFactory;
             _hubFactory = hubFactory;
             _sdk = sdk;
@@ -60,14 +68,17 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.GameStat
             _clientsConnectionTrackingService = clientsConnectionTrackingService;
             _uiFactory = uiFactory;
             _assetLoader = assetLoader;
+            _setPetsUIFactory = setPetsUIFactory;
         }
 
         public async UniTask EnterAsync()
         {
+            CursorSwitchTools.TryDisablingCursor();
+
             var loadingGamePopupController = await _loadingUIFactory.GetLoadingGamePopupControllerAsync();
-            
+
             var uiRoot = await _uiFactory.GetUIRootAsync();
-            
+
             loadingGamePopupController.Popup.LoadingSlider.value = 0.25f;
 
             var shopPopupController = _shopUIFactory.GetShopPopupController();
@@ -79,12 +90,12 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.GameStat
             loadingGamePopupController.Popup.LoadingSlider.value = 0.5f;
 
             await AsyncTools.WaitWhileWithoutSkippingFrame(() => _playersFactory.OwnerPlayerComponents == null);
-            
+
             _playersFactory.OwnerPlayerComponents.CharacterComponents.CursorController?.AddCanSwitchCursorFunc(() =>
                 !shopPopupController.ShopPopup.Popup.IsOpen);
-            
-            _playersFactory.OwnerPlayerComponents.CharacterComponents.CameraController.AddCanSwitchCameraModeFunc(
-                () => !chatWindowController.ChatWindow.InputField.isFocused);
+
+            _playersFactory.OwnerPlayerComponents.CharacterComponents.CameraController.AddCanSwitchCameraModeFunc(() =>
+                !chatWindowController.ChatWindow.InputField.isFocused);
 
             loadingGamePopupController.Popup.LoadingSlider.value = 0.75f;
 
@@ -97,11 +108,11 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.GameStat
 
             loadingGamePopupController.Popup.LoadingSlider.value = 0.9f;
 
-            await CreateAndSubscribeSettingEmotionsPopupAsync();
+            await CreateAndSubscribeSetEmotionsPopupAndPetsPopupAsync();
 
             loadingGamePopupController.Popup.LoadingSlider.value = 1f;
 
-            RenderSettings.skybox = await AssetProvider.LoadAsync<Material>(SkyboxAssetId, 
+            RenderSettings.skybox = await AssetProvider.LoadAsync<Material>(SkyboxAssetId,
                 _assetLoader);
 
             await TrainingTools.InitializeTrainingProcessAsync(_sdk.PlayerData, shopPopupController,
@@ -114,16 +125,14 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.GameStat
             loadingGamePopupController.Popup.Popup.TryClosing();
         }
 
-        public async UniTask ExitAsync()
-        {
-        }
+        public UniTask ExitAsync() => UniTask.CompletedTask;
 
-        private async UniTask CreateAndSubscribeSettingEmotionsPopupAsync()
+        private async UniTask CreateAndSubscribeSetEmotionsPopupAndPetsPopupAsync()
         {
             var shopPopupController = _shopUIFactory.GetShopPopupController();
 
-            var settingEmotionsPopupController = await
-                _settingEmotionsUiFactory.GetSettingEmotionsPopupControllerAsync(
+            var setEmotionsPopupController = await
+                _setEmotionsUIFactory.GetSetEmotionsPopupControllerAsync(
                     shopPopupController.ShopPopup.ItemsParentSafeAreaTransform,
                     shopPopupController.ShopPopup.SelectionItemButtonsParent,
                     shopPopupController.ShopPopup.SelectionItemButtonTargetStateAnimationConfig
@@ -131,35 +140,58 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.GameStat
                     shopPopupController.ShopPopup.SelectionItemButtonTargetStateAnimationConfig
                         .SpeedChangingScaleOnSetTargetState);
 
-            settingEmotionsPopupController.SettingPopup.Popup.TryClosing();
+            var setPetsPopupController = await
+                _setPetsUIFactory.GetSetPetsPopupControllerAsync(
+                    shopPopupController.ShopPopup.ItemsParentSafeAreaTransform,
+                    shopPopupController.ShopPopup.SelectionItemButtonsParent,
+                    shopPopupController.ShopPopup.SelectionItemButtonTargetStateAnimationConfig
+                        .ScaleMultiplierOnBecomeTarget,
+                    shopPopupController.ShopPopup.SelectionItemButtonTargetStateAnimationConfig
+                        .SpeedChangingScaleOnSetTargetState);
+
+            setPetsPopupController.SetItemsModel.UpdatedTemporaryData += data =>
+                _hubFactory.ClientHubComponents.ShopController.PlayerPetsViewController.UpdatePetsViewAsync(data)
+                    .Forget();
+
+            SubscribeSetItemPopupController(setEmotionsPopupController, shopPopupController, ItemCategory.Emotions);
+            SubscribeSetItemPopupController(setPetsPopupController, shopPopupController, ItemCategory.Pets);
+
+            shopPopupController.ShopPopup.transform.SetAsLastSibling();
+        }
+
+        private void SubscribeSetItemPopupController<T1, T2>(SetItemsPopupController<T1, T2> setItemPopupController,
+            ShopPopupController shopPopupController, ItemCategory targetCategory) where T1 : class, ISelectedItemData
+            where T2 : IClientSelectedItemsData<T1>
+        {
+            setItemPopupController.SetItemsPopup.Popup.TryClosing();
 
             shopPopupController.SelectedItemCategory += category =>
             {
-                settingEmotionsPopupController.SettingPopup.Popup.TrySettingOpenState(
+                setItemPopupController.SetItemsPopup.Popup.TrySettingOpenState(
                     category is ItemCategory.Emotions or ItemCategory.All);
 
-                if (category == ItemCategory.Emotions)
-                    settingEmotionsPopupController.InitializeOnOpen();
+                if (category == targetCategory)
+                    setItemPopupController.InitializeOnOpen(true);
                 else if (category != ItemCategory.All)
-                    settingEmotionsPopupController.DeInitializeOnClose();
+                {
+                    setItemPopupController.DeInitializeOnClose();
+                }
             };
 
             shopPopupController.CreatedAllButtons += category =>
             {
                 if (category == ItemCategory.All)
-                    settingEmotionsPopupController.InitializeOnOpen();
+                    setItemPopupController.InitializeOnOpen(false);
             };
 
-            shopPopupController.ShopSettingEquippedItemsModel.RevertedChanges +=
-                settingEmotionsPopupController.ReturnLastSavedValuesAndUpdateView;
-            shopPopupController.ShopSettingEquippedItemsModel.AppliedChanges +=
-                settingEmotionsPopupController.SettingEmotionsModel.ApplyChanges;
+            shopPopupController.ShopSetEquippedItemsModel.RevertedChanges +=
+                setItemPopupController.ReturnLastSavedValuesAndUpdateView;
+            shopPopupController.ShopSetEquippedItemsModel.AppliedChanges +=
+                setItemPopupController.SetItemsModel.ApplyChanges;
 
-            shopPopupController.ShopPopup.Popup.Closed += settingEmotionsPopupController.SettingPopup.Popup.TryClosing;
-            shopPopupController.ShopSettingEquippedItemsModel.AddModifiable(settingEmotionsPopupController
-                .SettingEmotionsModel);
-
-            shopPopupController.ShopPopup.transform.SetAsLastSibling();
+            shopPopupController.ShopPopup.Popup.Closed += setItemPopupController.SetItemsPopup.Popup.TryClosing;
+            shopPopupController.ShopSetEquippedItemsModel.AddModifiable(setItemPopupController
+                .SetItemsModel);
         }
     }
 }

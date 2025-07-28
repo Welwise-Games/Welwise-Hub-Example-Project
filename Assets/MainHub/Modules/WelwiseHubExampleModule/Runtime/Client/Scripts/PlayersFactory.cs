@@ -25,6 +25,7 @@ using WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.Services;
 using WelwiseHubExampleModule.Runtime.Client.Scripts.UI;
 using WelwiseHubExampleModule.Runtime.Shared.Scripts;
 using WelwiseHubExampleModule.Runtime.Shared.Scripts.Services.Data;
+using WelwisePetsModule.Runtime.Client.Scripts;
 using WelwiseSharedModule.Runtime.Client.Scripts;
 using WelwiseSharedModule.Runtime.Client.Scripts.Animator;
 using WelwiseSharedModule.Runtime.Client.Scripts.NetworkModule;
@@ -49,7 +50,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts
         private readonly ChatFactory _chatFactory;
         private readonly ClientsCustomizationDataProviderService _clientsCustomizationDataProviderService;
         private readonly ClientsDataProviderService _clientsDataProviderService;
-        private readonly EmotionsViewConfigsProviderService _emotionsViewConfigsProviderService;
+        private readonly EmotionsViewConfigProviderService _emotionsViewConfigProviderService;
         private readonly ClientsNicknamesProviderService _clientsNicknamesProviderService;
 
         private readonly Dictionary<NetworkConnection, ClientPlayerComponents>
@@ -58,6 +59,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts
         private readonly ItemsViewConfigsProviderService _itemsViewConfigsProviderService;
         private readonly ClothesFactory _clothesFactory;
         private readonly EventBus _eventBus;
+        private readonly PetsViewFactory _petsViewFactory;
         private readonly HeroAudioClipsProviderService _heroAudioClipsProviderService;
         private readonly IInputService _inputService;
         private readonly IAssetLoader _assetLoader;
@@ -74,24 +76,26 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts
         public PlayersFactory(CameraFactory cameraFactory, ChatFactory chatFactory,
             ClientsCustomizationDataProviderService clientsCustomizationDataProviderService,
             ClientsDataProviderService clientsDataProviderService,
-            ClothesFactory clothesFactory, EmotionsViewConfigsProviderService emotionsViewConfigsProviderService,
+            ClothesFactory clothesFactory, EmotionsViewConfigProviderService emotionsViewConfigProviderService,
             ClientsNicknamesProviderService clientsNicknamesProviderService,
             EventBus eventBus,
             HeroAudioClipsProviderService heroAudioClipsProviderService, IInputService inputService,
-            IAssetLoader assetLoader, ItemsViewConfigsProviderService itemsViewConfigsProviderService)
+            IAssetLoader assetLoader, ItemsViewConfigsProviderService itemsViewConfigsProviderService,
+            PetsViewFactory petsViewFactory)
         {
             _cameraFactory = cameraFactory;
             _chatFactory = chatFactory;
             _clientsCustomizationDataProviderService = clientsCustomizationDataProviderService;
             _clientsDataProviderService = clientsDataProviderService;
             _clothesFactory = clothesFactory;
-            _emotionsViewConfigsProviderService = emotionsViewConfigsProviderService;
+            _emotionsViewConfigProviderService = emotionsViewConfigProviderService;
             _clientsNicknamesProviderService = clientsNicknamesProviderService;
             _eventBus = eventBus;
             _heroAudioClipsProviderService = heroAudioClipsProviderService;
             _inputService = inputService;
             _assetLoader = assetLoader;
             _itemsViewConfigsProviderService = itemsViewConfigsProviderService;
+            _petsViewFactory = petsViewFactory;
         }
 
         public void TryRemovingPlayer(NetworkConnection networkConnection)
@@ -156,7 +160,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts
 
                 serializableComponents.ClientSerializableComponents.NicknameText.gameObject.SetActive(!isFirstCamera);
 
-                CollectionTools.ToList<ItemCategory>()
+                CollectionTools.ParseEnumToList<ItemCategory>()
                     .Where(category => category is not ItemCategory.All and not ItemCategory.Emotions)
                     .ForEach(category =>
                         clientComponents.ColorableClothesViewController.TrySettingItemCategoryInstancesActiveState(
@@ -209,7 +213,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts
                 await _container.GetOrLoadAndRegisterObjectAsync<ClientPlayerSerializableComponents>(PlayerViewAssetId,
                     _assetLoader,
                     shouldCreate: false);
-
+            
             return UnityEngine.Object.Instantiate(serializableComponentsPrefab,
                 sharedPlayerCharacterSerializableComponents.transform);
         }
@@ -246,12 +250,25 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts
                 skinColorChangerController,
                 playerColorableClothesViewController,
                 new PlayerEmotionsComponents(sharedSerializableComponents.EmotionsSerializableComponents,
-                    await _emotionsViewConfigsProviderService.GetEmotionsViewConfigAsync(),
+                    await _emotionsViewConfigProviderService.GetEmotionsViewConfig(),
                     sharedSerializableComponents.CharacterSerializableComponents.NetworkAnimator, animatorStateObserver,
                     particleEventController),
                 new ClientPlayerCharacterComponents(serializableComponents.CharacterSerializableComponents),
-                serializableComponents));
+                serializableComponents,
+                new PlayerPetsViewController(_petsViewFactory, sharedSerializableComponents.transform,
+                    _clientsDataProviderService.Data[networkConnection].SelectedPetsData)));
 
+            _clientsCustomizationDataProviderService.ChangedClientCustomizationData +=
+                (clientWithDataNetworkConnection, data)
+                    =>
+                {
+                    if (clientWithDataNetworkConnection != networkConnection) return;
+
+                    skinColorChangerController.SetDefaultClothesEmissionColorAndSkinColor(
+                        data.AppearanceData.SkinColor, data.AppearanceData.DefaultClothesEmissionColor);
+                    playerColorableClothesViewController.SetClothesInstancesByData(data.EquippedItemsData);
+                };
+            
             _clientsCustomizationDataProviderService.ChangedClientCustomizationData +=
                 (clientWithDataNetworkConnection, data)
                     =>

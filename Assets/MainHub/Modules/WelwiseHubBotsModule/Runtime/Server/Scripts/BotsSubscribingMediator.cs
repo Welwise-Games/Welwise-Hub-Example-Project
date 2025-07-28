@@ -9,6 +9,8 @@ using WelwiseChangingClothesModule.Runtime.Shared.Scripts;
 using WelwiseChangingNicknameModule.Runtime.Shared.Scripts.Services;
 using WelwiseClothesSharedModule.Runtime.Shared.Scripts;
 using WelwiseHubBotsModule.Runtime.Shared.Scripts;
+using WelwisePetsModule.Runtime.Server.Scripts;
+using WelwisePetsModule.Runtime.Shared.Scripts;
 using WelwiseSharedModule.Runtime.Server.Scripts;
 using WelwiseSharedModule.Runtime.Shared.Scripts.Loading;
 using WelwiseSharedModule.Runtime.Shared.Scripts.Observers;
@@ -21,11 +23,13 @@ namespace WelwiseHubBotsModule.Runtime.Server.Scripts
         private readonly string _roomSceneName;
         private readonly BotsNicknamesProviderService _botsNicknamesProviderService;
         private readonly BotsCustomizationDataProviderService _botsCustomizationDataProviderService;
+        private readonly BotsPetsDataProviderService _botsPetsDataProviderService;
         private readonly ServerManager _serverManager;
         private readonly IRoomsProviderService _roomsProviderService;
         private readonly ClientsConfigsProviderService _clientsConfigsProviderService;
         private readonly BotsConfigsProviderService _botsConfigsProviderService;
         private readonly ItemsConfigsProviderService _itemsConfigsProviderService;
+        private readonly PetsConfigProviderService _petsConfigProviderService;
 
         public BotsSubscribingMediator(BotsNicknamesProviderService botsNicknamesProviderService,
             ServerManager serverManager,
@@ -34,7 +38,9 @@ namespace WelwiseHubBotsModule.Runtime.Server.Scripts
             BotsCustomizationDataProviderService botsCustomizationDataProviderService,
             ClientsConfigsProviderService clientsConfigsProviderService,
             BotsConfigsProviderService botsConfigsProviderService,
-            ItemsConfigsProviderService itemsConfigsProviderService)
+            ItemsConfigsProviderService itemsConfigsProviderService,
+            BotsPetsDataProviderService botsPetsDataProviderService,
+            PetsConfigProviderService petsConfigProviderService)
         {
             _botsNicknamesProviderService = botsNicknamesProviderService;
             _serverManager = serverManager;
@@ -45,6 +51,8 @@ namespace WelwiseHubBotsModule.Runtime.Server.Scripts
             _clientsConfigsProviderService = clientsConfigsProviderService;
             _botsConfigsProviderService = botsConfigsProviderService;
             _itemsConfigsProviderService = itemsConfigsProviderService;
+            _botsPetsDataProviderService = botsPetsDataProviderService;
+            _petsConfigProviderService = petsConfigProviderService;
 
             _botsFactory.CreatedBotBehaviourController += SubscribeBotBehaviourControllerAsync;
             serverSceneManagementService.ClientLoadedScene += SendInitializationBotsForConnectedClient;
@@ -70,29 +78,36 @@ namespace WelwiseHubBotsModule.Runtime.Server.Scripts
         {
             if (_roomSceneName != scene.name ||
                 !_botsFactory.BotBehaviourControllersByRoom.TryGetValue(
-                    _roomsProviderService.RoomsByConnectedClientsNetworkConnections[connection], out var botBehaviourControllers))
+                    _roomsProviderService.RoomsByConnectedClientsNetworkConnections[connection],
+                    out var botBehaviourControllers))
                 return;
 
             foreach (var bot in botBehaviourControllers)
             {
                 var botObjectId = bot.SerializableComponents.GetComponent<NetworkObject>().ObjectId;
-                
+
                 _serverManager.Broadcast(connection,
                     new InitializationBotBroadcast(bot.SerializableComponents.gameObject,
                         _botsNicknamesProviderService.Nicknames[botObjectId],
-                        _botsCustomizationDataProviderService.BotsCustomizationData[botObjectId]));
+                        _botsCustomizationDataProviderService.BotsCustomizationData[botObjectId],
+                        _botsPetsDataProviderService.PetsData[botObjectId]));
             }
         }
 
-        private async void SubscribeBotBehaviourControllerAsync(BotBehaviourController botBehaviourController,
+        private async void SubscribeBotBehaviourControllerAsync(BotController botController,
             IRoom room)
         {
-            var botObjectId = botBehaviourController.SerializableComponents.GetComponent<NetworkObject>().ObjectId;
+            var botObjectId = botController.SerializableComponents.GetComponent<NetworkObject>().ObjectId;
 
             _botsNicknamesProviderService.AddBotNickname(botObjectId, BotsNicknamesTools.GetRandomNickname());
-            
+
+            _botsPetsDataProviderService.AddBotData(botObjectId,
+                BotsSelectedPetsDataTools.GetRandomSelectedPetsData(
+                    (await _botsConfigsProviderService.GetBotsConfigAsync()).SetBotPetsDataPartChance,
+                    await _petsConfigProviderService.GetPetsConfigAsync()));
+
             var clientsConfig = await _clientsConfigsProviderService.GetClientsConfigAsync();
-            
+
             _botsCustomizationDataProviderService.AddBotCustomizationData(botObjectId,
                 BotsCustomizationDataTools.GetRandomCustomizationData(
                     new CustomizationData(
@@ -103,17 +118,17 @@ namespace WelwiseHubBotsModule.Runtime.Server.Scripts
                     (await _botsConfigsProviderService.GetBotsConfigAsync()).SetBotCustomizationDataPartChance,
                     await _itemsConfigsProviderService.GetItemsConfigAsync()));
 
-            botBehaviourController.SerializableComponents.gameObject.GetOrAddComponent<DestroyObserver>().Destroyed +=
+            botController.SerializableComponents.gameObject.GetOrAddComponent<DestroyObserver>().Destroyed +=
                 () =>
                 {
                     _botsNicknamesProviderService.RemoveBotNickname(botObjectId);
                     _botsCustomizationDataProviderService.RemoveBotCustomizationData(botObjectId);
                 };
 
-            botBehaviourController.StartedPlayingEmotion += emotionIndex => _serverManager.Broadcast(
+            botController.StartedPlayingEmotion += emotionIndex => _serverManager.Broadcast(
                 new HashSet<NetworkConnection>(room.ConnectedClientsNetworkConnections),
                 new PlayBotEmotionBroadcast(emotionIndex,
-                    botBehaviourController.SerializableComponents.gameObject));
+                    botController.SerializableComponents.gameObject));
         }
     }
 }

@@ -20,7 +20,13 @@
         "WelwiseEmotionsSharedModule",
         "WelwiseChatServerModule",
         "WelwiseChatSharedModule",
-        "WelwiseEmotionsServerModule"
+        "WelwiseEmotionsServerModule",
+        "WelwiseCurrenciesSharedModule",
+        "WelwiseCurrenciesServerModule",
+        "WelwiseShopItemSharedModule",
+        "WelwiseShopItemServerModule",
+        "WelwisePetsSharedModule",
+        "WelwisePetsServerModule"
     ],
     "includePlatforms": [
         "Editor",

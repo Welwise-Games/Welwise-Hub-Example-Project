@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.TrainingSystem
 {
-    [CreateAssetMenu(menuName = "Training/ArrowsDisplayingConfig", fileName = "ArrowsDisplayingConfig")]
+    [CreateAssetMenu(menuName = "WelwiseTrainingModule/ArrowsDisplayingConfig")]
     public class ArrowsDisplayingConfig : ScriptableObject
     {
         [field: SerializeField] [field: Range(0.1f, 10)] public float DistanceBetweenArrows { get; private set; } = 1;

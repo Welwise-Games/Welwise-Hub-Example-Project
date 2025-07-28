@@ -4,6 +4,7 @@ using System.Linq;
 using FishNet.Connection;
 using WelwiseChangingNicknameModule.Runtime.Shared.Scripts.Services;
 using WelwiseChatModule.Runtime.Shared.Scripts.Network;
+using WelwiseCurrenciesModule.Runtime.Shared.Scripts;
 using WelwiseSharedModule.Runtime.Shared.Scripts.Tools;
 
 namespace WelwiseHubExampleModule.Runtime.Shared.Scripts.Services.Data
@@ -23,10 +24,11 @@ namespace WelwiseHubExampleModule.Runtime.Shared.Scripts.Services.Data
             add => _addedNicknameData += value;
             remove => _addedNicknameData -= value;
         }
-        
-        private Action<NetworkConnection, IClientNicknameData> _addedNicknameData;
+
         public event Action<NetworkConnection, ClientData> AddedData;
         
+        private Action<NetworkConnection, IClientNicknameData> _addedNicknameData;
+
         private readonly Dictionary<NetworkConnection, ClientData> _data =
             new Dictionary<NetworkConnection, ClientData>();
 

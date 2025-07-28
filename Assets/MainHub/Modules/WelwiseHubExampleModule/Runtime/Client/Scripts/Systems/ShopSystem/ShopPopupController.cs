@@ -29,7 +29,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
         private bool _isAnyCategorySelected;
 
         public readonly ShopPopup ShopPopup;
-        public readonly ShopSettingEquippedItemsModel ShopSettingEquippedItemsModel;
+        public readonly ShopSetEquippedItemsModel ShopSetEquippedItemsModel;
         private readonly ItemsConfig _itemsConfig;
         private readonly ItemsViewConfig _itemsViewConfig;
         private readonly ClientsDataProviderService _clientsDataProviderService;
@@ -44,7 +44,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
         private readonly ItemsColoringPopupController _itemsColoringPopupController;
 
 
-        public ShopPopupController(ShopSettingEquippedItemsModel shopSettingEquippedItemsModel,
+        public ShopPopupController(ShopSetEquippedItemsModel shopSetEquippedItemsModel,
             ShopPopup shopPopup, ItemsConfig itemsConfig, ShopUIFactory shopUIFactory,
             ClientsDataProviderService clientsDataProviderService,
             ClientsNicknamesProviderService clientsNicknamesProviderService,
@@ -52,7 +52,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
             ColorableClothesViewController previewColorableClothesViewController,
             SharedClientsNicknamesConfig sharedClientsNicknamesConfig, ItemsViewConfig itemsViewConfig)
         {
-            ShopSettingEquippedItemsModel = shopSettingEquippedItemsModel;
+            ShopSetEquippedItemsModel = shopSetEquippedItemsModel;
             ShopPopup = shopPopup;
             _itemsConfig = itemsConfig;
             _shopUIFactory = shopUIFactory;
@@ -63,14 +63,14 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
 
             _itemsColoringPopupController = new ItemsColoringPopupController(
                 previewColorableClothesViewController, clientsDataProviderService,
-                shopSettingEquippedItemsModel, shopPopup.ChangingItemsColorPopup,
+                shopSetEquippedItemsModel, shopPopup.ChangingItemsColorPopup,
                 playerPreviewSkinColorChangerController, itemsViewConfig);
 
             SubscribeChangingWarningPopup();
             SubscribeChangingNamePopup();
 
             ShopPopup.RevertChangesButton.onClick.AddListener(() =>
-                ShopSettingEquippedItemsModel.TryRevertingChanges());
+                ShopSetEquippedItemsModel.TryRevertingChanges());
 
             ShopPopup.SelectionItemCategoryButtons.ForEach(button =>
                 button.Button.onClick.AddListener(() => TrySelectingCategoryAndUpdateViewAsync(button.ItemCategory)));
@@ -95,7 +95,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
                 ShopPopup.ChangingNicknamePopup.Popup.TryOpening());
 
             ShopPopup.ChangingNicknamePopup.ApplyButton.onClick.AddListener(() =>
-                ShopSettingEquippedItemsModel.SetName(ShopPopup.ChangingNicknamePopup.PlayerNicknameInputField.text));
+                ShopSetEquippedItemsModel.SetName(ShopPopup.ChangingNicknamePopup.PlayerNicknameInputField.text));
 
 #if UNITY_WEBGL && !UNITY_EDITOR
 
@@ -114,8 +114,8 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
             ShopPopup.ChangesWarningPopup.CancelButton.onClick.AddListener(() =>
                 ShopPopup.ChangesWarningPopup.Popup.TryClosing());
 
-            ShopSettingEquippedItemsModel.RevertedChanges += OnRevertChanges;
-            ShopSettingEquippedItemsModel.AppliedChanges += ShopPopup.ChangesWarningPopup.Popup.TryClosing;
+            ShopSetEquippedItemsModel.RevertedChanges += OnRevertChanges;
+            ShopSetEquippedItemsModel.AppliedChanges += ShopPopup.ChangesWarningPopup.Popup.TryClosing;
 
             ShopPopup.ApplyChangesButton.onClick.AddListener(() =>
                 TryInitializingAndOpeningChangesCancellationPopupAsync(true));
@@ -130,7 +130,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
         private async void TryInitializingAndOpeningChangesCancellationPopupAsync(bool shouldApplyChanges,
             Action notModified = null)
         {
-            var successfully = ShopSettingEquippedItemsModel.IsModified;
+            var successfully = ShopSetEquippedItemsModel.IsModified;
 
             if (!successfully)
             {
@@ -153,12 +153,12 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
             ShopPopup.ChangesWarningPopup.ApplyButton.onClick.RemoveAllListeners();
 
             if (shouldApplyChanges)
-                ShopPopup.ChangesWarningPopup.ApplyButton.onClick.AddListener(ShopSettingEquippedItemsModel
+                ShopPopup.ChangesWarningPopup.ApplyButton.onClick.AddListener(ShopSetEquippedItemsModel
                     .ApplyTemporaryChanges);
             else
             {
                 ShopPopup.ChangesWarningPopup.ApplyButton.onClick.AddListener(() =>
-                    ShopSettingEquippedItemsModel.TryRevertingChanges());
+                    ShopSetEquippedItemsModel.TryRevertingChanges());
             }
 
             ShopPopup.ChangesWarningPopup.ApplyButton.onClick.AddListener(() => ShopPopup.Popup.TryClosing());
@@ -181,7 +181,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
             if (itemViewConfig == null || itemConfig == null)
                 return;
             
-            ShopSettingEquippedItemsModel.TrySettingTemporaryEquippedItem(
+            ShopSetEquippedItemsModel.TrySettingTemporaryEquippedItem(
                 itemConfig, shouldTakeOff);
 
             _previewColorableClothesViewController.TrySettingClothesInstance(
@@ -236,7 +236,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
         private void SetSelectionNotColorButtonMode(SelectionItemButtonController buttonController,
             bool shouldSetToOpposite)
         {
-            var isSelected = ShopSettingEquippedItemsModel.GetTemporaryEquippedItemsData
+            var isSelected = ShopSetEquippedItemsModel.GetTemporaryEquippedItemsData
                 .Any(equippedItemData =>
                     equippedItemData.ItemIndex == buttonController.TargetItemConfig.ItemIndex);
 

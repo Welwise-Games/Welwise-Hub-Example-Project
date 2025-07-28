@@ -36,8 +36,6 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.GameStat
             _serverChatsDataProvider.SendInitializationChatsDataForClient(networkConnection, _serverManager);
         }
 
-        public async UniTask ExitAsync(NetworkConnection networkConnection)
-        {
-        }
+        public UniTask ExitAsync(NetworkConnection networkConnection) => UniTask.CompletedTask;
     }
 }

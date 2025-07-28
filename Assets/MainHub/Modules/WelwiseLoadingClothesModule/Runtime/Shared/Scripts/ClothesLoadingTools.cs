@@ -9,7 +9,7 @@ namespace MainHub.Modules.WelwiseLoadingClothesModule.Runtime.Shared.Scripts
     {
         public static EquippedItemsData GetDefaultEquippedItemsData() =>
             new(
-                CollectionTools.ToList<ItemCategory>()
+                CollectionTools.ParseEnumToList<ItemCategory>()
                     .Where(category => category is not ItemCategory.All and not ItemCategory.Color)
                     .Select(category => new EquippedItemData(null, new Dictionary<int, float>(), category))
                     .ToList());

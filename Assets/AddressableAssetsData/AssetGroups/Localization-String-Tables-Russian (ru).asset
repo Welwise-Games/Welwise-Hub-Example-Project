@@ -41,6 +41,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ru
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8904ffaf616f6b24b8129b1e1de7d884
+    m_Address: SetPetsPopup_ru
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a2e99f55db8befd40800c3dc0f742966
     m_Address: LoadingGamePopup_ru
     m_ReadOnly: 1
@@ -48,7 +54,7 @@ MonoBehaviour:
     - Locale-ru
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bc89c1861f6599f429de3b8796a93af1
-    m_Address: SettingEmotionsPopup_ru
+    m_Address: SetEmotionsPopup_ru
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ru

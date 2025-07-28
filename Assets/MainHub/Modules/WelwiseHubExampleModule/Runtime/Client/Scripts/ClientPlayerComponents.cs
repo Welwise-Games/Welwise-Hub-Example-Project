@@ -2,6 +2,7 @@
 using WelwiseChatModule.Runtime.Client.Scripts.UI;
 using WelwiseClothesSharedModule.Runtime.Client.Scripts;
 using WelwiseEmotionsModule.Runtime.Client.Scripts.Animations;
+using WelwisePetsModule.Runtime.Client.Scripts;
 
 namespace WelwiseHubExampleModule.Runtime.Client.Scripts
 {
@@ -11,6 +12,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts
         public readonly ClientPlayerSerializableComponents SerializableComponents;
         public readonly PlayerChatTextController ChatTextController;
         public readonly PlayerEmotionsComponents PlayerEmotionsComponents;
+        public readonly PlayerPetsViewController PetsViewController;
         public readonly SkinColorChangerController SkinColorChangerController;
         public readonly ColorableClothesViewController ColorableClothesViewController;
 
@@ -18,7 +20,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts
             SkinColorChangerController skinColorChangerController,
             ColorableClothesViewController colorableClothesViewController,
             PlayerEmotionsComponents playerEmotionsComponents, ClientPlayerCharacterComponents characterComponents,
-            ClientPlayerSerializableComponents serializableComponents)
+            ClientPlayerSerializableComponents serializableComponents, PlayerPetsViewController petsViewController)
         {
             ChatTextController = chatTextController;
             SkinColorChangerController = skinColorChangerController;
@@ -26,6 +28,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts
             PlayerEmotionsComponents = playerEmotionsComponents;
             CharacterComponents = characterComponents;
             SerializableComponents = serializableComponents;
+            PetsViewController = petsViewController;
         }
     }
 }

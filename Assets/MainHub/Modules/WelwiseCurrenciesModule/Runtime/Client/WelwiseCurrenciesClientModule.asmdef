@@ -1,0 +1,22 @@
+{
+    "name": "WelwiseCurrenciesClientModule",
+    "rootNamespace": "",
+    "references": [
+        "WelwiseGamesSDK",
+        "WelwiseCurrenciesSharedModule",
+        "WelwiseSharedSharedModule",
+        "FishNet.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WebGL"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

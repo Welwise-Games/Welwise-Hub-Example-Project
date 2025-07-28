@@ -22,7 +22,7 @@ namespace WelwiseClothesSharedModule.Runtime.Client.Scripts
         {
             _itemsViewConfig = itemsViewConfig;
 
-            _clothesSkinnedMeshRendererControllerByItemCategory = CollectionTools.ToList<ItemCategory>()
+            _clothesSkinnedMeshRendererControllerByItemCategory = CollectionTools.ParseEnumToList<ItemCategory>()
                 .Where(category => category is not ItemCategory.All and not ItemCategory.Color).ToDictionary(
                     category => category, category =>
                     {

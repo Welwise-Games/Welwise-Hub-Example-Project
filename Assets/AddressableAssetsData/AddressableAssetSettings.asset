@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 468a46d0ae32c3544b7d98094e6448a9, type: 3}
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: 
-  m_DefaultGroup: 049edd664386ebd488e799f2c8f87467
+  m_DefaultGroup: 0978a1bef57834642956b6e063c1b9b3
   m_currentHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
@@ -24,7 +24,7 @@ MonoBehaviour:
   m_IgnoreUnsupportedFilesInBuild: 0
   m_UniqueBundleIds: 0
   m_NonRecursiveBuilding: 1
-  m_CCDEnabled: 1
+  m_CCDEnabled: 0
   m_maxConcurrentWebRequests: 3
   m_ContiguousBundles: 1
   m_StripUnityVersionFromBundleBuild: 0
@@ -33,39 +33,40 @@ MonoBehaviour:
   m_ShaderBundleCustomNaming: 
   m_MonoScriptBundleNaming: 0
   m_CheckForContentUpdateRestrictionsOption: 0
-  m_BuildAndReleaseBinFileOption: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
-    m_Id: 2e0466634c921f149a9cdabb2cf94dd2
+    m_Id: 0ef2cebf766fe0345971df66fcad0699
   m_RemoteCatalogLoadPath:
-    m_Id: a091340687af31d4aba645da6553e4b3
+    m_Id: a5bc376282ce2ba4b893d863845de27c
   m_ContentStateBuildPathProfileVariableName: <default settings path>
   m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
   m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
-  - {fileID: 11400000, guid: 85d8e6b04cc993147afc1dd9f9b87f89, type: 2}
+  - {fileID: 11400000, guid: 11f53eef937239a4ca93a020bebbe730, type: 2}
   - {fileID: 11400000, guid: 9389f0c4d589a354c8ab42fc467f9ef4, type: 2}
-  - {fileID: 11400000, guid: 50511129a022e7c4886c167aa070fff2, type: 2}
-  - {fileID: 11400000, guid: 9777b635f1067f0499832dc8f13fb6ca, type: 2}
-  - {fileID: 11400000, guid: 472408adc7a4594499bd49a21501b4cc, type: 2}
-  - {fileID: 11400000, guid: e8ae0aacfb887b0409330eb5c2f1027a, type: 2}
-  - {fileID: 11400000, guid: 28ee9fb8cc2990b41b21b3749c33106a, type: 2}
-  - {fileID: 11400000, guid: 6a049ede6ad18404abbfa4d8415c3966, type: 2}
-  - {fileID: 11400000, guid: b071fc9fc44fe9f47a02d639211f703e, type: 2}
-  - {fileID: 11400000, guid: 641f817c41f185547b5f71e877058cc9, type: 2}
+  - {fileID: 11400000, guid: e6eabd30ccd5df64caabe190722e8849, type: 2}
+  - {fileID: 11400000, guid: e365cd55fca121a4b9a6f1a3f35875cc, type: 2}
+  - {fileID: 11400000, guid: 88b3e53e2df5cd943ae0b315bcd3a323, type: 2}
+  - {fileID: 11400000, guid: 96c045dd8d988e54f92c1ef503ef7ee9, type: 2}
+  - {fileID: 11400000, guid: 78ee6556c3611b843ab6bcf646ea622e, type: 2}
+  - {fileID: 11400000, guid: 98b9222343035e44ebdc9d05edd06c70, type: 2}
   - {fileID: 11400000, guid: 10c36346d8a3c5240b2cc01bcdf79ea0, type: 2}
   - {fileID: 11400000, guid: 12e401007f85af64ca269bb950709945, type: 2}
-  - {fileID: 11400000, guid: d9e68dbaf4609834aa49816ab230a1a5, type: 2}
+  - {fileID: 11400000, guid: e1d6dd31983cc1f448e5b68078d761d4, type: 2}
+  - {fileID: 11400000, guid: 569f047b4da2ca64cbbb515c5c1223f7, type: 2}
   - {fileID: 11400000, guid: 68ea6a4485469774490afec5a00b5bcd, type: 2}
+  - {fileID: 11400000, guid: 67eb543f304532044a7b385edacc2763, type: 2}
   - {fileID: 11400000, guid: 39d453543cb1b264a961fcaf81c53446, type: 2}
-  - {fileID: 11400000, guid: 1b2201beffa7d5e42a93f50ccc6d10ee, type: 2}
+  - {fileID: 11400000, guid: 967066225201c4f4c84ad66dc40ca007, type: 2}
+  - {fileID: 11400000, guid: 9776671933a44434fa8de1c09565aded, type: 2}
   - {fileID: 11400000, guid: 2d28ab95f926b2e44bcff256c05fdffc, type: 2}
-  - {fileID: 11400000, guid: 520742a04002506429983d788c100df9, type: 2}
-  - {fileID: 11400000, guid: cfcfa100f832eef43bb8e9ea48581a48, type: 2}
-  - {fileID: 11400000, guid: c2019fd4f1c3ab943911ee223e1c2e50, type: 2}
-  - {fileID: 11400000, guid: 164eee031f3f99f42a77543cc5801d38, type: 2}
+  - {fileID: 11400000, guid: 73bc0c100a05f9346bf29f1429cbef17, type: 2}
+  - {fileID: 11400000, guid: 6bdd2abccae7da242b1622fda221dd51, type: 2}
+  - {fileID: 11400000, guid: f6fc7b75c9e6e814e89c8e5034ee8d0b, type: 2}
+  - {fileID: 11400000, guid: 3a061697972ba66428468dbd0919cc1c, type: 2}
+  - {fileID: 11400000, guid: 66f3c6aaaa1344a4aa823c5f9ea27a8f, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -80,25 +81,25 @@ MonoBehaviour:
       - m_Id: 0ef2cebf766fe0345971df66fcad0699
         m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
       - m_Id: 2e0466634c921f149a9cdabb2cf94dd2
-        m_Value: ServerData/[BuildTarget]
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
       - m_Id: 8d496152370e3064e8bb4fa68352b6b1
         m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
       - m_Id: a091340687af31d4aba645da6553e4b3
-        m_Value: https://github.com/Arendrast/Hub-Remote-Addressables
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
       - m_Id: a5bc376282ce2ba4b893d863845de27c
         m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
     - m_InheritedParent: 
       m_Id: 5bb370646d014bc4a876c91775b443be
-      m_ProfileName: New Profile
+      m_ProfileName: Remote
       m_Values:
       - m_Id: 0ef2cebf766fe0345971df66fcad0699
         m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
       - m_Id: 2e0466634c921f149a9cdabb2cf94dd2
-        m_Value: ServerData/[BuildTarget]
+        m_Value: RemoteAddressables/[BuildTarget]
       - m_Id: 8d496152370e3064e8bb4fa68352b6b1
         m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
       - m_Id: a091340687af31d4aba645da6553e4b3
-        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+        m_Value: '{WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.AddressablesPathHolder.RemoteLoadPath}[BuildTarget]'
       - m_Id: a5bc376282ce2ba4b893d863845de27c
         m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
     m_ProfileEntryNames:
@@ -125,6 +126,7 @@ MonoBehaviour:
     - Locale
     - Locale-en
     - Locale-ru
+    - Preload
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 6583dd9e857f6ff40b5d66586fd0e1b1, type: 2}
@@ -155,11 +157,11 @@ MonoBehaviour:
           m_Key: HostingServiceUploadSpeed
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.String
-          m_Data: ServerData/WebGL;Library/com.unity.addressables/aa/WebGL/WebGL
+          m_Data: Library/com.unity.addressables/aa/WebGL/WebGL
           m_Key: ContentRoot
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.Boolean
-          m_Data: True
+          m_Data: False
           m_Key: IsEnabled
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.String
@@ -183,7 +185,7 @@ MonoBehaviour:
           m_Key: HostingServiceUploadSpeed
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.String
-          m_Data: ServerData/WebGL;Library/com.unity.addressables/aa/WebGL/WebGL
+          m_Data: Library/com.unity.addressables/aa/WebGL/WebGL
           m_Key: ContentRoot
         - m_AssemblyName: mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
           m_ClassName: System.Boolean
@@ -202,9 +204,3 @@ MonoBehaviour:
     m_RegisteredServiceTypeRefs:
     - UnityEditor.AddressableAssets.HostingServices.HttpHostingService, Unity.Addressables.Editor
     m_PingTimeoutInMilliseconds: 5000
-  m_CcdManagedData:
-    EnvironmentId: 
-    EnvironmentName: 
-    BucketId: 
-    Badge: 
-    State: 0

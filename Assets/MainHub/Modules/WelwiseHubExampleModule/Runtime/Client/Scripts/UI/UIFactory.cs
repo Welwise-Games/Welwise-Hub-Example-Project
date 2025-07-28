@@ -29,10 +29,11 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.UI
         public async UniTask<UIRootComponents> GetUIRootAsync() =>
             await _container.GetControllerAsync<UIRootComponents, UIRootSerializableComponents>(
                 UIRootAssetId, _assetLoader,
-                async root =>
+                root =>
                 {
                     _container.RegisterAndGetSingleByType(new UIRootComponents(root,
                         new ErrorTextController(root.ErrorText, root.ErrorTextConfig)));
+                    return UniTask.CompletedTask;
                 });
     }
 }

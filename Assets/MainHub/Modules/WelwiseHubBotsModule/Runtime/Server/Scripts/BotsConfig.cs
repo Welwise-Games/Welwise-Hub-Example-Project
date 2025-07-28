@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace WelwiseHubBotsModule.Runtime.Server.Scripts
 {
-    [CreateAssetMenu(fileName = "BotsConfig", menuName = "WelwiseHubBotsModule/BotsConfig")]
+    [CreateAssetMenu(menuName = "WelwiseHubBotsModule/BotsConfig")]
     public class BotsConfig : ScriptableObject
     {
         [field: SerializeField] public Vector3 SpawnPosition { get; private set; }
@@ -17,6 +17,7 @@ namespace WelwiseHubBotsModule.Runtime.Server.Scripts
         [field: SerializeField] [field: Range(1, 60)] public float MinimalChangingClothAndNicknameTime { get; private set; } = 10;
         [field: SerializeField] [field: Range(1, 500)] public float MaximumChangingClothAndNicknameTime { get; private set; } = 120;
         [field: SerializeField]  [field: Range(0, 100)] public float SetBotCustomizationDataPartChance { get; private set; } = 50;  
+        [field: SerializeField]  [field: Range(0, 100)] public float SetBotPetsDataPartChance { get; private set; } = 50;  
         [field: SerializeField] [field: Range(1, 10)] public int MaxUniformInterestPointGroupsInRow { get; private set; } = 3;
         [field: SerializeField] public List<ChanceInteractWithInterestPointConfig> ChanceInteractWithInterestPointConfigs { get; private set; }
     }

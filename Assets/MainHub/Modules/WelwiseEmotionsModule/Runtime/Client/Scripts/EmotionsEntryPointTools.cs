@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using FishNet.Connection;
 using FishNet.Managing.Client;
 using WelwiseEmotionsModule.Runtime.Client.Scripts.Animations;
@@ -12,6 +13,7 @@ using WelwiseEmotionsModule.Runtime.Shared.Scripts.Animations;
 using WelwiseEmotionsModule.Runtime.Shared.Scripts.Animations.Network;
 using WelwiseGamesSDK.Shared;
 using WelwiseGamesSDK.Shared.Modules;
+using WelwiseItemInShopModule.Client.Scripts;
 using WelwiseSharedModule.Runtime.Shared.Scripts;
 using WelwiseSharedModule.Runtime.Shared.Scripts.Loading;
 
@@ -24,26 +26,33 @@ namespace WelwiseEmotionsModule.Runtime.Client.Scripts
         public static void SubscribeAnimatorController(this PlayerEmotionsComponents playerEmotionsComponents,
             OwnerEmotionsPlayingSynchronizerService ownerEmotionsPlayingSynchronizerService) =>
             playerEmotionsComponents.EmotionsAnimatorController.StartedEmotionAnimation +=
-                (emotionIndex, emotionIndexInsideCircle) =>
+                (emotionIndex, emotionOrdinalIndex) =>
                     ownerEmotionsPlayingSynchronizerService.SendPlayingEmotionAnimationBroadcast(
-                        emotionIndexInsideCircle);
+                        emotionOrdinalIndex);
 
-        public static void Initialize(
+        public static async UniTask InitializeAsync(
+            DataContainer<EmotionsEntryPointData> emotionsEntryPointDataContainer,
             INotOwnerPlayersComponentsProviderService notOwnerPlayersComponentsProviderService,
             ClientManager clientManager,
-            EmotionsAnimationsConfig emotionsAnimationsConfig,
-            EmotionsConfigsProviderService emotionsConfigsProviderService,
-            EmotionsViewConfigsProviderService emotionsViewConfigsProviderService, IPlayerData playerData,
-            out EmotionsEntryPointData emotionsEntryPointData, IAssetLoader assetLoader)
+            IPlayerData playerData,
+            IAssetLoader assetLoader, EmotionsConfigProviderService emotionsConfigProviderService = null,
+            EmotionsViewConfigProviderService emotionsViewConfigProviderService = null,
+            EmotionsAnimationsConfig emotionsAnimationsConfig = null)
         {
+            emotionsViewConfigProviderService ??= new EmotionsViewConfigProviderService(assetLoader);
+            emotionsConfigProviderService ??= new EmotionsConfigProviderService(assetLoader);
+            emotionsAnimationsConfig ??= await emotionsConfigProviderService.GetEmotionsAnimationsConfig();
+            
             var ownerSelectedEmotionsProviderService =
-                new OwnerSelectedEmotionsDataProviderService(emotionsAnimationsConfig);
+                new OwnerSelectedEmotionsDataProviderService(Enumerable
+                    .Range(0, emotionsAnimationsConfig.MaxSelectedItemsNumber)
+                    .Select(i => new SelectedEmotionData(i)).ToList());
 
-            var emotionsViewFactory = new EmotionsViewFactory(emotionsViewConfigsProviderService);
+            var emotionsViewFactory = new EmotionsViewFactory(emotionsViewConfigProviderService);
 
             var emotionsCircleFactory =
-                new EmotionsCircleFactory(ownerSelectedEmotionsProviderService, emotionsConfigsProviderService,
-                    emotionsViewFactory, emotionsViewConfigsProviderService, assetLoader);
+                new EmotionsCircleFactory(ownerSelectedEmotionsProviderService, emotionsConfigProviderService,
+                    emotionsViewFactory, emotionsViewConfigProviderService, assetLoader);
 
             var ownerEmotionsPlayingSynchronizer =
                 new OwnerEmotionsPlayingSynchronizerService(ownerSelectedEmotionsProviderService, clientManager);
@@ -51,27 +60,15 @@ namespace WelwiseEmotionsModule.Runtime.Client.Scripts
             new NotOwnerEmotionsSynchronizerService(notOwnerPlayersComponentsProviderService,
                 emotionsAnimationsConfig, clientManager, emotionsViewFactory);
 
-            ownerSelectedEmotionsProviderService.UpdatedEmotionsData += updatedData =>
-                SetOwnersMetaverseStringData(playerData,
-                    new ClientSelectedEmotionsData(ownerSelectedEmotionsProviderService.GetAllSelectedEmotionsData()
-                        .ToList()));
+            SetItemsEntryPointTools.SubscribeToSaveMetaverseOnUpdate<SelectedEmotionData,
+                SelectedEmotionsData, OwnerSelectedEmotionsDataProviderService>(
+                ownerSelectedEmotionsProviderService, playerData, ()
+                    => new SelectedEmotionsData(ownerSelectedEmotionsProviderService.GetAllSelectedItemsData()
+                        .ToList(), emotionsAnimationsConfig), SelectedEmotionsDataFieldNameForMetaverseSavings);
 
-            emotionsEntryPointData = new EmotionsEntryPointData(ownerSelectedEmotionsProviderService,
+            emotionsEntryPointDataContainer.Data = new EmotionsEntryPointData(ownerSelectedEmotionsProviderService,
                 emotionsCircleFactory, ownerEmotionsPlayingSynchronizer,
                 emotionsViewFactory);
-        }
-
-        private static void SetOwnersMetaverseStringData(IPlayerData playerData,
-            ClientSelectedEmotionsData clientSelectedEmotionsData)
-        {
-            var data = clientSelectedEmotionsData.GetJsonSerializedObjectWithoutNulls();
-            
-            if (data == playerData.MetaverseData.GetString(SelectedEmotionsDataFieldNameForMetaverseSavings))
-                return;
-            
-            playerData.MetaverseData.SetString(SelectedEmotionsDataFieldNameForMetaverseSavings, data);
-            
-            playerData.Save();
         }
     }
 }

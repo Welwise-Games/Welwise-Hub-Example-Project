@@ -15,7 +15,9 @@
         "WelwiseLoadingClothesClientModule",
         "WelwiseLoadingClothesSharedModule",
         "WelwiseEmotionsSharedModule",
-        "WelwiseCharacterSharedModule"
+        "WelwiseCharacterSharedModule",
+        "WelwisePetsSharedModule",
+        "WelwisePetsServerModule"
     ],
     "includePlatforms": [
         "Editor",

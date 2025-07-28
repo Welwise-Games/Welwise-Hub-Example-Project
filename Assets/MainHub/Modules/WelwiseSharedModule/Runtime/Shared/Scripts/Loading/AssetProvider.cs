@@ -27,7 +27,7 @@ namespace WelwiseSharedModule.Runtime.Shared.Scripts.Loading
             var instance = await assetLoader.GetInstantiatedGameObjectAsync(assetId, position, rotation, spawnParent);
 
             if (shouldAppointParentAfterInstantiate)
-                instance.transform.SetParent(parent);
+                instance.transform.SetParent(parent, false);
 
             if (typeof(T) == typeof(GameObject))
                 return instance as T;

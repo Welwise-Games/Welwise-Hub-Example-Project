@@ -47,7 +47,7 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCamera
             if (_canSwitchCameraModeFuncs.All(func => func.Invoke()) && _inputService.ShouldSwitchCameraMode())
                 SwitchCameraMode();
 
-            if (cameraInputData.IsHold && CursorSwitcherTools.IsCursorEnabled || !CursorSwitcherTools.IsCursorEnabled)
+            if (cameraInputData.IsHold && CursorSwitchTools.IsCursorEnabled || !CursorSwitchTools.IsCursorEnabled)
                 TryRotating(cameraInputData.InputAxis);
         }
 
@@ -57,7 +57,7 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCamera
             ChangedCameraMode?.Invoke(IsFirstCameraMode);
            
             if (IsFirstCameraMode)
-                CursorSwitcherTools.TryDisablingCursor();
+                CursorSwitchTools.TryDisablingCursor();
         }
 
         private void OnLateUpdate()

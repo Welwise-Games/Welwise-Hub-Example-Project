@@ -14,17 +14,17 @@ namespace WelwiseHubBotsModule.Runtime.Server.Scripts
             ItemsConfig itemsConfig)
         {
             var appearanceData = new ModelAppearanceData(
-                CanSetData(setDataChance)
+                setDataChance.UseAsChanceAndGetResult()
                     ? Random.Range(clientsConfig.PlayerDefaultClothesColorMinimumValue,
                         clientsConfig.PlayerDefaultClothesColorMaximumValue)
                     : currentCustomizationData.AppearanceData.DefaultClothesEmissionColor,
-                CanSetData(setDataChance)
+                setDataChance.UseAsChanceAndGetResult()
                     ? Random.Range(clientsConfig.PlayerSkinColorMinimumValue,
                         clientsConfig.PlayerDefaultClothesColorMaximumValue)
                     : currentCustomizationData.AppearanceData.SkinColor);
 
-            var equippedItemsData = new EquippedItemsData(CollectionTools.ToList<ItemCategory>().Select(category =>
-                CanSetData(setDataChance)
+            var equippedItemsData = new EquippedItemsData(CollectionTools.ParseEnumToList<ItemCategory>().Select(category =>
+                setDataChance.UseAsChanceAndGetResult()
                     ? new EquippedItemData(
                         itemsConfig.Items.Where(item => item.ItemCategory == category).GetRandomOrDefault()?.ItemIndex,
                         new Dictionary<int, float>(), category)
@@ -32,7 +32,5 @@ namespace WelwiseHubBotsModule.Runtime.Server.Scripts
 
             return new CustomizationData(appearanceData, equippedItemsData);
         }
-
-        private static bool CanSetData(float setDataChance) => Random.Range(0f, 100f) <= setDataChance;
     }
 }

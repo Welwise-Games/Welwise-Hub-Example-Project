@@ -1,0 +1,24 @@
+{
+    "name": "WelwiseUIItemsCircleModule",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5c6184cbae34e72478e19ee3a10e88f0",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:c3858f8eefaccb247a3e0b7ec1bdbd4a",
+        "GUID:79ec8d2d27f5c9b4491c6bc3d72c2646",
+        "GUID:26786e284f692114ebd49c462b5190ee"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WebGL"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -146,8 +146,8 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Systems.HubSystem
 
             _hubs.Add(newHubId, newHub);
 
-            HubCreated?.Invoke(newHub);
             _roomCreated?.Invoke(newHub);
+            HubCreated?.Invoke(newHub);
 
             _doesLoadHub = false;
 
@@ -158,8 +158,8 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Systems.HubSystem
         {
             _hubs.Remove(hub.Id);
 
-            HubRemoved?.Invoke(hub);
             _roomRemoved?.Invoke(hub);
+            HubRemoved?.Invoke(hub);
 
             var hud = new SceneUnloadData(hub.SceneLoadData.GetFirstLookupScene().handle);
             _sceneManager.UnloadConnectionScenes(hud);

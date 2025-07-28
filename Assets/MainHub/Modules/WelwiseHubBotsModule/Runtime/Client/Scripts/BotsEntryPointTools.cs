@@ -7,8 +7,11 @@ using WelwiseEmotionsModule.Runtime.Client.Scripts;
 using WelwiseEmotionsModule.Runtime.Client.Scripts.Animations;
 using WelwiseEmotionsModule.Runtime.Shared.Scripts;
 using WelwiseHubBotsModule.Runtime.Shared.Scripts;
+using WelwisePetsModule.Runtime.Client.Scripts;
+using WelwisePetsModule.Runtime.Shared.Scripts;
 using WelwiseSharedModule.Runtime.Client.Scripts;
 using WelwiseSharedModule.Runtime.Client.Scripts.NetworkModule;
+using WelwiseSharedModule.Runtime.Shared.Scripts.EventBusSystem;
 using WelwiseSharedModule.Runtime.Shared.Scripts.Loading;
 using WelwiseSharedModule.Runtime.Shared.Scripts.Observers;
 
@@ -18,18 +21,20 @@ namespace WelwiseHubBotsModule.Runtime.Client.Scripts
     {
         public static void Initialize(CameraFactory cameraFactory, ClientManager clientManager,
             ClientsConnectionTrackingServiceForClient connectionTrackingService,
-            EmotionsConfigsProviderService emotionsConfigsProviderService,
-            EmotionsViewConfigsProviderService emotionsViewConfigsProviderService,
-            EmotionsViewFactory emotionsViewFactory, 
+            EmotionsConfigProviderService emotionsConfigProviderService,
+            EmotionsViewConfigProviderService emotionsViewConfigProviderService,
+            EmotionsViewFactory emotionsViewFactory,
             ItemsViewConfigsProviderService itemsViewConfigsProviderService,
-            ClothesFactory clothesFactory, IAssetLoader assetLoader)
+            ClothesFactory clothesFactory, IAssetLoader assetLoader,
+            BotsPetsDataProviderService botsPetsDataDataProviderService, PetsViewFactory petsViewFactory,
+            EventBus eventBus)
         {
             var botsNicknamesProviderService = new BotsNicknamesProviderService();
             var botsCustomizationDataProviderService = new BotsCustomizationDataProviderService();
 
-            var botsFactory = new BotsFactory(cameraFactory, emotionsViewConfigsProviderService, 
+            var botsFactory = new BotsFactory(cameraFactory, emotionsViewConfigProviderService, 
                 botsNicknamesProviderService, botsCustomizationDataProviderService,
-                itemsViewConfigsProviderService, clothesFactory, assetLoader);
+                itemsViewConfigsProviderService, clothesFactory, assetLoader, botsPetsDataDataProviderService, petsViewFactory, eventBus);
 
             botsFactory.InitializedBot += (botGameObject, botObjectId) =>
                 botGameObject.GetOrAddComponent<DestroyObserver>().Destroyed += () =>
@@ -43,9 +48,9 @@ namespace WelwiseHubBotsModule.Runtime.Client.Scripts
             connectionTrackingService.OwnerDisconnected += botsCustomizationDataProviderService.Dispose;
 
             var synchronizer =
-                new BotsClientSynchronizer(botsFactory, emotionsConfigsProviderService, emotionsViewFactory,
+                new BotsClientSynchronizer(botsFactory, emotionsConfigProviderService, emotionsViewFactory,
                     botsNicknamesProviderService,
-                    botsCustomizationDataProviderService);
+                    botsCustomizationDataProviderService, botsPetsDataDataProviderService);
 
             clientManager.RegisterBroadcast<PlayBotEmotionBroadcast>(synchronizer.PlayBotEmotionAsync);
             clientManager.RegisterBroadcast<InitializationBotBroadcast>(synchronizer.InitializeBot);

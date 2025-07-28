@@ -15,10 +15,10 @@ MonoBehaviour:
   m_GroupName: Welwise Emotions Client Module Group
   m_Data:
     m_SerializedData: []
-  m_GUID: 68f6cf5c07c062c498ab697a6a3652cf
+  m_GUID: 5a6bdfe4ed39a89499e19e34c46598a4
   m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 237a77756b9c52945863cb194eef1450, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 42754045677cd8043b46acb4a72b74bc, type: 2}
+    - {fileID: 11400000, guid: f1253816540fd9a4892b0862ea9743a0, type: 2}

@@ -1,11 +1,16 @@
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using FishNet.Connection;
+using UnityEngine;
 using WelwiseChangingClothesModule.Runtime.Shared.Scripts;
 using WelwiseClothesSharedModule.Runtime.Shared.Scripts;
+using WelwiseCurrenciesModule.Runtime.Server.Scripts;
 using WelwiseEmotionsModule.Runtime.Shared.Scripts;
 using WelwiseHubExampleModule.Runtime.Shared.Scripts;
 using WelwiseHubExampleModule.Runtime.Shared.Scripts.Services.Data;
+using WelwisePetsModule.Runtime.Shared.Scripts;
 using WelwiseSharedModule.Runtime.Shared.Scripts.EventBusSystem;
+using WelwiseSharedModule.Runtime.Shared.Scripts.Tools;
 
 namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.GameStateMachinePart
 {
@@ -14,16 +19,22 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.GameStat
         private readonly EventBus _eventBus;
         private readonly ClientsDataProviderService _clientsDataProviderService;
         private readonly ClientsConfigsProviderService _sharedConfigsProviderService;
-        private readonly EmotionsConfigsProviderService _emotionsConfigsProviderService;
+        private readonly EmotionsConfigProviderService _emotionsConfigProviderService;
+        private readonly ClientsCurrenciesProviderService _clientsCurrenciesProviderService;
+        private readonly PetsConfigProviderService _petsConfigProviderService;
 
         public ClientInitializationGameState(EventBus eventBus, ClientsDataProviderService clientsDataProviderService,
-             ClientsConfigsProviderService sharedConfigsProviderService,
-            EmotionsConfigsProviderService emotionsConfigsProviderService)
+            ClientsConfigsProviderService sharedConfigsProviderService,
+            EmotionsConfigProviderService emotionsConfigProviderService,
+            ClientsCurrenciesProviderService clientsCurrenciesProviderService,
+            PetsConfigProviderService petsConfigProviderService)
         {
             _eventBus = eventBus;
             _clientsDataProviderService = clientsDataProviderService;
             _sharedConfigsProviderService = sharedConfigsProviderService;
-            _emotionsConfigsProviderService = emotionsConfigsProviderService;
+            _emotionsConfigProviderService = emotionsConfigProviderService;
+            _clientsCurrenciesProviderService = clientsCurrenciesProviderService;
+            _petsConfigProviderService = petsConfigProviderService;
         }
 
         public async UniTask EnterAsync(NetworkConnection networkConnection, ClientData clientData)
@@ -42,18 +53,20 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.GameStat
             //         .Where(category => category is not ItemCategory.All and not ItemCategory.Color)
             //         .Select(category => new EquippedItemData(null, new Dictionary<int, float>(), category))
             //         .ToList());
-
+            
             clientData = new ClientData(
                 clientData.AccountData,
                 clientData.SelectedEmotionsData ??
-                new ClientSelectedEmotionsData(await _emotionsConfigsProviderService.GetEmotionsAnimationsConfig()),
+                new SelectedEmotionsData(await _emotionsConfigProviderService.GetEmotionsAnimationsConfig()),
                 new CustomizationData(clientData.CustomizationData.AppearanceData ??
-                                            new ModelAppearanceData(
-                                                (await _sharedConfigsProviderService.GetClientsConfigAsync())
-                                                .PlayerDefaultClothesColorValue,
-                                                (await _sharedConfigsProviderService.GetClientsConfigAsync())
-                                                .DefaultPlayerSkinColorValue),
-                    clientData.CustomizationData.EquippedItemsData));
+                                      new ModelAppearanceData(
+                                          (await _sharedConfigsProviderService.GetClientsConfigAsync())
+                                          .PlayerDefaultClothesColorValue,
+                                          (await _sharedConfigsProviderService.GetClientsConfigAsync())
+                                          .DefaultPlayerSkinColorValue),
+                    clientData.CustomizationData.EquippedItemsData), clientData.CurrenciesData,
+                clientData.SelectedPetsData ??
+                new SelectedPetsData(await _petsConfigProviderService.GetPetsConfigAsync()));
 
             //await _dataBaseService.RegisterClientAsync(clientData);
             // }
@@ -68,12 +81,11 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.GameStat
             // }
 
             _clientsDataProviderService.AddClientData(networkConnection, clientData);
+            _clientsCurrenciesProviderService.Add(networkConnection, clientData.CurrenciesData);
 
             _eventBus.Fire(new EnterServerStateEvent(GameState.Hub, networkConnection));
         }
 
-        public async UniTask ExitAsync(NetworkConnection networkConnection)
-        {
-        }
+        public UniTask ExitAsync(NetworkConnection networkConnection) => UniTask.CompletedTask;
     }
 }

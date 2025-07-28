@@ -19,7 +19,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
         private int _selectedChangingColorButtonIndex;
 
         private readonly ChangingItemsColorPopup _changingItemsColorPopup;
-        private readonly ShopSettingEquippedItemsModel _shopSettingEquippedItemsModel;
+        private readonly ShopSetEquippedItemsModel _shopSetEquippedItemsModel;
         private readonly List<PersistentColorableItem> _persistentColorableItems;
         private readonly ColorableClothesViewController _previewColorableClothesViewController;
         private readonly ClientsDataProviderService _clientsDataProviderService;
@@ -35,13 +35,13 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
         public ItemsColoringPopupController(
             ColorableClothesViewController previewColorableClothesViewController,
             ClientsDataProviderService clientsDataProviderService,
-            ShopSettingEquippedItemsModel shopSettingEquippedItemsModel,
+            ShopSetEquippedItemsModel shopSetEquippedItemsModel,
             ChangingItemsColorPopup changingItemsColorPopup,
             SkinColorChangerController playerPreviewSkinColorChangerController, ItemsViewConfig itemsViewConfig)
         {
             _previewColorableClothesViewController = previewColorableClothesViewController;
             _clientsDataProviderService = clientsDataProviderService;
-            _shopSettingEquippedItemsModel = shopSettingEquippedItemsModel;
+            _shopSetEquippedItemsModel = shopSetEquippedItemsModel;
             _changingItemsColorPopup = changingItemsColorPopup;
             _playerPreviewSkinColorChangerController = playerPreviewSkinColorChangerController;
 
@@ -155,15 +155,15 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
             switch (_targetIndexableItemConfig.ItemIndex)
             {
                 case SkinColorItemIndex:
-                    _shopSettingEquippedItemsModel.UpdateTemporarySkinColor(colorValue);
+                    _shopSetEquippedItemsModel.UpdateTemporarySkinColor(colorValue);
                     _playerPreviewSkinColorChangerController.SetSkinColor(colorValue);
                     break;
                 case DefaultClothesEmissionColorItemIndex:
-                    _shopSettingEquippedItemsModel.UpdateTemporaryDefaultClothesEmissionColor(colorValue);
+                    _shopSetEquippedItemsModel.UpdateTemporaryDefaultClothesEmissionColor(colorValue);
                     _playerPreviewSkinColorChangerController.SetDefaultClothesEmissionColor(colorValue);
                     break;
                 default:
-                    _shopSettingEquippedItemsModel.TrySettingTemporaryEquippedItemColor(
+                    _shopSetEquippedItemsModel.TrySettingTemporaryEquippedItemColor(
                         _targetIndexableItemConfig.ItemIndex,
                         colorValue, _selectedMaterialIndex);
 
@@ -221,7 +221,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
             TryRevertingSliderValueAndSelectionMaterialButtonsColorsByData();
         }
 
-        public async UniTask<IIndexableItemConfig[]> GetEquippedItemsWithValidMaterialsAsync()
+        public UniTask<IIndexableItemConfig[]> GetEquippedItemsWithValidMaterialsAsync()
         {
             /*var equippedItemsClothesSerializableComponents = _itemsConfig.Items.Select(async itemConfig =>
             {
@@ -245,7 +245,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.ShopSystem
                         components != null))
                 .ToArray<IIndexableItemConfig>();*/
 
-            return _persistentColorableItems.ToArray();
+            return new UniTask<IIndexableItemConfig[]>(_persistentColorableItems.ToArray());
         }
     }
 }

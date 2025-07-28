@@ -10,7 +10,10 @@
         "Unity.TextMeshPro",
         "WelwiseSharedClientUIModule",
         "WelwiseSharedClientUnityLocalizationModule",
-        "WelwiseGamesSDK"
+        "WelwiseGamesSDK",
+        "WelwiseShopItemClientModule",
+        "WelwiseShopItemSharedModule",
+        "WelwiseUIItemsCircleModule"
     ],
     "includePlatforms": [
         "Editor",

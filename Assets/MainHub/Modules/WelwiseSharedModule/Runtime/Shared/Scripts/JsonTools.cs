@@ -18,7 +18,7 @@ namespace WelwiseSharedModule.Runtime.Shared.Scripts
                     });
 
 
-        public static T GetDeserializedWithoutNulls<T>(this string str) =>
+        public static T GetFromJsonDeserializedWithoutNulls<T>(this string str) =>
             JsonConvert.DeserializeObject<T>(str,
                 new JsonSerializerSettings
                 {
@@ -30,7 +30,7 @@ namespace WelwiseSharedModule.Runtime.Shared.Scripts
                 }
             );
 
-        public static object GetDeserializedWithoutNulls(this string str, Type type) =>
+        public static object GetFromJsonDeserializedWithoutNulls(this string str, Type type) =>
             JsonConvert.DeserializeObject(str, type,
                 new JsonSerializerSettings
                 {

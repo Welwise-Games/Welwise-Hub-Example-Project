@@ -20,7 +20,7 @@ namespace WelwiseEmotionsModule.Runtime.Client.Scripts.Animations
         public readonly AnimatorStateObserver AnimatorStateObserver;
         public readonly ParticleEventController ParticleEventController;
 
-        private int _targetEmotionIndexInsideCircle;
+        private int _targetEmotionOrdinalIndex;
         private string _targetEmotionIndex;
         private EmotionViewConfig _targetEmotionViewConfig;
 
@@ -67,10 +67,10 @@ namespace WelwiseEmotionsModule.Runtime.Client.Scripts.Animations
 
         public void SetAnimatorControllerAndTryStartingEmotionAnimation(
             AnimatorOverrideController animatorOverrideController,
-            string emotionIndex, int emotionIndexInsideCircle = -1)
+            string emotionIndex, int emotionOrdinalIndex = -1)
         {
             var viewConfig =
-                _emotionsViewConfig.EmotionsConfigs.FirstOrDefault(config => config?.EmotionIndex == emotionIndex);
+                _emotionsViewConfig.Configs.FirstOrDefault(config => config?.ItemIndex == emotionIndex);
 
             _targetEmotionViewConfig = viewConfig;
 
@@ -84,7 +84,7 @@ namespace WelwiseEmotionsModule.Runtime.Client.Scripts.Animations
             else
                 _animator.SetTrigger(_playEmotionHash);
 
-            StartedEmotionAnimation?.Invoke(emotionIndex, emotionIndexInsideCircle);
+            StartedEmotionAnimation?.Invoke(emotionIndex, emotionOrdinalIndex);
         }
     }
 }

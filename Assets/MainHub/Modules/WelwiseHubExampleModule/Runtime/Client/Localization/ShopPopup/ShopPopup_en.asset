@@ -61,10 +61,6 @@ MonoBehaviour:
     m_Localized: "\rOnly Letters and numbers are allowed. N1-N2 characters."
     m_Metadata:
       m_Items: []
-  - m_Id: 72301012996096
-    m_Localized: Deselect all emotions
-    m_Metadata:
-      m_Items: []
   - m_Id: 81304719872000
     m_Localized: Do you want to apply changes for your character's appearance?
     m_Metadata:

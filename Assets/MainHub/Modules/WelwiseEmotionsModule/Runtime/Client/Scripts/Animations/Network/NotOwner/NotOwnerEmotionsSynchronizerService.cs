@@ -37,8 +37,8 @@ namespace WelwiseEmotionsModule.Runtime.Client.Scripts.Animations.Network.NotOwn
             playerEmotionsComponents.ParticleEventController.UpdateParticleObjects(particlesParents.Select(parent => parent.gameObject).ToArray());
             
             playerEmotionsComponents.EmotionsAnimatorController.SetAnimatorControllerAndTryStartingEmotionAnimation(
-                    _emotionsAnimationsConfig.EmotionsAnimationConfigs
-                        .FirstOrDefault(config => config.EmotionIndex == dependencies.EmotionIndex)
+                    _emotionsAnimationsConfig.Configs
+                        .FirstOrDefault(config => config.Index == dependencies.EmotionIndex)
                         ?.OverrideController, dependencies.EmotionIndex);
         }
     }

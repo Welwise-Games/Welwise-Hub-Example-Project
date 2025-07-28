@@ -14,7 +14,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem
         public StandEmotionsAnimatorController(EmotionsAnimatorController emotionsAnimatorController,
             Animator animator, AnimatorStateObserver animatorStateObserver)
         {
-            animatorStateObserver.EndedState += async (enteredAnimationHash) =>
+            animatorStateObserver.EndedState += (enteredAnimationHash) =>
             {
                 emotionsAnimatorController.InvokeEndedEmotionAnimation(enteredAnimationHash);
                 

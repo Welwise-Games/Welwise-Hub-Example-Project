@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4122700444701690706}
   - component: {fileID: 1107303709707234528}
-  - component: {fileID: 991783616754285084}
+  - component: {fileID: 3345265706975220154}
   m_Layer: 5
   m_Name: SelectionEmotion_Button
   m_TagString: Untagged
@@ -47,7 +47,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156075573764947097}
   m_CullTransparentMesh: 1
---- !u!114 &991783616754285084
+--- !u!114 &3345265706975220154
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,13 +56,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 156075573764947097}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbc88deeeb434d36a56245fcfb19b145, type: 3}
+  m_Script: {fileID: 11500000, guid: 363a984161f74e51b62ff1aa16c8e9c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <Button>k__BackingField: {fileID: 0}
   <RaycastableImage>k__BackingField: {fileID: 0}
   <CirclePartImage>k__BackingField: {fileID: 4286764016171350542}
-  <EmotionImage>k__BackingField: {fileID: 4469904850285637885}
+  <ItemImage>k__BackingField: {fileID: 4469904850285637885}
   <PointerEnterExitObserver>k__BackingField: {fileID: 0}
 --- !u!1 &3910935963886289362
 GameObject:

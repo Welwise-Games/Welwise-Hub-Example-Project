@@ -1,12 +1,12 @@
 using UnityEngine;
+using WelwiseItemInShopModule.Shared.Scripts;
 
 namespace WelwiseEmotionsModule.Runtime.Shared.Scripts.Animations
 {
-    [CreateAssetMenu(fileName = "EmotionsModule/EmotionsAnimationsConfig",
-        menuName = "EmotionsModule/EmotionsAnimationsConfig")]
-    public class EmotionsAnimationsConfig : ScriptableObject
+    [CreateAssetMenu(menuName = "WelwiseEmotionsModule/EmotionsAnimationsConfig")]
+    public class EmotionsAnimationsConfig : ScriptableObject, IItemsConfig<EmotionAnimationConfig>
     {
-        [field: Min(1)] [field: SerializeField] public int MaxSelectedAnimationsNumber { get; private set; } = 8;
-        [field: SerializeField] public EmotionAnimationConfig[] EmotionsAnimationConfigs { get; private set; }
+        [field: Min(1)] [field: SerializeField] public int MaxSelectedItemsNumber { get; private set; } = 8;
+        [field: SerializeField] public EmotionAnimationConfig[] Configs { get; private set; }
     }
 }

@@ -14,8 +14,8 @@ namespace WelwiseEmotionsModule.Runtime.Client.Scripts.Circle
     public class EmotionsCircleFactory
     {
         private readonly OwnerSelectedEmotionsDataProviderService _ownerSelectedEmotionsDataProviderService;
-        private readonly EmotionsConfigsProviderService _emotionsConfigsProviderService;
-        private readonly EmotionsViewConfigsProviderService _emotionsViewConfigsProviderService;
+        private readonly EmotionsConfigProviderService _emotionsConfigProviderService;
+        private readonly EmotionsViewConfigProviderService _emotionsViewConfigProviderService;
         private readonly EmotionsViewFactory _emotionsViewFactory;
         private readonly IAssetLoader _assetLoader;
 
@@ -29,13 +29,13 @@ namespace WelwiseEmotionsModule.Runtime.Client.Scripts.Circle
 #endif
 
         public EmotionsCircleFactory(OwnerSelectedEmotionsDataProviderService ownerSelectedEmotionsDataProviderService,
-            EmotionsConfigsProviderService emotionsConfigsProviderService, EmotionsViewFactory emotionsViewFactory,
-            EmotionsViewConfigsProviderService emotionsViewConfigsProviderService, IAssetLoader assetLoader)
+            EmotionsConfigProviderService emotionsConfigProviderService, EmotionsViewFactory emotionsViewFactory,
+            EmotionsViewConfigProviderService emotionsViewConfigProviderService, IAssetLoader assetLoader)
         {
             _ownerSelectedEmotionsDataProviderService = ownerSelectedEmotionsDataProviderService;
-            _emotionsConfigsProviderService = emotionsConfigsProviderService;
+            _emotionsConfigProviderService = emotionsConfigProviderService;
             _emotionsViewFactory = emotionsViewFactory;
-            _emotionsViewConfigsProviderService = emotionsViewConfigsProviderService;
+            _emotionsViewConfigProviderService = emotionsViewConfigProviderService;
             _assetLoader = assetLoader;
         }
 
@@ -50,9 +50,9 @@ namespace WelwiseEmotionsModule.Runtime.Client.Scripts.Circle
                 async window =>
                     _container.RegisterAndGetSingleByType(
                         new EmotionsCircleWindowController(window,
-                            await _emotionsViewConfigsProviderService.GetEmotionsViewConfigAsync(),
+                            await _emotionsViewConfigProviderService.GetEmotionsViewConfig(),
                             _ownerSelectedEmotionsDataProviderService,
-                            await _emotionsConfigsProviderService.GetEmotionsAnimationsConfig(),
+                            await _emotionsConfigProviderService.GetEmotionsAnimationsConfig(),
                             (canSwitchingPopupOpenStateFunc ?? (() => true)), canDisableCursorOnCloseFunc,
                             _emotionsViewFactory, playerEmotionsComponents)),
                 parent: popupTransform);

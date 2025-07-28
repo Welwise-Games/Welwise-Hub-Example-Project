@@ -7,6 +7,8 @@ namespace WelwiseSharedModule.Runtime.Shared.Scripts.Tools
 {
     public static class CollectionTools
     {
+        public static bool UseAsChanceAndGetResult(this float chance) => Random.Range(0f, 100f) <= chance; 
+        
         public static bool CustomSequenceEqual<T>(this IReadOnlyList<T> list1, IReadOnlyList<T> list2, 
             Func<T, T, bool> equalFunc)
         {
@@ -20,10 +22,11 @@ namespace WelwiseSharedModule.Runtime.Shared.Scripts.Tools
         public static T GetRandomOrDefault<T>(this IEnumerable<T> enumerable) =>
             enumerable.ElementAtOrDefault(Random.Range(0, enumerable.Count()));
 
-        public static List<T> ToList<T>() where T : Enum => Enum.GetValues(typeof(T)).Cast<T>().ToList();
+        public static List<T> ParseEnumToList<T>() where T : Enum => Enum.GetValues(typeof(T)).Cast<T>().ToList();
 
-        public static T SafeGet<T>(this List<T> list, int index) where T : class => index < 0 || index >= list.Count ? null : list[index];
-        public static T SafeGet<T>(this IReadOnlyList<T> list, int index) where T : class => index < 0 || index >= list.Count ? null : list[index];
+        public static T SafeGet<T>(this List<T> list, int index) => index < 0 || index >= list.Count ? default : list[index];
+        public static T SafeGet<T>(this T[] array, int index)=> index < 0 || index >= array.Length ? default : array[index];
+        public static T SafeGet<T>(this IReadOnlyList<T> list, int index) => index < 0 || index >= list.Count ? default : list[index];
         public static K AddAndGet<T, K>(this Dictionary<T, K> dictionary, T value, Func<K> getItem)
         {
             if (dictionary.TryGetValue(value, out var item))

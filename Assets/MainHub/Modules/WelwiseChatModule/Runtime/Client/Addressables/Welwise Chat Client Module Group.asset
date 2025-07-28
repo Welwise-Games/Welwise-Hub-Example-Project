@@ -15,10 +15,10 @@ MonoBehaviour:
   m_GroupName: Welwise Chat Client Module Group
   m_Data:
     m_SerializedData: []
-  m_GUID: df38b7147b165904c81e1d0601f27ce0
+  m_GUID: 2e1b27677a66b74469d8d6c66a272a95
   m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 237a77756b9c52945863cb194eef1450, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: a9ec3212756ed3d4a9c8a16118678a70, type: 2}
+    - {fileID: 11400000, guid: eddbfe52067517f4582f0c9d27bd7451, type: 2}

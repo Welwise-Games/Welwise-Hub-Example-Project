@@ -16,7 +16,11 @@
         "Unity.ResourceManager",
         "WelwiseCharacterSharedModule",
         "WelwiseChangingAnimationClientModule",
-        "WelwiseChangingAnimationSharedModule"
+        "WelwiseChangingAnimationSharedModule",
+        "WelwiseCurrenciesSharedModule",
+        "WelwiseShopItemServerModule",
+        "WelwiseShopItemSharedModule",
+        "WelwisePetsSharedModule"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

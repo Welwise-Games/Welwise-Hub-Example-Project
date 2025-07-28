@@ -15,10 +15,10 @@ MonoBehaviour:
   m_GroupName: Welwise Hub Bots Server Module Group
   m_Data:
     m_SerializedData: []
-  m_GUID: cfcbf64f536d9ee4a9e488306c99cb35
+  m_GUID: cbf4fa3aa30d91146a6a50f3281d1b6d
   m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 237a77756b9c52945863cb194eef1450, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: b49955d6f3c455842b1689b51f649ef9, type: 2}
+    - {fileID: 11400000, guid: 72510657c52e236428606103fde964bb, type: 2}

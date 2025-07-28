@@ -14,7 +14,7 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure
             if (File.Exists(path))
             {
                 var json = File.ReadAllText(path);
-                return json.GetDeserializedWithoutNulls<ServerNetworkSettings>();
+                return json.GetFromJsonDeserializedWithoutNulls<ServerNetworkSettings>();
             }
 
             return new ServerNetworkSettings(7777);

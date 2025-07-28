@@ -23,11 +23,12 @@ MonoBehaviour:
   <MinimalChangingClothAndNicknameTime>k__BackingField: 10
   <MaximumChangingClothAndNicknameTime>k__BackingField: 120
   <SetBotCustomizationDataPartChance>k__BackingField: 50
+  <SetBotPetsDataPartChance>k__BackingField: 50
   <MaxUniformInterestPointGroupsInRow>k__BackingField: 2
   <ChanceInteractWithInterestPointConfigs>k__BackingField:
-  - <Chance>k__BackingField: 50
-    <Group>k__BackingField: 0
-  - <Chance>k__BackingField: 75
-    <Group>k__BackingField: 1
   - <Chance>k__BackingField: 100
     <Group>k__BackingField: 2
+  - <Chance>k__BackingField: 50
+    <Group>k__BackingField: 3
+  - <Chance>k__BackingField: 75
+    <Group>k__BackingField: 1

@@ -5,10 +5,10 @@ namespace WelwiseHubBotsModule.Runtime.Server.Scripts
     public class BotAnimatorController
     {
         public BotAnimatorController(HeroAnimatorController heroAnimatorController,
-            BotBehaviourController botBehaviourController)
+            BotController botController)
         {
-            botBehaviourController.ChangedRunningState += heroAnimatorController.SetIsRunning;
-            heroAnimatorController.SetIsRunning(!botBehaviourController.IsInteracting);
+            botController.ChangedRunningState += heroAnimatorController.SetIsRunning;
+            heroAnimatorController.SetIsRunning(!botController.IsInteracting);
         }
     }
 }

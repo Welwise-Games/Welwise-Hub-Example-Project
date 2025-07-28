@@ -25,7 +25,7 @@ namespace WelwiseHubExampleModule.Runtime.Shared.Scripts
         }
 
 #if !ADDRESSABLES
-        public static async UniTask AddResourcesNetworkObjectsToSpawnableObjects()
+        public static UniTask AddResourcesNetworkObjectsToSpawnableObjects()
         {
             var allResources = Resources.LoadAll("", typeof(GameObject));
 
@@ -35,6 +35,7 @@ namespace WelwiseHubExampleModule.Runtime.Shared.Scripts
                 (SinglePrefabObjects)InstanceFinder.NetworkManager.GetPrefabObjects<SinglePrefabObjects>(LabelId, true);
 
             spawnablePrefabs.AddObjects(networkObjects);
+            return UniTask.CompletedTask;
         }
 #else
         public static async UniTask AddAddressablesNetworkObjectsToSpawnableObjects()

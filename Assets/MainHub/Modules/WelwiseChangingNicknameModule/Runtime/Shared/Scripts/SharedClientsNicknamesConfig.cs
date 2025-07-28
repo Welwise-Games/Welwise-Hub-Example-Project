@@ -2,7 +2,7 @@
 
 namespace WelwiseChangingNicknameModule.Runtime.Shared.Scripts
 {
-    [CreateAssetMenu(fileName = "SharedClientsNicknamesConfig", menuName = "WelwiseNicknameModule/SharedClientsNicknamesConfig")]
+    [CreateAssetMenu(menuName = "WelwiseNicknameModule/SharedClientsNicknamesConfig")]
     public class SharedClientsNicknamesConfig : ScriptableObject
     {
         [field: SerializeField] [field: Range(1, 32)] public int MinimalNicknameLength { get; private set; } = 1;

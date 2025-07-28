@@ -51,7 +51,7 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.GameStat
         private async void InitializeAsync(NetworkManager networkManager, IAssetLoader assetLoader)
         {
 #if !UNITY_EDITOR
-            Debug.unityLogger.logEnabled = true;
+            Debug.unityLogger.logEnabled = false;
 #endif
 
             await NetworkAssetsLoader.AddNetworkObjectsToSpawnableObjects();

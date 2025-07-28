@@ -2,7 +2,7 @@
 
 namespace WelwiseChatModule.Runtime.Client.Scripts.UI
 {
-    [CreateAssetMenu(fileName = "ChatConfig", menuName = "ChatConfig")]
+    [CreateAssetMenu(menuName = "WelwiseChatConfig/ChatConfig")]
     public class ChatConfig : ScriptableObject
     {
         [field: Min(0.1f)] [field: SerializeField] public float TimeShowingMessageOverHeadBeforeHide { get; private set; } = 3;

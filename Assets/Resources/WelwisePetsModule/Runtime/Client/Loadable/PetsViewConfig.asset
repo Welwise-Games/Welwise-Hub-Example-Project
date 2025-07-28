@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38be76a6138040db942cb50ce2f77bbe, type: 3}
+  m_Name: PetsViewConfig
+  m_EditorClassIdentifier: 
+  <Configs>k__BackingField:
+  - {fileID: 11400000, guid: 45d869d579ee89e449a99693dd5f268f, type: 2}
+  - {fileID: 11400000, guid: a0a2e9a2e26454d41a8c23321bbd42b6, type: 2}
+  - {fileID: 11400000, guid: 281c769b4253df44ca5bbb6a46afb670, type: 2}
+  - {fileID: 11400000, guid: daf5a348962c1354ca825c6cd9bbdb95, type: 2}
+  - {fileID: 11400000, guid: eb61aadea84931f42ac35081f6bfb876, type: 2}
+  - {fileID: 11400000, guid: d732119ec437c8240a10f1fdc3bd8ee0, type: 2}
+  <ErrorTextConfig>k__BackingField:
+    <FadeInTime>k__BackingField: 0.5
+    <FadeOutTime>k__BackingField: 0.5
+  <PetOffsetFromPetOwnerByOrdinalIndex>k__BackingField:
+  - {x: -1, y: 1, z: -1}
+  - {x: 0, y: 1, z: -1.5}
+  - {x: 1, y: 1, z: -1}
+  - {x: -1, y: 2.25, z: -1}
+  - {x: 1, y: 2.25, z: -1}

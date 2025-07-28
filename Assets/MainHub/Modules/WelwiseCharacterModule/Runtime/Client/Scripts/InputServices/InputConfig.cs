@@ -2,7 +2,7 @@
 
 namespace WelwiseCharacterModule.Runtime.Client.Scripts.InputServices
 {
-    [CreateAssetMenu(fileName = "InputConfig", menuName = "WelwiseCharacterModule/InputConfig")]
+    [CreateAssetMenu(menuName = "WelwiseCharacterModule/InputConfig")]
     public class InputConfig : ScriptableObject
     {
         [field: SerializeField] public KeyCode SwitchCursorKeyCode { get; private set; } = KeyCode.Tab;

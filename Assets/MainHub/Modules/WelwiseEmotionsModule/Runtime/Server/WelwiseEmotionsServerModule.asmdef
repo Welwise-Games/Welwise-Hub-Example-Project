@@ -6,7 +6,9 @@
         "FishNet.Runtime",
         "WelwiseSharedSharedModule",
         "WelwiseSharedServerModule",
-        "UniTask"
+        "UniTask",
+        "WelwiseShopItemSharedModule",
+        "WelwiseShopItemServerModule"
     ],
     "includePlatforms": [
         "Editor",

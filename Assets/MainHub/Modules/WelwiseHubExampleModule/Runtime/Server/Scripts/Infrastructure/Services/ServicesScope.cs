@@ -14,6 +14,7 @@ using WelwiseChangingNicknameModule.Runtime.Server.Scripts;
 using WelwiseChangingNicknameModule.Runtime.Server.Scripts.Services;
 using WelwiseChangingNicknameModule.Runtime.Shared.Scripts.Services;
 using WelwiseClothesSharedModule.Runtime.Shared.Scripts;
+using WelwiseCurrenciesModule.Runtime.Server.Scripts;
 using WelwiseEmotionsModule.Runtime.Server.Scripts.Animations.Network;
 using WelwiseEmotionsModule.Runtime.Shared.Scripts;
 using WelwiseHubBotsModule.Runtime.Server.Scripts;
@@ -23,10 +24,12 @@ using WelwiseHubExampleModule.Runtime.Server.Scripts.Systems.ChatSystem;
 using WelwiseHubExampleModule.Runtime.Server.Scripts.Systems.EmotionsSystem;
 using WelwiseHubExampleModule.Runtime.Server.Scripts.Systems.HubSystem;
 using WelwiseHubExampleModule.Runtime.Server.Scripts.Systems.PlayerSystem;
-using WelwiseHubExampleModule.Runtime.Server.Scripts.Systems.ShopSystem.SettingEmotions;
+using WelwiseHubExampleModule.Runtime.Server.Scripts.Systems.ShopSystem.SetEmotions;
 using WelwiseHubExampleModule.Runtime.Shared.Scripts.Holders;
 using WelwiseHubExampleModule.Runtime.Shared.Scripts.Services;
 using WelwiseHubExampleModule.Runtime.Shared.Scripts.Services.Data;
+using WelwisePetsModule.Runtime.Server.Scripts;
+using WelwisePetsModule.Runtime.Shared.Scripts;
 using WelwiseSharedModule.Runtime.Server.Scripts;
 using WelwiseSharedModule.Runtime.Shared.Scripts.Loading;
 using WelwiseSharedModule.Runtime.Shared.Scripts.EventBusSystem;
@@ -60,10 +63,13 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.Services
                 out var hubsProviderService, out var serverSceneManagementService,
                 out var clientsNetworkConnectionsProviderService, out var serverChatsDataProvider,
                 out var visibleClientsProviderService,
-                out var clientsDataProviderService, 
+                out var clientsDataProviderService,
                 out var clientsCustomizationDataProviderService, out var emotionsConfigsProviderService,
                 out var setPlayerAnimationPlaceModelsProviderService,
                 out var botsEntryPointData, out var playersConfigsProviderService,
+                out var clientsCurrenciesProviderService,
+                out var currenciesSynchronizerService,
+                out var petsConfigsProviderService,
                 await clientsConfigsProviderService.GetClientsConfigAsync(),
                 await itemsConfigsProviderService.GetItemsConfigAsync(),
                 serverManager, sceneManager, InstanceFinder.ClientManager, itemsConfigsProviderService,
@@ -72,7 +78,8 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.Services
             RegisterFactories(out var playerFactory, playersConfigsProviderService, serverManager, assetLoader);
 
             EmotionsEntryPointTools.Initialize(serverManager, visibleClientsProviderService,
-                emotionsConfigsProviderService, out var emotionsEntryPointData);
+                emotionsConfigsProviderService, await emotionsConfigsProviderService.GetEmotionsAnimationsConfig(),
+                out var emotionsEntryPointData);
 
             var sharedNicknamesConfigsProviderService = new SharedNicknamesConfigsProviderService(assetLoader);
 
@@ -82,28 +89,36 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.Services
             NicknamesSharedEntryPointTools.Initialize(sharedClientsNicknamesConfig, serverManager,
                 visibleClientsProviderService,
                 clientsDataProviderService, out var nicknamesEntryPointData);
-
+            
+            var clientsSelectedPetsDataProviderService =
+                new ClientsSelectedPetsDataProviderService(await petsConfigsProviderService.GetPetsConfigAsync());
+            
+            new ServerPetsSetSynchronizerService(serverManager, clientsSelectedPetsDataProviderService, visibleClientsProviderService);
+            
             new SubscribingMediator(clientsConnectionTrackingServiceForServer, hubsProviderService,
                 playerFactory, serverSceneManagementService, serverChatsDataProvider,
                 emotionsEntryPointData.ClientsSelectedEmotionsDataProviderService, clientsDataProviderService, eventBus,
                 clientsCustomizationDataProviderService,
                 serverManager, sceneManager, botsEntryPointData.BotsFactory,
-                await botsEntryPointData.BotsConfigsProviderService.GetBotsConfigAsync(), assetLoader);
+                await botsEntryPointData.BotsConfigsProviderService.GetBotsConfigAsync(), assetLoader,
+                clientsCurrenciesProviderService, clientsSelectedPetsDataProviderService, currenciesSynchronizerService);
 
             ChatEntryPointTools.Initialize(serverChatsDataProvider, clientsNetworkConnectionsProviderService,
                 clientsDataProviderService, serverManager);
 
-            new ServerEmotionsSettingSynchronizerService(serverManager,
+            new ServerEmotionsSetSynchronizerService(serverManager,
                 emotionsEntryPointData.ClientsSelectedEmotionsDataProviderService);
 
             InitializeGameStateMachine(clientsConnectionTrackingServiceForServer, eventBus, hubsProviderService,
                 playerFactory, serverChatsDataProvider,
                 clientsDataProviderService, clientsConfigsProviderService,
-                serverManager, emotionsConfigsProviderService, assetLoader);
+                serverManager, emotionsConfigsProviderService, assetLoader, clientsCurrenciesProviderService,
+                petsConfigsProviderService);
         }
 
         private void RegisterFactories(out PlayersFactory playersFactory,
-            PlayersConfigsProviderService playersConfigsProviderService, ServerManager serverManager, IAssetLoader assetLoader) =>
+            PlayersConfigsProviderService playersConfigsProviderService, ServerManager serverManager,
+            IAssetLoader assetLoader) =>
             playersFactory = new PlayersFactory(serverManager, playersConfigsProviderService, assetLoader);
 
         private void RegisterServices(
@@ -115,9 +130,12 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.Services
             out IVisibleClientsProviderService visibleClientsProviderService,
             out ClientsDataProviderService clientsDataProviderService,
             out ClientsCustomizationDataProviderService clientsCustomizationDataProviderService,
-            out EmotionsConfigsProviderService emotionsConfigsProviderService,
+            out EmotionsConfigProviderService emotionsConfigProviderService,
             out SetPlayerAnimationPlaceModelsProviderService setPlayerAnimationPlaceModelsProviderService,
             out BotsEntryPointData botsEntryPointData, out PlayersConfigsProviderService playersConfigsProviderService,
+            out ClientsCurrenciesProviderService clientsCurrenciesProviderService,
+            out CurrenciesSynchronizerService currenciesSynchronizerService,
+            out PetsConfigProviderService petsConfigProviderService,
             ClientsConfig clientsConfig, ItemsConfig itemsConfig, ServerManager serverManager,
             SceneManager sceneManager,
             ClientManager clientManager, ItemsConfigsProviderService itemsConfigsProviderService,
@@ -131,7 +149,7 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.Services
             hubsProviderService = new HubsProviderService(serverManager, sceneManager, assetLoader, _playerLimitPerHub);
 
             sceneManagementService = new ServerSceneManagementService();
-            emotionsConfigsProviderService = new EmotionsConfigsProviderService(assetLoader);
+            emotionsConfigProviderService = new EmotionsConfigProviderService(assetLoader);
 
             ChangingAnimationsTools.Initialize(hubsProviderService,
                 room => Enumerable.Range(0, ((Hub)room).Instance.SetPlayerAnimationPlacesTransforms.Length)
@@ -141,11 +159,14 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.Services
                 serverManager,
                 out var changingAnimationEntryPointData, setPlayerAnimationPlaceModelsProviderService);
 
+            petsConfigProviderService = new PetsConfigProviderService(assetLoader);
+            var botsPetsDataProviderService = new BotsPetsDataProviderService();
+            
             BotsEntryPointTools.Initialize(setPlayerAnimationPlaceModelsProviderService,
                 sceneManagementService, hubsProviderService, serverManager, ScenesNames.Hub,
-                emotionsConfigsProviderService, out botsEntryPointData,
+                emotionsConfigProviderService, out botsEntryPointData,
                 changingAnimationEntryPointData.ServerSetPlayersAnimationsPlacesSynchronizer,
-                clientsConfigsProviderService, itemsConfigsProviderService, assetLoader);
+                clientsConfigsProviderService, itemsConfigsProviderService, assetLoader, botsPetsDataProviderService, petsConfigProviderService);
 
             eventBus = new EventBus();
             clientsNetworkConnectionsProviderService =
@@ -157,6 +178,9 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.Services
                 new SharedClientsCustomizationDataProviderService(clientsDataProviderService, clientsConfig,
                     itemsConfig));
 
+            clientsCurrenciesProviderService = new ClientsCurrenciesProviderService();
+            currenciesSynchronizerService = new CurrenciesSynchronizerService(clientsCurrenciesProviderService);
+
             playersConfigsProviderService = new PlayersConfigsProviderService(assetLoader);
         }
 
@@ -165,10 +189,13 @@ namespace WelwiseHubExampleModule.Runtime.Server.Scripts.Infrastructure.Services
             EventBus eventBus, HubsProviderService hubsProviderService, PlayersFactory playersFactory,
             ServerChatsDataProvider serverChatsDataProvider, ClientsDataProviderService clientsDataProviderService,
             ClientsConfigsProviderService clientsConfigsProviderService, ServerManager serverManager,
-            EmotionsConfigsProviderService emotionsConfigsProviderService, IAssetLoader assetLoader)
+            EmotionsConfigProviderService emotionsConfigProviderService, IAssetLoader assetLoader,
+            ClientsCurrenciesProviderService clientsCurrenciesProviderService,
+            PetsConfigProviderService petsConfigsProviderService)
         {
             new GameStateMachine(new ClientInitializationGameState(eventBus, clientsDataProviderService,
-                    clientsConfigsProviderService, emotionsConfigsProviderService),
+                    clientsConfigsProviderService, emotionsConfigProviderService, clientsCurrenciesProviderService,
+                    petsConfigsProviderService),
                 new HubGameState(playersFactory, hubsProviderService, serverChatsDataProvider, serverManager), eventBus,
                 _networkManager, clientsConnectionTrackingServiceForServer, assetLoader);
         }

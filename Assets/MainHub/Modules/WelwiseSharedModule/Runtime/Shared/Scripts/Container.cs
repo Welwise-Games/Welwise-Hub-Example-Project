@@ -21,7 +21,7 @@ namespace WelwiseSharedModule.Runtime.Shared.Scripts
             Func<T, UniTask> loaded = null,
             Func<UniTask> notLoaded = null, bool shouldCreate = true, Transform parent = null,
             bool shouldMakeDontDestroyOnLoad = false,
-            Vector3? position = null)
+            Vector3? position = null, bool shouldAppointParentAfterInstantiate = false)
             where T : Object
         {
             var single = await GetSingleByAssetIdAsync<T>(assetId);
@@ -38,7 +38,7 @@ namespace WelwiseSharedModule.Runtime.Shared.Scripts
                     : await GetSingleByAssetIdAsync<T>(assetId);
             }
 
-            var task = LoadOrInstantiateObjectAsync<T>(assetId, assetLoader, shouldCreate, parent, position);
+            var task = LoadOrInstantiateObjectAsync<T>(assetId, assetLoader, shouldCreate, parent, position, shouldAppointParentAfterInstantiate);
             
             _loadingImplementationsByHash.Add(assetId, task);
             
@@ -174,9 +174,9 @@ namespace WelwiseSharedModule.Runtime.Shared.Scripts
         }
 
         private async UniTask<T> LoadOrInstantiateObjectAsync<T>(string assetId, IAssetLoader assetLoader, bool shouldCreate, Transform parent,
-            Vector3? position) where T : Object =>
+            Vector3? position, bool shouldAppointParentAfterInstantiate = false) where T : Object =>
             shouldCreate && (typeof(T).IsSubclassOf(typeof(Component)) || typeof(T) == typeof(GameObject))
-                ? await AssetProvider.InstantiateAsync<T>(assetId, assetLoader, position, parent: parent)
+                ? await AssetProvider.InstantiateAsync<T>(assetId, assetLoader, position, parent: parent, shouldAppointParentAfterInstantiate: shouldAppointParentAfterInstantiate)
                 : await AssetProvider.LoadAsync<T>(assetId, assetLoader);
     }
 }

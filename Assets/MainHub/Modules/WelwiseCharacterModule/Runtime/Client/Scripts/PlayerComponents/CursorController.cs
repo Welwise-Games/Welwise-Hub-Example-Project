@@ -24,7 +24,7 @@ namespace MainHub.Modules.WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCo
         private void TrySwitchingCursor()
         {
             if (_canSwitchCursorFuncs.All(@func => @func.Invoke()) && _shouldSwitchCursorProvider.ShouldSwitchCursor())
-                CursorSwitcherTools.TrySwitchingCursor();
+                CursorSwitchTools.TrySwitchingCursor();
         }
     }
 }

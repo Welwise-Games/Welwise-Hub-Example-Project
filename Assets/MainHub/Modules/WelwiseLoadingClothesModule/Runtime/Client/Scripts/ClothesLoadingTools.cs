@@ -13,6 +13,6 @@ namespace WelwiseLoadingClothesModule.Runtime.Client.Scripts
                     ClothesSharedTools
                         .EquippedItemsDataFieldNameForMetaverseSavings,
                     MainHub.Modules.WelwiseLoadingClothesModule.Runtime.Shared.Scripts.ClothesLoadingTools.GetDefaultEquippedItemsData().GetJsonSerializedObjectWithoutNulls())
-                .GetDeserializedWithoutNulls<EquippedItemsData>();
+                .GetFromJsonDeserializedWithoutNulls<EquippedItemsData>();
     }
 }

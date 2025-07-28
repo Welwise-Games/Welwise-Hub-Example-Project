@@ -15,10 +15,10 @@ MonoBehaviour:
   m_GroupName: Welwise Clothes Shared Client Module Group
   m_Data:
     m_SerializedData: []
-  m_GUID: 45c5b116b4535c54d8da040f3feeb4e3
+  m_GUID: 4ac4793e40abd45428d5af69a7a5426d
   m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 237a77756b9c52945863cb194eef1450, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: efc4d797c54fcf54fbbcc492fa182fe3, type: 2}
+    - {fileID: 11400000, guid: 9b1b0613ebe9def499d348a95e40ab52, type: 2}

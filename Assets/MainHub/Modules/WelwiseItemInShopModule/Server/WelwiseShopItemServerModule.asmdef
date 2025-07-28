@@ -1,0 +1,25 @@
+{
+    "name": "WelwiseShopItemServerModule",
+    "rootNamespace": "",
+    "references": [
+        "FishNet.Runtime",
+        "WelwiseShopItemSharedModule",
+        "WelwiseSharedSharedModule"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "LinuxStandalone64",
+        "CloudRendering",
+        "WSA",
+        "WindowsStandalone32",
+        "WindowsStandalone64"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

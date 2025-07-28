@@ -1,0 +1,27 @@
+{
+    "name": "WelwiseShopItemClientModule",
+    "rootNamespace": "",
+    "references": [
+        "WelwiseSharedClientUIModule",
+        "WelwiseShopItemSharedModule",
+        "WelwiseSharedSharedModule",
+        "WelwiseSharedClientUnityLocalizationModule",
+        "UniTask",
+        "Unity.TextMeshPro",
+        "WelwiseSharedClientModule",
+        "FishNet.Runtime",
+        "WelwiseGamesSDK"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WebGL"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

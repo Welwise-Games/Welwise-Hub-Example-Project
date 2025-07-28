@@ -55,10 +55,6 @@ MonoBehaviour:
     m_Key: Only letters and numbers
     m_Metadata:
       m_Items: []
-  - m_Id: 72301012996096
-    m_Key: Deselect all emotions
-    m_Metadata:
-      m_Items: []
   - m_Id: 81304719872000
     m_Key: Do you want to apply changes
     m_Metadata:

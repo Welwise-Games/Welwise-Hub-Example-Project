@@ -33,7 +33,14 @@
         "WelwiseHubExampleSharedModule",
         "WelwiseChatSharedModule",
         "WelwiseEmotionsSharedModule",
-        "WelwiseCharacterSharedModule"
+        "WelwiseCharacterSharedModule",
+        "WelwiseCurrenciesSharedModule",
+        "WelwiseCurrenciesClientModule",
+        "WelwiseShopItemClientModule",
+        "WelwiseShopItemSharedModule",
+        "WelwisePetsSharedModule",
+        "WelwisePetsClientModule",
+        "WelwiseMiniGamesMainModule"
     ],
     "includePlatforms": [
         "Editor",

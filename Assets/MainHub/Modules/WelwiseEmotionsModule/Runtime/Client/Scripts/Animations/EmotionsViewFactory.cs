@@ -7,26 +7,24 @@ namespace WelwiseEmotionsModule.Runtime.Client.Scripts.Animations
 {
     public class EmotionsViewFactory
     {
-        private readonly EmotionsViewConfigsProviderService _emotionsViewConfigsProviderService;
+        private readonly EmotionsViewConfigProviderService _emotionsViewConfigProviderService;
 
-        public EmotionsViewFactory(EmotionsViewConfigsProviderService emotionsViewConfigsProviderService) => _emotionsViewConfigsProviderService = emotionsViewConfigsProviderService;
+        public EmotionsViewFactory(EmotionsViewConfigProviderService emotionsViewConfigProviderService) => _emotionsViewConfigProviderService = emotionsViewConfigProviderService;
 
         public async UniTask<ParticlesParentSerializableComponents[]> TryCreatingParticlesParentsAsync(Transform parent, string emotionIndex)
         {
-            var emotionsViewConfig = await _emotionsViewConfigsProviderService.GetEmotionsViewConfigAsync();
+            var emotionsViewConfig = await _emotionsViewConfigProviderService.GetEmotionsViewConfig();
             
-            var particlesPrefabs = emotionsViewConfig.EmotionsConfigs
-                .FirstOrDefault(config => config.EmotionIndex == emotionIndex)?.ParticlesComponentsParentsPrefabs;
+            var particlesPrefabs = emotionsViewConfig.Configs
+                .FirstOrDefault(config => config.ItemIndex == emotionIndex)?.ParticlesComponentsParentsPrefabs;
             
-           var a =  particlesPrefabs?.Where(prefab => prefab != null).Select(prefab =>
+           return particlesPrefabs?.Where(prefab => prefab != null).Select(prefab =>
             {
                 var instance =  Object.Instantiate(prefab, parent);
                 Timer.TryStartingCountingTime(emotionsViewConfig.MaxParticlesLifeTime, () => Object.Destroy(instance),
                     false, instance.GetCancellationTokenOnDestroy()).Forget();
                 return instance;
             }).ToArray();
-
-           return a;
         }
     }
 }

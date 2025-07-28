@@ -19,7 +19,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.GameStat
         public async UniTask EnterAsync()
         {
 #if !UNITY_EDITOR
-            Debug.unityLogger.logEnabled = true;
+            Debug.unityLogger.logEnabled = false;
 #endif
             
             await _cameraFactory.GetMainCameraAsync();
@@ -32,6 +32,6 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.GameStat
 
         }
 
-        public async UniTask ExitAsync() {}
+        public UniTask ExitAsync() => UniTask.CompletedTask;
     }
 }

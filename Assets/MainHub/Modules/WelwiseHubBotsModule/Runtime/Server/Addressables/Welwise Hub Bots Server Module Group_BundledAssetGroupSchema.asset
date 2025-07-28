@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d17a21594effb4e9591490b009e7aa, type: 3}
   m_Name: Welwise Hub Bots Server Module Group_BundledAssetGroupSchema
   m_EditorClassIdentifier: 
-  m_Group: {fileID: 11400000, guid: 520742a04002506429983d788c100df9, type: 2}
+  m_Group: {fileID: 11400000, guid: 73bc0c100a05f9346bf29f1429cbef17, type: 2}
   m_InternalBundleIdMode: 1
   m_Compression: 1
   m_IncludeAddressInCatalog: 1

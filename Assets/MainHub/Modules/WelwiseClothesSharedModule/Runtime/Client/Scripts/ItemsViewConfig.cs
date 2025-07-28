@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace WelwiseClothesSharedModule.Runtime.Client.Scripts
 {
-    [CreateAssetMenu(fileName = "ItemsViewConfig", menuName = "WelwiseLoadingClothesModule/ItemsViewConfig")]
+    [CreateAssetMenu(menuName = "WelwiseLoadingClothesModule/ItemsViewConfig")]
     public class ItemsViewConfig : ScriptableObject
     {
         [field: SerializeField] public ItemViewConfig[] Items { get; private set; }

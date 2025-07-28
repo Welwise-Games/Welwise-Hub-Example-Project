@@ -15,6 +15,8 @@ using WelwiseChatModule.Runtime.Client.Scripts.UI.Window;
 using WelwiseChatModule.Runtime.Shared.Scripts.Network;
 using WelwiseClothesSharedModule.Runtime.Client.Scripts;
 using WelwiseClothesSharedModule.Runtime.Shared.Scripts;
+using WelwiseCurrenciesModule.Runtime.Client.Scripts;
+using WelwiseCurrenciesModule.Runtime.Shared.Scripts;
 using WelwiseEmotionsModule.Runtime.Client.Scripts;
 using WelwiseEmotionsModule.Runtime.Client.Scripts.Animations.Network.Owner;
 using WelwiseEmotionsModule.Runtime.Shared.Scripts;
@@ -30,12 +32,15 @@ using WelwiseHubExampleModule.Runtime.Shared.Scripts.Services.Data;
 using WelwiseHubExampleModule.Runtime.Shared.Scripts.Systems.HubSystem.Network;
 using WelwiseLoadingClothesModule.Runtime.Client.Scripts;
 using WelwiseNicknameSharedModule.Runtime.Client.Scripts;
+using WelwisePetsModule.Runtime.Client.Scripts;
+using WelwisePetsModule.Runtime.Shared.Scripts;
 using WelwiseSharedModule.Runtime.Client.Scripts;
 using WelwiseSharedModule.Runtime.Client.Scripts.NetworkModule;
 using WelwiseSharedModule.Runtime.Client.Scripts.Tools;
 using WelwiseSharedModule.Runtime.Shared.Scripts;
 using WelwiseSharedModule.Runtime.Shared.Scripts.EventBusSystem;
 using Channel = FishNet.Transporting.Channel;
+using CurrenciesTools = WelwiseCurrenciesModule.Runtime.Client.Scripts.CurrenciesTools;
 
 namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.Services
 {
@@ -58,7 +63,8 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.Services
             ShopUIFactory shopUIFactory, ClientsDataProviderService clientsDataProviderService,
             ClientsCustomizationDataProviderService clientsCustomizationDataProviderService,
             ChatsDataProviderService chatsDataProviderService, ClientManager clientManager, IEnvironment environment,
-            ISDK sdk, ClientsNicknamesProviderService clientsNicknamesProviderService, ChatFactory chatFactory)
+            ISDK sdk, ClientsNicknamesProviderService clientsNicknamesProviderService, ChatFactory chatFactory,
+            ICurrenciesProviderService currenciesProviderService)
         {
             _playersFactory = playersFactory;
             _hubFactory = hubFactory;
@@ -79,7 +85,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.Services
 
             clientManager.RegisterBroadcast<HubInitializationDependencies>(InitializeHubAndEnterHubState);
 
-            clientManager.RegisterBroadcast<SettingClientCustomizationDataBroadcastForClient>(
+            clientManager.RegisterBroadcast<SetClientCustomizationDataBroadcastForClient>(
                 SetPlayerCustomizationData);
 
             clientManager.OnAuthenticated += clientsConnectionTrackingServiceForClient.InvokeConnectedActionForOwner;
@@ -93,7 +99,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.Services
             chatsDataProviderService.AddedMessageData += DisplayMessageOverPlayer;
 
             chatFactory.CreatedChatWindowController += SubscribeChatWindowAsync;
-                
+
             void SubscribeChatWindowAsync(ChatWindowController chatWindowController)
             {
                 chatWindowController.ChatWindow.InputField.onSelect.AddListener(text =>
@@ -126,13 +132,17 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.Services
                     networkConnection);
             };
 
-            _clientsDataProviderService.AddedData += (networkConnection, clientData) =>
+            _clientsDataProviderService.AddedData += OnAddClientData;
+
+            void OnAddClientData(NetworkConnection networkConnection, ClientData clientData)
             {
                 if (!networkConnection.IsOwners())
                     return;
 
+                currenciesProviderService.TryInitializingAndSubscribe(clientData.CurrenciesData, sdk.PlayerData,
+                    clientManager);
                 TrySavingOwnerEquippedItemsDataForMetaverse(sdk, networkConnection, clientData.CustomizationData);
-            };
+            }
 
             _clientsCustomizationDataProviderService.ChangedClientCustomizationData +=
                 (networkConnection, data) => TrySavingOwnerEquippedItemsDataForMetaverse(sdk, networkConnection, data);
@@ -141,30 +151,39 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.Services
                 shopPopupController =>
                 {
                     SubscribeShopSettingEquippedItemsModelForChangingOwnerName(shopPopupController
-                        .ShopSettingEquippedItemsModel);
+                        .ShopSetEquippedItemsModel);
                 };
 
             shopUIFactory.CreatedShopPopupController += shopPopupController =>
                 SubscribeShopSettingEquippedItemsModelForChangingClientPlayerCustomizationData(shopPopupController
-                    .ShopSettingEquippedItemsModel);
+                    .ShopSetEquippedItemsModel);
 
             clientsConnectionTrackingServiceForClient.Disconnected += _playersFactory.TryRemovingPlayer;
             clientsConnectionTrackingServiceForClient.Disconnected += TryRemovingServiceFromClientsDataProviderService;
+            clientsConnectionTrackingServiceForClient.Disconnected += _ => currenciesProviderService.Dispose();
             clientsConnectionTrackingServiceForClient.OwnerDisconnected +=
-                () => eventBus.Fire(new EnterClientStateEvent(GameState.Reconnection));
-
-            clientsConnectionTrackingServiceForClient.OwnerConnected +=
                 () =>
                 {
-                    clientManager.Broadcast(new LoginBroadcast(new ClientData(
-                        new ClientAccountData(null, sdk.PlayerData.GetPlayerName()),
-                        sdk.PlayerData.MetaverseData
-                            .GetString(EmotionsEntryPointTools.SelectedEmotionsDataFieldNameForMetaverseSavings)
-                            ?.GetDeserializedWithoutNulls<ClientSelectedEmotionsData>(), new CustomizationData(
-                            sdk.PlayerData.MetaverseData.GetString(PlayerAppearanceDataFieldNameForMetaverseSavings)
-                                ?.GetDeserializedWithoutNulls<ModelAppearanceData>(),
-                            sdk.PlayerData.GetEquippedItemsDataFromMetaverse()))));
+                    currenciesProviderService.Dispose();
+                    eventBus.Fire(new EnterClientStateEvent(GameState.Reconnection));
                 };
+
+            clientsConnectionTrackingServiceForClient.OwnerConnected += SendLoginBroadcast;
+
+            void SendLoginBroadcast() =>
+                clientManager.Broadcast(new LoginBroadcast(new ClientData(
+                    new ClientAccountData(null, 
+                        sdk.PlayerData.GetPlayerName()),
+                    sdk.PlayerData.MetaverseData
+                        .GetString(EmotionsEntryPointTools.SelectedEmotionsDataFieldNameForMetaverseSavings)
+                        ?.GetFromJsonDeserializedWithoutNulls<SelectedEmotionsData>(),
+                    new CustomizationData(sdk.PlayerData.MetaverseData.GetString(PlayerAppearanceDataFieldNameForMetaverseSavings)
+                            ?.GetFromJsonDeserializedWithoutNulls<ModelAppearanceData>(), 
+                        sdk.PlayerData.GetEquippedItemsDataFromMetaverse()),
+                    sdk.PlayerData.GetFilledCurrenciesDataFromSavings(), 
+                    sdk.PlayerData.MetaverseData
+                        .GetString(PetsEntryPointTools.SelectedPetsDataFieldNameForMetaverseSavings)
+                        ?.GetFromJsonDeserializedWithoutNulls<SelectedPetsData>())));
         }
 
         private void TrySavingOwnerEquippedItemsDataForMetaverse(ISDK sdk, NetworkConnection networkConnection,
@@ -202,33 +221,33 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Infrastructure.Services
                 _clientsDataProviderService.TryRemovingClientData(networkConnection);
         }
 
-        private void SetPlayerCustomizationData(SettingClientCustomizationDataBroadcastForClient broadcast,
+        private void SetPlayerCustomizationData(SetClientCustomizationDataBroadcastForClient broadcast,
             Channel channel) =>
             _clientsCustomizationDataProviderService.TrySettingClientCustomizationData(
                 broadcast.DataOwnerNetworkConnection,
                 broadcast.CustomizationData);
 
         private void SubscribeShopSettingEquippedItemsModelForChangingClientPlayerCustomizationData(
-            ShopSettingEquippedItemsModel shopSettingEquippedItemsModel)
-            => shopSettingEquippedItemsModel.ChangedPlayerCustomizationData += customizationData =>
+            ShopSetEquippedItemsModel shopSetEquippedItemsModel)
+            => shopSetEquippedItemsModel.ChangedPlayerCustomizationData += customizationData =>
             {
                 if (_clientsCustomizationDataProviderService.CanSetClientPlayerCustomizationData(
                         SharedNetworkTools.OwnerConnection, customizationData))
-                    _clientManager.Broadcast(new SettingClientCustomizationDataBroadcastForServer(customizationData));
+                    _clientManager.Broadcast(new SetClientCustomizationDataBroadcastForServer(customizationData));
             };
 
         private void SubscribeShopSettingEquippedItemsModelForChangingOwnerName(
-            ShopSettingEquippedItemsModel shopSettingEquippedItemsModel)
-            => shopSettingEquippedItemsModel.ChangedNickname += nickname =>
+            ShopSetEquippedItemsModel shopSetEquippedItemsModel)
+            => shopSetEquippedItemsModel.ChangedNickname += nickname =>
             {
                 if (_clientsNicknamesProviderService.CanSetClientNickname(SharedNetworkTools.OwnerConnection,
                         nickname))
-                    _clientManager.Broadcast(new SettingNicknameBroadcastForServer(nickname));
+                    _clientManager.Broadcast(new SetNicknameBroadcastForServer(nickname));
             };
 
         private void InitializeClientServices(ClientServicesInitializationBroadcast broadcast)
         {
-            var clientData = broadcast.SerializedClientData.GetDeserializedWithoutNulls<ClientData>();
+            var clientData = broadcast.SerializedClientData.GetFromJsonDeserializedWithoutNulls<ClientData>();
             _clientsDataProviderService.AddClientData(broadcast.DataOwnerNetworkConnection, clientData);
         }
 

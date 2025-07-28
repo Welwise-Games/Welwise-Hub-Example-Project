@@ -7,6 +7,6 @@ namespace WelwiseEmotionsModule.Runtime.Client.Scripts.Animations
     {
         event Action<string, int> StartedEmotionAnimation;
         void SetAnimatorControllerAndTryStartingEmotionAnimation(AnimatorOverrideController animatorOverrideController,
-            string emotionIndex, int emotionIndexInsideCircle = 0);
+            string emotionIndex, int emotionOrdinalIndex = 0);
     }
 }

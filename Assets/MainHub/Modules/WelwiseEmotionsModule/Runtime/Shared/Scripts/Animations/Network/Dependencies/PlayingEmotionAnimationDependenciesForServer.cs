@@ -4,11 +4,11 @@ namespace WelwiseEmotionsModule.Runtime.Shared.Scripts.Animations.Network.Depend
 {
     public struct PlayingEmotionAnimationDependenciesForServer : IBroadcast
     {
-        public readonly int EmotionIndexInsideCircle;
+        public readonly int EmotionOrdinalIndex;
 
-        public PlayingEmotionAnimationDependenciesForServer(int emotionIndexInsideCircle)
+        public PlayingEmotionAnimationDependenciesForServer(int emotionOrdinalIndex)
         {
-            EmotionIndexInsideCircle = emotionIndexInsideCircle;
+            EmotionOrdinalIndex = emotionOrdinalIndex;
         }
     }
 }

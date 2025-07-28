@@ -74,12 +74,12 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.UISystem
             _container.GetSingleByType<ShopPopupController>();
 
         public async UniTask<ShopPopupController> GetCreatedShopPopupControllerAsync(ShopController shopController,
-            ShopSettingEquippedItemsModel shopSettingEquippedItemsModel)
+            ShopSetEquippedItemsModel shopSetEquippedItemsModel)
         {
             return await _container.GetControllerAsync<ShopPopupController, ShopPopup>(ShopPopupAssetId,
                 _assetLoader, async popup =>
                 {
-                    var shopPopupController = new ShopPopupController(shopSettingEquippedItemsModel,
+                    var shopPopupController = new ShopPopupController(shopSetEquippedItemsModel,
                         popup, await _itemsConfigsProviderService.GetItemsConfigAsync(), this,
                         _clientsDataProviderService,
                         _clientsNicknamesProviderService,

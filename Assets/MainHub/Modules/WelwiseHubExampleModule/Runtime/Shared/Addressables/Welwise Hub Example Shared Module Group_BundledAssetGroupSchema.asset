@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d17a21594effb4e9591490b009e7aa, type: 3}
   m_Name: Welwise Hub Example Shared Module Group_BundledAssetGroupSchema
   m_EditorClassIdentifier: 
-  m_Group: {fileID: 11400000, guid: d9e68dbaf4609834aa49816ab230a1a5, type: 2}
+  m_Group: {fileID: 11400000, guid: 66f3c6aaaa1344a4aa823c5f9ea27a8f, type: 2}
   m_InternalBundleIdMode: 1
   m_Compression: 1
   m_IncludeAddressInCatalog: 1

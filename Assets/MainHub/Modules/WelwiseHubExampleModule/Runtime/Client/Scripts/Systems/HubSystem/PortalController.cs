@@ -15,16 +15,16 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem
 {
     public class PortalController
     {
-        public event Action<int> OwnerEnteredToPortal;
+        public event Action<string> OwnerEnteredToPortal;
 
-        private int _gameId = -1;
+        private string _gameId;
 
         private readonly PortalSerializableComponents _portalSerializableComponents;
         private readonly PortalsConfig _portalsConfig;
         private readonly string _portalMaterialsUrl;
         private readonly float _timeBeforeSetActiveVideoSideImages = 0.5f;
 
-        public PortalController(PortalSerializableComponents portalSerializableComponents, int portalId,
+        public PortalController(PortalSerializableComponents portalSerializableComponents, string portalId,
             PortalsConfig portalsConfig, IPlatformNavigation platformNavigation, Action<string> gotErrorOnGoingToGame)
         {
             _portalSerializableComponents = portalSerializableComponents;
@@ -88,12 +88,12 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem
                 await webRequest.SendWebRequest();
 
                 if (webRequest.result == UnityWebRequest.Result.Success)
-                    _gameId = Convert.ToInt32(webRequest.downloadHandler.text);
+                    _gameId = webRequest.downloadHandler.text;
                 // else
                 //     Debug.LogError(url + ": Exception: " + webRequest.error + ", Request Error: " +
                 //                    webRequest.downloadHandler.error);
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 //Debug.LogError(url + ": Exception: " + exception + ", Request Error: " +
                 //webRequest.downloadHandler.error;
@@ -132,7 +132,7 @@ namespace WelwiseHubExampleModule.Runtime.Client.Scripts.Systems.HubSystem
                 // Debug.LogError(url + ": Texture is null!");
                 return null;
             }
-            catch (Exception exception)
+            catch (Exception)
             {
                 // Debug.LogError(url + ": Exception: " + exception + ", Request Error: " +
                 //                webRequest.downloadHandler.error);

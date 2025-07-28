@@ -1,0 +1,21 @@
+{
+    "name": "WelwiseHelicopterMiniGame",
+    "rootNamespace": "",
+    "references": [
+        "Unity.TextMeshPro",
+        "WelwiseMiniGamesSharedModule",
+        "UniTask"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WebGL"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
